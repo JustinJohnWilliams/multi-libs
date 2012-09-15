@@ -35,9 +35,7 @@
 			</div>
 		</div>
 		<hr />
-		<div>
-			<h3>Game started: <label id="gameStatus"></label></h3>
-		</div>
+		<br />
 		<div id="blackCard" class="card">
 			<p id="blackCardText"></p>
 		</div>
@@ -77,13 +75,9 @@
 			var isStarted = game.isStarted;
 
       if(!isStarted) {
-        $('#gameStatus').text("waiting for others to join...please wait"); 
         $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
         setTimeout(PollForGames, 1000);
         return;
-      }
-      else {
-        $('#gameStatus').text(""); 
       }
 
 			if(isStarted) {
