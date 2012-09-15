@@ -32,7 +32,11 @@ function getGame(id) {
 }
 
 function joinGame(game, player) {
-  game.players.push({ id: player.id, name: player.name, isReady: false });
+  game.players.push({ id: player.id
+    , name: player.name
+    , isReady: false
+    , selectedWhiteCardId: null
+    });
 
   if(game.players.length == 4) {
     startGame(game);
@@ -42,17 +46,34 @@ function joinGame(game, player) {
 }
 
 function startGame(game) {
-    game.isStarted = true;
-    var index = Math.floor(Math.random() * game.deck.black.length);
-    game.currentBlackCard = game.deck.black[index];
-    game.deck.black.splice(index, 1);
+  game.isStarted = true;
+  var index = Math.floor(Math.random() * game.deck.black.length);
+  game.currentBlackCard = game.deck.black[index];
+  game.deck.black.splice(index, 1);
+}
+
+function getPlayer(gameId, playerId) {
+  var game = getGame(gameId);
+  return linq.From(game.players)
+    .First(function (x) { return x.id == playerId});
 }
 
 function readyForNextRound(gameId, playerId) {
-    var game = getGame(gameid);
-    var player = linq.From(game.players)
-	.First(function (x) { return x.id == playerId});
-    player.isReady = true;
+  var player = getPlayer(gameId, playerId);
+  player.isReady = true;
+
+  var game = getGame(gameId);
+  var pendingPlayers = linq.From(game.players)
+    .Any(function (x) { x.isReady == false });
+
+  if(pendingPlayers == false) {
+    //call roundended
+  }
+}
+
+function selectCard(gameId, playerId, whiteCardId) {
+  var player = getPlayer(gameId, playerId);
+  player.selectedWhiteCardId = whiteCardId;
 }
 
 function reset(){
@@ -65,6 +86,4 @@ exports.getGame = getGame;
 exports.joinGame = joinGame;
 exports.readyForNextRound = readyForNextRound;
 exports.reset = reset;
-
-//exports selectCard (playerId, whiteCardId)
-//readyForNextRound(gameId, playerId)
+exports.selectCard = selectCard;

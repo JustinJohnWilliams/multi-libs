@@ -31,8 +31,21 @@ describe('multi-libs', function() {
   
   it('player only ready when they say so', function() {
     var game = startGame("newgame");
-    //var readyPlayers = 
-    expect(game.currentBlackCard).toBeTruthy();
-    expect(game.deck.black.length).toBe(25);
+    expect(game.players[0].isReady).toBe(false);
+    Game.readyForNextRound("newgame", "player1");
+    var game = Game.getGame(game.id);
+    expect(game.players[0].isReady).toBe(true);
+    Game.readyForNextRound("newgame", "player3");
+    var game = Game.getGame(game.id);
+    expect(game.players[2].isReady).toBe(true);
   });
+
+  it('selecting white card works', function() {
+    var whiteCardId = "Coffee";
+    var game = startGame("newgame");
+    Game.selectCard("newgame", "player1", whiteCardId);
+    var game = Game.getGame(game.id);
+    expect(game.players[0].selectedWhiteCardId).toBe(whiteCardId);
+  });
+
 });
