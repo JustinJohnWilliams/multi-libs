@@ -19,10 +19,10 @@ function list() {
 }
 
 function addGame(game) {
-  
   game.players = [];
   game.isStarted = false;
   game.deck = getDeck();
+  game.currentBlackCard = "";
   gameList.push(game);
   return game;
 }
