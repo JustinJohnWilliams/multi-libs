@@ -46,6 +46,9 @@ function startGame(game) {
     var index = Math.floor(Math.random() * game.deck.black.length);
     game.currentBlackCard = game.deck.black[index];
     game.deck.black.splice(index, 1);
+    _.each(game.players, function(player) {
+
+    });
 }
 
 function readyForNextRound(gameId, playerId) {

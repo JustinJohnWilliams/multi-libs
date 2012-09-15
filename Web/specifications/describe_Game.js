@@ -23,10 +23,11 @@ describe('multi-libs', function() {
     expect(game.isStarted).toBe(true);
   });
 
-  it('game started, black card selected', function() {
+  it('game started, black card selected, white cards distributed', function() {
     var game = startGame("newgame");
     expect(game.currentBlackCard).toBeTruthy();
     expect(game.deck.black.length).toBe(25);
+    expect(game.deck.white.length).toBe(22);
   });
   
   it('player only ready when they say so', function() {
