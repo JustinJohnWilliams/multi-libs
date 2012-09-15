@@ -75,4 +75,66 @@ describe('multi-libs', function() {
     var game = Game.getGame(game.id);
     expect(game.players[3].roundWinner).toBe(true);
   });
+
+  it('winner gets awesome points', function() {
+    var winningPlayerId = "player4"
+    var game = startGame("newgame");
+    expect(game.players[3].awesomePoints).toBe(0);
+    Game.selectWinner(game.id, winningPlayerId);
+    var game = Game.getGame(game.id);
+    expect(game.players[3].awesomePoints).toBe(1);
+  });
+
+  it('new game player 1 is czar', function() {
+    var game = startGame("newgame");
+    expect(game.players[0].isCzar).toBe(true);
+  });
+
+  it('after 1 round player 2 is czar', function() {
+    var game = startGame("newgame");
+    expect(game.players[0].isCzar).toBe(true);
+    Game.roundEnded(game);
+    var game = Game.getGame(game.id);
+    expect(game.players[0].isCzar).toBe(false);
+    expect(game.players[1].isCzar).toBe(true);
+  });
+
+  it('after winning 5 points player is winner', function() {
+    var winningPlayerId = "player4"
+    var game = startGame("newgame");
+    expect(game.isOver).toBe(false);
+    expect(game.winnerId).toBe(null);
+    expect(game.players[3].awesomePoints).toBe(0);
+    
+    Game.selectWinner(game.id, winningPlayerId);
+    game = Game.getGame(game.id);
+    expect(game.isOver).toBe(false);
+    expect(game.winnerId).toBe(null);
+    expect(game.players[3].awesomePoints).toBe(1);
+    
+    Game.selectWinner(game.id, winningPlayerId);
+    game = Game.getGame(game.id);
+    expect(game.isOver).toBe(false);
+    expect(game.winnerId).toBe(null);
+    expect(game.players[3].awesomePoints).toBe(2);
+
+    Game.selectWinner(game.id, winningPlayerId);
+    game = Game.getGame(game.id);
+    expect(game.isOver).toBe(false);
+    expect(game.winnerId).toBe(null);
+    expect(game.players[3].awesomePoints).toBe(3);
+
+    Game.selectWinner(game.id, winningPlayerId);
+    game = Game.getGame(game.id);
+    expect(game.isOver).toBe(false);
+    expect(game.winnerId).toBe(null);
+    expect(game.players[3].awesomePoints).toBe(4);
+
+    Game.selectWinner(game.id, winningPlayerId);
+    game = Game.getGame(game.id);
+    expect(game.isOver).toBe(true);
+    expect(game.winnerId).toBe(winningPlayerId);
+    expect(game.players[3].awesomePoints).toBe(5);
+
+  });
 });
