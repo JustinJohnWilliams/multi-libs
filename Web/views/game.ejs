@@ -53,7 +53,7 @@
 		</div>
 		<div id="actionButton">
 			<a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
-			<a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Select Winner!</a>
+			<a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Select Winner!</a>
 		</div>
 
 	</body>
@@ -78,7 +78,12 @@
 
       if(!isStarted) {
         $('#gameStatus').text("waiting for others to join...please wait"); 
+        $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
         setTimeout(PollForGames, 1000);
+        return;
+      }
+      else {
+        $('#gameStatus').text(""); 
       }
 
 			if(isStarted) {
@@ -87,11 +92,17 @@
 
 			var thisPlayer = me(game.players);
 
-      if(thisPlayer.selectedWhiteCardId) {
-
-      }
-      else {
-
+      if(thisPlayer.isCzar) {
+        $("#playCardLink").hide();
+        $("#selectWinner").show();
+      } else {
+        if(thisPlayer.selectedWhiteCardId) {
+          $("#playCardLink").hide();
+          $("#selectWinner").show();
+          $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
+        } else {
+          $("#playCardLink").html("Play Card!").removeAttr("disabled");
+        }
       }
 
 			if(thisPlayer && thisPlayer.cards) {
@@ -110,9 +121,13 @@
 
 	function playCard() {
 		var cardValue = $('.active .card').attr('data-cardId');
-		$.post("selectCard", { playerId: $.cookie('playerId'), gameId: $.cookie('gameId'), whiteCardId: cardValue}, function(){
-			
-		});
+    $.post("selectCard", {
+        playerId: $.cookie('playerId'),
+        gameId: $.cookie('gameId'),
+        whiteCardId: cardValue
+      }, function() {
+        PollForGames();
+      });
 	}
 
 	$(document).ready(function() {
