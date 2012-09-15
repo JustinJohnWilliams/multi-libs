@@ -3,7 +3,7 @@ var linq = require('linq');
 var app = express()
   , server = require('http').createServer(app)
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);
 
 var amir = { person: { id:1, name: "Amir" } } 
 var venkat = { person: { id:2, name: "Venkat" } } 
