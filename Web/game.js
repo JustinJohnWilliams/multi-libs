@@ -47,7 +47,12 @@ function startGame(game) {
     game.currentBlackCard = game.deck.black[index];
     game.deck.black.splice(index, 1);
     _.each(game.players, function(player) {
-
+      player.cards = [];
+      for(var i = 0; i < 7; i++) {
+        var whiteIndex = Math.floor(Math.random() * game.deck.white.length);
+        player.cards.push(game.deck.white[whiteIndex]);
+        game.deck.white.splice(whiteIndex, 1);
+      }
     });
 }
 
