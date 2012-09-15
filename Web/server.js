@@ -29,6 +29,14 @@ app.get('/list', function (req, res) {
   res.end();
 });
 
+app.get('/listall', function (req, res) {
+  games = Game.listAll();
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(JSON.stringify(games));
+  res.end();
+});
+
 app.post('/add', function (req, res) {
   var newGame = Game.addGame(req.body);
   res.writeHead(200, { 'Content-Type': 'application/json' });

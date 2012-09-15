@@ -61,6 +61,10 @@ function list() {
     .ToArray();
 }
 
+function listAll() {
+  return gameList;
+}
+
 function addGame(game) {
   game.players = [];
   game.isOver = false;
