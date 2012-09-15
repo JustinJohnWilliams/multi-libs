@@ -36,6 +36,7 @@ function joinGame(game, player) {
     , name: player.name
     , isReady: false
     , selectedWhiteCardId: null
+    , roundWinner: false
     });
 
   if(game.players.length == 4) {
@@ -84,6 +85,11 @@ function selectCard(gameId, playerId, whiteCardId) {
   player.selectedWhiteCardId = whiteCardId;
 }
 
+function selectWinner(gameId, playerId) {
+  var player = getPlayer(gameId, playerId);
+  player.roundWinner = true;
+}
+
 function reset(){
   gameList = [];
 }
@@ -95,3 +101,4 @@ exports.joinGame = joinGame;
 exports.readyForNextRound = readyForNextRound;
 exports.reset = reset;
 exports.selectCard = selectCard;
+exports.selectWinner = selectWinner;

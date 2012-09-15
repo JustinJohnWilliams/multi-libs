@@ -53,4 +53,11 @@ describe('multi-libs', function() {
     expect(game.players[0].selectedWhiteCardId).toBe(whiteCardId);
   });
 
+  it('picking round winner works', function() {
+    var winningPlayerId = "player4"
+    var game = startGame("newgame");
+    Game.selectWinner(game.id, winningPlayerId)
+    var game = Game.getGame(game.id);
+    expect(game.players[3].roundWinner).toBe(true);
+  });
 });
