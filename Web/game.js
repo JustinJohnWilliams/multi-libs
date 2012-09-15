@@ -37,6 +37,7 @@ function joinGame(game, player) {
     , isReady: false
     , selectedWhiteCardId: null
     , roundWinner: false
+    , awesomePoints: 0
     });
 
   if(game.players.length == 4) {
@@ -110,6 +111,7 @@ function selectCard(gameId, playerId, whiteCardId) {
 function selectWinner(gameId, playerId) {
   var player = getPlayer(gameId, playerId);
   player.roundWinner = true;
+  player.awesomePoints = player.awesomePoints + 1;
 }
 
 function reset(){

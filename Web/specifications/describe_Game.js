@@ -75,4 +75,13 @@ describe('multi-libs', function() {
     var game = Game.getGame(game.id);
     expect(game.players[3].roundWinner).toBe(true);
   });
+
+  it('winner gets awesome points', function() {
+    var winningPlayerId = "player4"
+    var game = startGame("newgame");
+    expect(game.players[3].awesomePoints).toBe(0);
+    Game.selectWinner(game.id, winningPlayerId)
+    var game = Game.getGame(game.id);
+    expect(game.players[3].awesomePoints).toBe(1);
+  });
 });
