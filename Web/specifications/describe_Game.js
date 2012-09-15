@@ -26,8 +26,8 @@ describe('multi-libs', function() {
   it('game started, black card selected, white cards distributed', function() {
     var game = startGame("newgame");
     expect(game.currentBlackCard).toBeTruthy();
-    expect(game.deck.black.length).toBe(25);
-    expect(game.deck.white.length).toBe(22);
+    expect(game.deck.black.length).toBe(40);
+    expect(game.deck.white.length).toBe(170);
     expect(game.players[0].cards.length).toBe(7);
     expect(game.players[1].cards.length).toBe(7);
     expect(game.players[2].cards.length).toBe(7);
@@ -137,4 +137,5 @@ describe('multi-libs', function() {
     expect(game.players[3].awesomePoints).toBe(5);
 
   });
+
 });
