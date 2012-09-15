@@ -89,7 +89,8 @@ describe('multi-libs', function() {
   it('picking round winner works', function() {
     var winningPlayerId = "player4"
     var game = startGame("newgame");
-    Game.selectWinner(game.id, winningPlayerId)
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0])
+    Game.selectWinner(game.id, game.players[3].cards[0])
     var game = Game.getGame(game.id);
     expect(game.players[3].roundWinner).toBe(true);
   });
@@ -98,7 +99,8 @@ describe('multi-libs', function() {
     var winningPlayerId = "player4"
     var game = startGame("newgame");
     expect(game.players[3].awesomePoints).toBe(0);
-    Game.selectWinner(game.id, winningPlayerId);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0])
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     var game = Game.getGame(game.id);
     expect(game.players[3].awesomePoints).toBe(1);
   });
@@ -123,32 +125,37 @@ describe('multi-libs', function() {
     expect(game.isOver).toBe(false);
     expect(game.winnerId).toBe(null);
     expect(game.players[3].awesomePoints).toBe(0);
-    
-    Game.selectWinner(game.id, winningPlayerId);
+
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);    
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     game = Game.getGame(game.id);
     expect(game.isOver).toBe(false);
     expect(game.winnerId).toBe(null);
     expect(game.players[3].awesomePoints).toBe(1);
     
-    Game.selectWinner(game.id, winningPlayerId);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     game = Game.getGame(game.id);
     expect(game.isOver).toBe(false);
     expect(game.winnerId).toBe(null);
     expect(game.players[3].awesomePoints).toBe(2);
 
-    Game.selectWinner(game.id, winningPlayerId);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);    
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     game = Game.getGame(game.id);
     expect(game.isOver).toBe(false);
     expect(game.winnerId).toBe(null);
     expect(game.players[3].awesomePoints).toBe(3);
 
-    Game.selectWinner(game.id, winningPlayerId);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     game = Game.getGame(game.id);
     expect(game.isOver).toBe(false);
     expect(game.winnerId).toBe(null);
     expect(game.players[3].awesomePoints).toBe(4);
 
-    Game.selectWinner(game.id, winningPlayerId);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
+    Game.selectWinner(game.id, game.players[3].cards[0]);
     game = Game.getGame(game.id);
     expect(game.isOver).toBe(true);
     expect(game.winnerId).toBe(winningPlayerId);
