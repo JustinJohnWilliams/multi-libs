@@ -8,6 +8,7 @@
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js" type="text/javascript"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/jquery.dataTables.min.js" type="text/javascript"></script>
+		<script src="/public/jquerytmpl.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-fixed-top">
@@ -21,7 +22,7 @@
 					<a class="brand">Multi-Libs</a>
 				    <div class="nav-collapse collapse">
 				    	<ul class="nav">
-				    		<li><a href="#">Create Game</a></li>
+				    		<li><a href="javascript:createGame();">Create Game</a></li>
 			    		</ul>
 			    	</div>
 			    </div>
@@ -29,17 +30,52 @@
 		</div>
 		<hr />
 		<br />
-		<div class="well well-small">
-			<a href="game.html">Join Game 1</a> [8 players]
-		</div>
-		<div class="well well-small">
-			<a href="#">Join Game 2</a> [2 players]
-		</div>
-		<div class="well well-small">
-			<a href="#">Join Game 3</a> [6 players]
-		</div>
-		<div class="well well-small">
-			<a href="#">Join Game 4</a> [3 players]
+		<div id="availableGames">
 		</div>
 	</body>
 </html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+		var gameTemplate = '<div class="well well-small"> <a href="gamebyid?id=${gameId}">Join Game - [${name}]</a> </div>';
+
+		$.getJSON("list", function(games) {
+			jQuery.each(games, function(game) {
+				var gameElement = $.tmpl(gameTemplate, {
+					gameId: games[game].id,
+					name: games[game].name
+				});
+
+				$('#availableGames').append(gameElement);
+			});
+		});
+	});
+
+	function createGame() {
+		var guid = GUID();
+		$.post("add", { id: guid, name: "browser game" }, function() {
+    		$.post("joingame", { gameId: guid, playerId: "jjw", playerName: "justin williams" }, function() { 
+          		window.location.replace("/gamebyid?id=" + guid);
+        	});
+		});
+	};
+
+	function GUID(){
+		var S4 = function(){
+			return Math.floor(
+				Math.random() * 0x10000
+				).toString();
+		};
+
+		return (
+			   S4() + S4() + "-" +
+			   S4() + "-" +
+			   S4() + "-" +
+			   S4() + "-" +
+			   S4() + S4() + S4()
+			   );
+	};
+
+</script>
