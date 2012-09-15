@@ -72,8 +72,6 @@
 
     var gameId = $.cookie('gameId');
 
-    $("#winningCard").html("");
-
     $.getJSON('/gamebyid?id=' + gameId, function(game) {
       var isStarted = game.isStarted;
 
