@@ -26,6 +26,9 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			this.btnNewGame.TouchUpInside += (sender, e) => {
+				this.Title = "clicked";
+			};
 		}
 		
 		public override void ViewDidUnload ()

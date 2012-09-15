@@ -11,8 +11,15 @@ namespace multilibs
 	[Register ("rootViewController")]
 	partial class rootViewController
 	{
+		[Outlet]
+		MonoTouch.UIKit.UIButton btnNewGame { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnNewGame != null) {
+				btnNewGame.Dispose ();
+				btnNewGame = null;
+			}
 		}
 	}
 }
