@@ -88,7 +88,7 @@
       if(thisPlayer.isCzar) {
         renderCzar(game);
       } else {
-        renderNotCzar(thisPlayer);
+        renderNotCzar(thisPlayer, game);
       }
     });
   };
@@ -133,12 +133,13 @@
     }
   }
 
-  function renderNotCzar(player) {
+  function renderNotCzar(player, game) {
     $("#playCardLink").show();
     $("#selectWinnerLink").hide();
 
     if(player.selectedWhiteCardId) {
       $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
+      setTimeout(PollForGames, 1000);
     } else {
       $("#playCardLink").html("Play Card!").removeAttr("disabled");
     }
@@ -157,6 +158,11 @@
 
     if(game.winningCardId) {
       showWinnerSelected(game.winningCardId);
+      setTimeout(PollForGames, 1000);
+    }
+
+    if(game.isReadyForScoring || player.selectedWhiteCardId) {
+      setTimeout(PollForGames, 1000);
     }
   }
 
