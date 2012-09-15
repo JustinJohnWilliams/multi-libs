@@ -54,10 +54,11 @@
 	});
 
 	function createGame() {
-		var guid = GUID();
-		$.post("add", { id: guid, name: "browser game" }, function() {
-    		$.post("joingame", { gameId: guid, playerId: "jjw", playerName: "justin williams" }, function() { 
-          		window.location.replace("/gamebyid?id=" + guid);
+		var gameGuid = GUID();
+		var playerGuid = GUID();
+		$.post("add", { id: gameGuid, name: "browser game" }, function() {
+    		$.post("joingame", { gameId: gameGuid, playerId: playerGuid, playerName: "web guy" }, function() { 
+          		window.location.replace("/gamebyid?id=" + gameGuid);
         	});
 		});
 	};
