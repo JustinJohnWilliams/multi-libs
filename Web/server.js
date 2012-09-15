@@ -49,7 +49,9 @@ app.get('/list', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
-  gameList.push(req.body);
+  var body = req.body;
+  if(!body["players"]) body.players = [];
+  gameList.push();
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write(JSON.stringify({ games: gameList }));
   res.end();
