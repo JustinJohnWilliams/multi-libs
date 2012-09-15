@@ -69,6 +69,7 @@ function addGame(game) {
   game.players = [];
   game.isOver = false;
   game.winnerId = null;
+  game.winningCardId = null;
   game.isStarted = false;
   game.deck = getDeck();
   game.currentBlackCard = "";
@@ -159,6 +160,12 @@ function getPlayer(gameId, playerId) {
     .First(function (x) { return x.id == playerId});
 }
 
+function getPlayerByCardId(gameId, cardId) {
+  var game = getGame(gameId);
+  return linq.From(game.players)
+    .First(function (x) { return x.selectedWhiteCardId == cardId});
+}
+
 function readyForNextRound(gameId, playerId) {
   var player = getPlayer(gameId, playerId);
   player.isReady = true;
@@ -185,14 +192,16 @@ function selectCard(gameId, playerId, whiteCardId) {
   }
 }
 
-function selectWinner(gameId, playerId) {
-  var player = getPlayer(gameId, playerId);
+function selectWinner(gameId, cardId) {
+  var player = getPlayerByCardId(gameId, cardId);
+  var game = getGame(gameId);
+  game.winningCardId = cardId;
   player.roundWinner = true;
   player.awesomePoints = player.awesomePoints + 1;
   if(player.awesomePoints == 5) {
     var game = getGame(gameId);
     game.isOver = true;
-    game.winnerId = playerId;
+    game.winnerId = player.id;
   }
 }
 
