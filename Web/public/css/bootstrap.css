@@ -5782,12 +5782,21 @@ a.badge:hover {
   margin-top: 0px;
 }
 
-@media screen and (max-width: 480px)
-{
+/* Large desktop */
+@media (min-width: 1200px) { ... }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { ... }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { ... }
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
   .card{
     margin-left: 100px;
     padding: 5px;
-    height: 150px !important;
+    height: 120px !important;
   }
 
   #actionButton{
@@ -5798,5 +5807,16 @@ a.badge:hover {
   {
     margin-top: 10px;
     margin-bottom: 0px;
+  }
+
+  .card h3{
+    font-size: 1.3em;
+    line-height: 1.2em;
+  }
+
+  .card p
+  {
+    font-size: .9em;
+    line-height: 1.2em;
   }
 }
