@@ -171,6 +171,7 @@ function readyForNextRound(gameId, playerId) {
   player.isReady = true;
 
   var game = getGame(gameId);
+  game.winningCardId = null;
   var pendingPlayers = linq.From(game.players)
     .Any(function (x) { x.isReady == false });
 
@@ -193,6 +194,7 @@ function selectCard(gameId, playerId, whiteCardId) {
 }
 
 function selectWinner(gameId, cardId) {
+  console.log(cardId);
   var player = getPlayerByCardId(gameId, cardId);
   var game = getGame(gameId);
   game.winningCardId = cardId;
