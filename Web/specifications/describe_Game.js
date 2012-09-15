@@ -48,6 +48,24 @@ describe('multi-libs', function() {
     expect(game.players[3].cards.length).toBe(7);
   });
 
+  it('isReadyForScoring', function() {
+    var game = startGame("newgame");
+    game = Game.getGame(game.id);
+    expect(game.isReadyForScoring).toBe(false);
+
+    Game.selectCard(game.id, game.players[0].id, game.players[0].cards[0]);
+    game = Game.getGame(game.id);
+    expect(game.isReadyForScoring).toBe(false);
+    
+    Game.selectCard(game.id, game.players[1].id, game.players[1].cards[0]);
+    game = Game.getGame(game.id);
+    expect(game.isReadyForScoring).toBe(false);
+    
+    Game.selectCard(game.id, game.players[2].id, game.players[2].cards[0]);
+    game = Game.getGame(game.id);
+    expect(game.isReadyForScoring).toBe(true);
+  });
+
   
   it('player only ready when they say so', function() {
     var game = startGame("newgame");

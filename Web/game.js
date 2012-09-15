@@ -72,6 +72,7 @@ function addGame(game) {
   game.isStarted = false;
   game.deck = getDeck();
   game.currentBlackCard = "";
+  game.isReadyForScoring = false;
   gameList.push(game);
   return game;
 }
@@ -174,6 +175,14 @@ function readyForNextRound(gameId, playerId) {
 function selectCard(gameId, playerId, whiteCardId) {
   var player = getPlayer(gameId, playerId);
   player.selectedWhiteCardId = whiteCardId;
+
+  var game = getGame(gameId);
+  var readyPlayers = linq.From(game.players)
+    .Where(function (x) { return x.selectedWhiteCardId != null })
+    .ToArray();
+  if(readyPlayers.length == 3) {
+    game.isReadyForScoring = true;
+  }
 }
 
 function selectWinner(gameId, playerId) {
