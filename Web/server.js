@@ -61,7 +61,7 @@ app.post('/selectcard', function(req, res) {
 });
 
 app.post('/selectWinner', function(req, res) {
-  Game.selectWinner(req.body.gameId, req.body.playerId);
+  Game.selectWinner(req.body.gameId, req.body.cardId);
   var game = Game.getGame(req.body.gameId);
   res.writeHead(200, { 'Content-Type': 'application/json' });  
   res.write(JSON.stringify(game));
