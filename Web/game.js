@@ -32,7 +32,12 @@ function getGame(id) {
 }
 
 function joinGame(game, player) {
-  game.players.push({ id: player.id, name: player.name, isReady: false });
+  game.players.push({ id: player.id
+    , name: player.name
+    , isReady: false
+    , selectedWhiteCardId: null
+    , roundWinner: false
+    });
 
   if(game.players.length == 4) {
     startGame(game);
@@ -63,7 +68,7 @@ function roundEnded(game) {
 function removeWhiteCard(game, player) {
   var cardToDelete = player.selectedWhiteCardId;
   var hand = player.cards;
-  player.cards = linq.From(hand).Where(function(x) { x != cardToDelete }).ToArray();
+  player.cards = linq.From(hand).Where(function (x) { return x != cardToDelete }).ToArray();
 }
 
 function drawWhiteCard(game, player) {
@@ -78,11 +83,33 @@ function setCurrentBlackCard(game) {
   game.deck.black.splice(index, 1);
 }
 
+function getPlayer(gameId, playerId) {
+  var game = getGame(gameId);
+  return linq.From(game.players)
+    .First(function (x) { return x.id == playerId});
+}
+
 function readyForNextRound(gameId, playerId) {
-    var game = getGame(gameid);
-    var player = linq.From(game.players)
-	.First(function (x) { return x.id == playerId});
-    player.isReady = true;
+  var player = getPlayer(gameId, playerId);
+  player.isReady = true;
+
+  var game = getGame(gameId);
+  var pendingPlayers = linq.From(game.players)
+    .Any(function (x) { x.isReady == false });
+
+  if(pendingPlayers == false) {
+    roundEnded(game);
+  }
+}
+
+function selectCard(gameId, playerId, whiteCardId) {
+  var player = getPlayer(gameId, playerId);
+  player.selectedWhiteCardId = whiteCardId;
+}
+
+function selectWinner(gameId, playerId) {
+  var player = getPlayer(gameId, playerId);
+  player.roundWinner = true;
 }
 
 function reset(){
@@ -99,3 +126,5 @@ exports.roundEnded = roundEnded;
 
 //exports selectCard (playerId, whiteCardId)
 //readyForNextRound(gameId, playerId)
+exports.selectCard = selectCard;
+exports.selectWinner = selectWinner;

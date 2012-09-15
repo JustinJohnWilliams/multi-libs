@@ -36,21 +36,43 @@ describe('multi-libs', function() {
 
   it('game round ended', function() {
     var game = startGame("newgame");
-    game.players[0].selectedWhiteCardId = game.players[0].cards[0];
-    game.players[1].selectedWhiteCardId = game.players[1].cards[0];
-    game.players[2].selectedWhiteCardId = game.players[2].cards[0];
-    game.players[3].selectedWhiteCardId = game.players[3].cards[0];
+    Game.selectCard(game.id, game.players[0].id, game.players[0].cards[0]);
+    Game.selectCard(game.id, game.players[1].id, game.players[1].cards[0]);
+    Game.selectCard(game.id, game.players[2].id, game.players[2].cards[0]);
+    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);
     Game.roundEnded(game);
+    game = Game.getGame(game.id);
     expect(game.players[0].cards.length).toBe(7);
     expect(game.players[1].cards.length).toBe(7);
     expect(game.players[2].cards.length).toBe(7);
     expect(game.players[3].cards.length).toBe(7);
   });
+
   
   it('player only ready when they say so', function() {
     var game = startGame("newgame");
-    //var readyPlayers = 
-    expect(game.currentBlackCard).toBeTruthy();
-    expect(game.deck.black.length).toBe(25);
+    expect(game.players[0].isReady).toBe(false);
+    Game.readyForNextRound("newgame", "player1");
+    var game = Game.getGame(game.id);
+    expect(game.players[0].isReady).toBe(true);
+    Game.readyForNextRound("newgame", "player3");
+    var game = Game.getGame(game.id);
+    expect(game.players[2].isReady).toBe(true);
+  });
+
+  it('selecting white card works', function() {
+    var whiteCardId = "Coffee";
+    var game = startGame("newgame");
+    Game.selectCard("newgame", "player1", whiteCardId);
+    var game = Game.getGame(game.id);
+    expect(game.players[0].selectedWhiteCardId).toBe(whiteCardId);
+  });
+
+  it('picking round winner works', function() {
+    var winningPlayerId = "player4"
+    var game = startGame("newgame");
+    Game.selectWinner(game.id, winningPlayerId)
+    var game = Game.getGame(game.id);
+    expect(game.players[3].roundWinner).toBe(true);
   });
 });
