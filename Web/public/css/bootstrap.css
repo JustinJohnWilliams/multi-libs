@@ -5799,4 +5799,15 @@ a.badge:hover {
     margin-top: 10px;
     margin-bottom: 0px;
   }
+
+  .card h3{
+    font-size: 1.3em;
+    line-height: 1.2em;
+  }
+
+  .card p
+  {
+    font-size: .9em;
+    line-height: 1.2em;
+  }
 }
