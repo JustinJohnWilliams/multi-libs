@@ -86,6 +86,10 @@ app.post('/joingame', function (req, res) {
   res.end();
 });
 
+app.post('readyForNextRound', function(req, res){
+  Game.readyForNextRound(req.body.gameId, req.body.playerId);
+});
+
 //list -done
 //add -done
 //joingame -done
