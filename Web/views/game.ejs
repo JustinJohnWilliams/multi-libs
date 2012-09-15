@@ -104,8 +104,22 @@
     var cards = [];
 
     jQuery.each(game.players, function(player) {
-
+    	cards.push(game.players[player].selectedWhiteCardId);
     });
+
+    jQuery.each(cards, function(card) {
+    	var cardElement = $.tmpl(cardTemplate, {
+    		cardValue: cards[card]
+    	});
+
+        $('#availableCards').append(cardElement);
+        $('.cardwrap').removeClass('active');
+        $('.cardwrap').first().addClass('active');
+    });
+
+	if(!game.isReadyForScoring) {
+	    PollForGames();
+	}
   }
 
   function renderNotCzar(player) {
