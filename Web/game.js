@@ -26,7 +26,7 @@ function getDeck()
               "I ______ in your general direction.", "My Mama always said, 'Life was like a box of ______; you never know what you're gonna get.'",
               "It's good to be ______!"],
     white: [ "Being on fire.", "Old-people smell.", "Women in yogurt commercials.", "Not caring about the Third World.", "Medication.", "Oversized lollipops.",
-"African children.", "The hardworking Mexican.", "Boogers.", "A tiny horse.", "Soup that is too hot.", "The Big Bang.", "The Tempur-Pedic Swedish Sleep System.",
+"Happy children.", "The hardworking Mexican.", "Boogers.", "A tiny horse.", "Soup that is too hot.", "The Big Bang.", "The Tempur-Pedic Swedish Sleep System.",
 "Switching to Geico.", "Dry heaving.", "Skeletor.", "Darth Vader.", "Figgy pudding.", "Five-Dollar Footlongs.", "Elderly men.", "Free samples.", "Famine.", "Men.",
 "Heartwarming orphans.", "A bag of magic beans.", "Repression.", "Prancing.", "My relationship status.", "Overcompensation.",
 "The Devil himself.", "The World of Warcraft.", "Dick Cheney.", "Being fabulous.", "The Amish.", "Sarah Palin.", "Feeding Rosie O'Donnell.",
