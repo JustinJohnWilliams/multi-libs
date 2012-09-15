@@ -45,7 +45,7 @@ app.get('/list', function (req, res) {
 
 app.post('/add', function (req, res) {
   var body = req.body;
-  if(!body["players"]) {
+  if(body.players == null) {
     console.log("setting players");
     body.players = [];
   }

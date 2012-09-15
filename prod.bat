@@ -1,0 +1,1 @@
+cd ..\heroku\multi-libs
