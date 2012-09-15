@@ -5,19 +5,7 @@ var server = require('http').createServer(app);
 
 server.listen(process.env.PORT || 3000);
 
-var amir = { id: "129912312", name: "Amir" };
-var venkat = { id: "328182322", name: "Venkat" };
-var chris = { id: "34812831231", name: "Chris" };
-var justin = { id: "434324324", name: "Justin" };
-
-var game1 = { id: "A543543", name: "DemoGame", players: [ amir, venkat, chris, justin ] }
-
-var game2 = { id: "B35345435", name: "DemoGame2", players: [ amir, venkat, chris ] }
-
 var gameList = [];
-
-gameList.push(game1);
-gameList.push(game2);
 
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
