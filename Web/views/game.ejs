@@ -90,14 +90,14 @@
 	  
 
       if(thisPlayer.isCzar) {
-        renderCzar(game);
+        renderCzar(game, thisPlayer);
       } else {
         renderNotCzar(thisPlayer, game);
       }
     });
   };
 
-  function renderCzar(game) {
+  function renderCzar(game, player) {
     $("#playCardLink").hide();
     $("#selectWinnerLink").show();
     
@@ -114,7 +114,7 @@
     }
     else {
       if(game.winningCardId) {
-        showWinnerSelected(game.winningCardId);
+        showWinnerSelected(game.winningCardId, player);
       }
       else {
         jQuery.each(game.players, function(player) {
@@ -161,7 +161,7 @@
     }
 
     if(game.winningCardId) {
-      showWinnerSelected(game.winningCardId);
+      showWinnerSelected(game.winningCardId, player);
       setTimeout(PollForGames, 1000);
     }
 
@@ -200,9 +200,9 @@
   	};
   }
 
-  function showWinnerSelected(card) {
+  function showWinnerSelected(card, player) {
     $("#winningCard").html("here was the winning phrase: " + card);
-	  $('#awesomePoints').text('Awesome Points: ' + thisPlayer.awesomePoints);
+	  $('#awesomePoints').html('Awesome Points: ' + player.awesomePoints);
   	$("#nextRoundLink").show();
   	$("#playCardLink").hide();
   	$("#selectWinnerLink").hide();
