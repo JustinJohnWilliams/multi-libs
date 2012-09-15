@@ -5783,6 +5783,7 @@ a.badge:hover {
   .card{
     margin-left: 100px;
     padding: 5px;
+    height: 150px !important;
   }
 
   #myCarousel
