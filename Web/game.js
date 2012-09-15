@@ -16,7 +16,7 @@ function list() {
 }
 
 function addGame(game) {
-  game.id = game.gameId;
+  
   game.players = [];
   game.isStarted = false;
   game.deck = _.clone(deck);

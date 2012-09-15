@@ -2,7 +2,7 @@ var _ = require('underscore');
 var Game = require('../game.js')
 describe('multi-libs', function() {
   function startGame(gameId) {
-    var game = Game.addGame({ gameId: gameId, name: "somename" });
+    var game = Game.addGame({ id: gameId, name: "somename" });
     expect(Game.list().length).toBe(1);
     game = Game.getGame(gameId);
     Game.joinGame(game, { id: "player1", name: "player1" });
