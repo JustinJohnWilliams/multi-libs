@@ -25,19 +25,12 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </a>
-          <a class="brand">Multi-Libs</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li><a href="#">Create Game</a></li>
-              </ul>
-            </div>
+					<a class="brand" href="/">Multi-Libs</a>
           </div>
       </div>
     </div>
     <hr />
-    <div>
-      <h3>Game started: <label id="gameStatus"></label></h3>
-    </div>
+		<br />
     <div id="blackCard" class="card">
       <p id="blackCardText"></p>
     </div>
@@ -78,14 +71,10 @@
       var isStarted = game.isStarted;
 
       if(!isStarted) {
-        $('#gameStatus').text("waiting for others to join...please wait"); 
         $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
         $("#selectWinnerLink").hide();
         setTimeout(PollForGames, 1000);
         return;
-      }
-      else {
-        $('#gameStatus').text(""); 
       }
 
       if(isStarted) {
