@@ -50,8 +50,10 @@
     <br />
     <div>
     	<label id="awesomePoints"></label>
-	</div>
-
+    </div>
+    <div>
+    	<label id="winningCard"></label>
+    </div>
   </body>
 </html>
 
@@ -70,6 +72,7 @@
 
     var gameId = $.cookie('gameId');
 
+    $("#winningCard").html("");
 
     $.getJSON('/gamebyid?id=' + gameId, function(game) {
       var isStarted = game.isStarted;
@@ -87,7 +90,6 @@
 
       var thisPlayer = me(game.players);
 	  
-	  $('#awesomePoints').text('Awesome Points: ' + thisPlayer.awesomePoints);
 
       if(thisPlayer.isCzar) {
         renderCzar(game);
@@ -201,7 +203,8 @@
   }
 
   function showWinnerSelected(card) {
-    alert("here was the winning phrase: " + card);
+    $("#winningCard").html("here was the winning phrase: " + card);
+	  $('#awesomePoints').text('Awesome Points: ' + thisPlayer.awesomePoints);
   	$("#nextRoundLink").show();
   	$("#playCardLink").hide();
   	$("#selectWinnerLink").hide();
