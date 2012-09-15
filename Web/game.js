@@ -19,10 +19,10 @@ function list() {
 }
 
 function addGame(game) {
-  
   game.players = [];
   game.isStarted = false;
   game.deck = getDeck();
+  game.currentBlackCard = "";
   gameList.push(game);
   return game;
 }
@@ -50,6 +50,14 @@ function startGame(game) {
   var index = Math.floor(Math.random() * game.deck.black.length);
   game.currentBlackCard = game.deck.black[index];
   game.deck.black.splice(index, 1);
+  _.each(game.players, function(player) {
+    player.cards = [];
+    for(var i = 0; i < 7; i++) {
+      var whiteIndex = Math.floor(Math.random() * game.deck.white.length);
+      player.cards.push(game.deck.white[whiteIndex]);
+      game.deck.white.splice(whiteIndex, 1);
+    }
+  });
 }
 
 function getPlayer(gameId, playerId) {
