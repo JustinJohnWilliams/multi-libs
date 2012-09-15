@@ -53,7 +53,7 @@
 		</div>
 		<div id="actionButton">
 			<a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
-			<a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Select Winner!</a>
+			<a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Pick Winner!</a>
 		</div>
 
 	</body>
@@ -93,31 +93,52 @@
 			var thisPlayer = me(game.players);
 
       if(thisPlayer.isCzar) {
-        $("#playCardLink").hide();
-        $("#selectWinner").show();
+        renderCzar(game);
       } else {
-        if(thisPlayer.selectedWhiteCardId) {
-          $("#playCardLink").hide();
-          $("#selectWinner").show();
-          $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
-        } else {
-          $("#playCardLink").html("Play Card!").removeAttr("disabled");
-        }
+        renderNotCzar(thisPlayer);
       }
-
-			if(thisPlayer && thisPlayer.cards) {
-				jQuery.each(thisPlayer.cards, function(card) {
-					var cardElement = $.tmpl(cardTemplate, {
-						cardValue: thisPlayer.cards[card]
-					});
-
-					$('#availableCards').append(cardElement);
-					$('.cardwrap').removeClass('active');
-					$('.cardwrap').first().addClass('active');
-				});
-			}
 		});
-	};
+  };
+
+  function renderCzar(game) {
+    $("#playCardLink").hide();
+    $("#selectWinner").show();
+    
+    if(game.isReadyForScoring) {
+      $("#playCardLink").html("Pick Winner!").removeAttr("disabled");
+    } else  {
+      $("#selectWinner").html("Waiting...").attr("disabled", "disabled");
+    }
+
+    var cards = [];
+
+    jQuery.each(game.players, function(player) {
+
+    });
+  }
+
+  function renderNotCzar(player) {
+    $("#playCardLink").show();
+    $("#selectWinner").hide();
+
+    if(player.selectedWhiteCardId) {
+      $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
+    } else {
+      $("#playCardLink").html("Play Card!").removeAttr("disabled");
+    }
+
+    if(player && player.cards) {
+      jQuery.each(player.cards, function(card) {
+        var cardElement = $.tmpl(cardTemplate, {
+          cardValue: player.cards[card]
+        });
+
+        $('#availableCards').append(cardElement);
+        $('.cardwrap').removeClass('active');
+        $('.cardwrap').first().addClass('active');
+      });
+    }
+  }
 
 	function playCard() {
 		var cardValue = $('.active .card').attr('data-cardId');
@@ -129,6 +150,10 @@
         PollForGames();
       });
 	}
+
+  function selectWinner() {
+
+  }
 
 	$(document).ready(function() {
 
