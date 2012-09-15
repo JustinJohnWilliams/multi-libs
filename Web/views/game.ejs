@@ -31,7 +31,7 @@
     </div>
     <hr />
 		<br />
-    <div id="blackCard" class="card">
+    <div id="blackCard" class="card">     	
       <p id="blackCardText"></p>
     </div>
     <br>
@@ -47,6 +47,7 @@
     <div id="actionButton">
       <a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
       <a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Pick Winner!</a>
+      <a id="nextRoundLink" class="btn btn-success btn-large span3" href="javascript:ReadyForNextRound();">Next Round</a>
     </div>
 
   </body>
@@ -60,7 +61,7 @@
     });
   }
 
-  var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><p>${cardValue}</p></div></li></div>';
+  var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><span id="winnerIcon" style="display: none;" class="badge badge-success pull-right"><i class="icon-thumbs-up icon-white"></i>&nbsp;</span><p>${cardValue}</p></div></li></div>';
 
   function PollForGames() {
 
@@ -146,8 +147,12 @@
 
   }
 
+  function showWinner() {
+		document.getElementById('winnerIcon').style.display = 'block';
+	}
+
   $(document).ready(function() {
-    PollForGames();
+    PollForGames(); 
 
     $('.carousel').carousel({
       interval: false
