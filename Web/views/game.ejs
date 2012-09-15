@@ -42,6 +42,10 @@
 		<div>
 			<h3>Game started: <label id="gameStatus"></label></h3>
 		</div>
+		<div id="blackCard" class="card">
+			<h3>Current Black Card</h3>
+			<p id="blackCardText"></p>
+		</div>
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
 				<ul class="thumbnails">
@@ -116,8 +120,13 @@
 		var gameId = $.cookie('gameId');
 
 		$.getJSON('/gamebyid?id=' + gameId, function(game) {
+			var isStarted = game.isStarted;
 
-			$('#gameStatus').text(game.isStarted);
+			$('#gameStatus').text(isStarted);
+
+			if(isStarted) {
+				$('#blackCardText').text(game.currentBlackCard);
+			}
 		});
 
 		setTimeout(PollForGames, 1000);
