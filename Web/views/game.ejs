@@ -124,7 +124,7 @@
         $('.cardwrap').removeClass('active');
         $('.cardwrap').first().addClass('active');
       });
-      $("#playCardLink").html("Pick Winner!").removeAttr("disabled");
+      $("#selectWinnerLink").html("Pick Winner!").removeAttr("disabled");
     }
   }
 
@@ -158,12 +158,18 @@
         gameId: $.cookie('gameId'),
         whiteCardId: cardValue
       }, function() {
-        PollForGames();
+       setTimeout(PollForGames, 1000);
       });
   }
 
   function selectWinner() {
-
+    var cardValue = $('.active .card').attr('data-cardId');
+    $.post("selectWinner", {
+        gameId: $.cookie('gameId'),
+        cardId: cardValue
+      }, function() {
+       setTimeout(PollForGames, 1000);
+      });
   }
 
   function readyForNextRound(){
