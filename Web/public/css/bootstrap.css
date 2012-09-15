@@ -5780,23 +5780,37 @@ a.badge:hover {
 
 #actionButton{
   margin-top: 0px;
+  margin-left: 20px;
 }
 
-/* Large desktop */
-@media (min-width: 1200px) { ... }
- 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) { ... }
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) { ... }
+body{
+  /*height: 640px !important;  */
+}
+
+.card
+      {
+        width: 180px; 
+        height: 80px; 
+        border: solid 1px silver;
+        margin-left: 70px;
+        padding-left: 5px;
+
+      }
+.card h3{
+  font-size: 16px;
+  line-height: 12px;
+}
+
  
 /* Landscape phones and down */
-@media (max-width: 480px) {
+@media (max-width: 320) {
+
   .card{
-    margin-left: 100px;
-    padding: 5px;
+    /*margin-left: 100px;*/
+    padding-left: 50px;
+    /*padding: 5px;*/
     height: 120px !important;
+
   }
 
   #actionButton{
