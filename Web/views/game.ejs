@@ -53,6 +53,7 @@
 </html>
 
 <script type="text/javascript">
+  var stopPolling = false;
 
   function me(players){
     return _.find(players, function(player) {
@@ -103,23 +104,27 @@
 
     var cards = [];
 
-    jQuery.each(game.players, function(player) {
-    	cards.push(game.players[player].selectedWhiteCardId);
-    });
+    if(!game.isReadyForScoring) {
+        setTimeout(PollForGames, 1000);
+    }
+    else {
+      jQuery.each(game.players, function(player) {
+        if(game.players[player].selectedWhiteCardId) {
+          cards.push(game.players[player].selectedWhiteCardId);
+        }
+      });
 
-    jQuery.each(cards, function(card) {
-    	var cardElement = $.tmpl(cardTemplate, {
-    		cardValue: cards[card]
-    	});
+      jQuery.each(cards, function(card) {
+        var cardElement = $.tmpl(cardTemplate, {
+          cardValue: cards[card]
+        });
 
         $('#availableCards').append(cardElement);
         $('.cardwrap').removeClass('active');
         $('.cardwrap').first().addClass('active');
-    });
-
-	if(!game.isReadyForScoring) {
-	    PollForGames();
-	}
+      });
+      $("#playCardLink").html("Pick Winner!").removeAttr("disabled");
+    }
   }
 
   function renderNotCzar(player) {
