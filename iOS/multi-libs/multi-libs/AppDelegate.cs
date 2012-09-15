@@ -15,7 +15,7 @@ namespace multilibs
 	{
 		// class-level declarations
 		UIWindow window;
-		multi_libsViewController viewController;
+		rootViewController viewController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -28,7 +28,7 @@ namespace multilibs
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new multi_libsViewController ();
+			viewController = new rootViewController ();
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
 			

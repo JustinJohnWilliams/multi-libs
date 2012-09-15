@@ -1,3 +1,4 @@
+
 using System;
 using System.Drawing;
 
@@ -6,9 +7,9 @@ using MonoTouch.UIKit;
 
 namespace multilibs
 {
-	public partial class multi_libsViewController : UIViewController
+	public partial class gameViewController : UIViewController
 	{
-		public multi_libsViewController () : base ("multi_libsViewController", null)
+		public gameViewController () : base ("gameViewController", null)
 		{
 		}
 		

@@ -87,13 +87,18 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="multi_libsViewController.cs" />
-    <Compile Include="multi_libsViewController.designer.cs">
-      <DependentUpon>multi_libsViewController.cs</DependentUpon>
+    <Compile Include="rootViewController.cs" />
+    <Compile Include="rootViewController.designer.cs">
+      <DependentUpon>rootViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gameViewController.cs" />
+    <Compile Include="gameViewController.designer.cs">
+      <DependentUpon>gameViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="multi_libsViewController.xib" />
+    <InterfaceDefinition Include="rootViewController.xib" />
+    <InterfaceDefinition Include="gameViewController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
