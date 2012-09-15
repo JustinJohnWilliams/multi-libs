@@ -55,7 +55,7 @@
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
 		<div id="actionButton">
-			<a class="btn btn-success btn-large span3" href="#">Play!</a>
+			<a class="btn btn-success btn-large span3" href="javascript:playCard();">Play!</a>
 		</div>
 
 	</body>
@@ -73,7 +73,7 @@
 
 		var gameId = $.cookie('gameId');
 
-		var cardTemplate = '<div class="item cardwrap"><li class="span3"><div class="card"><h3>Card ${cardNumber}</h3><p>${cardValue}</p></div></li></div>';
+		var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><h3>Card says:</h3><p>${cardValue}</p></div></li></div>';
 
 		$.getJSON('/gamebyid?id=' + gameId, function(game) {
 			var isStarted = game.isStarted;
@@ -99,6 +99,13 @@
 			}
 		});
 	};
+
+	function playCard() {
+		var cardValue = $('.active .card').attr('data-cardId');
+		$.post("selectCard", { playerId: $.cookie('playerId'), gameId: $.cookie('gameId'), whiteCardId: cardValue}, function(){
+			
+		});
+	}
 
 	$(document).ready(function() {
 
