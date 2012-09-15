@@ -113,22 +113,27 @@
         setTimeout(PollForGames, 1000);
     }
     else {
-      jQuery.each(game.players, function(player) {
-        if(game.players[player].selectedWhiteCardId) {
-          cards.push(game.players[player].selectedWhiteCardId);
-        }
-      });
-
-      jQuery.each(cards, function(card) {
-        var cardElement = $.tmpl(cardTemplate, {
-          cardValue: cards[card]
+      if(game.winningCardId) {
+        showWinnerSelected(game.winningCardId);
+      }
+      else {
+        jQuery.each(game.players, function(player) {
+          if(game.players[player].selectedWhiteCardId) {
+            cards.push(game.players[player].selectedWhiteCardId);
+          }
         });
 
-        $('#availableCards').append(cardElement);
-        $('.cardwrap').removeClass('active');
-        $('.cardwrap').first().addClass('active');
-      });
-      $("#selectWinnerLink").html("Pick Winner!").removeAttr("disabled");
+        jQuery.each(cards, function(card) {
+          var cardElement = $.tmpl(cardTemplate, {
+            cardValue: cards[card]
+          });
+
+          $('#availableCards').append(cardElement);
+          $('.cardwrap').removeClass('active');
+          $('.cardwrap').first().addClass('active');
+        });
+        $("#selectWinnerLink").html("Pick Winner!").removeAttr("disabled");
+      }
     }
   }
 
@@ -152,6 +157,10 @@
         $('.cardwrap').removeClass('active');
         $('.cardwrap').first().addClass('active');
       });
+    }
+
+    if(game.winningCardId) {
+      showWinnerSelected(game.winningCardId);
     }
   }
 
@@ -185,8 +194,8 @@
   	};
   }
 
-  function showWinner() {
-  	$("#winnerIcon").show();
+  function showWinnerSelected(card) {
+    alert("here was the winning phrase: " + card);
   	$("#nextRoundLink").show();
   	$("#playCardLink").hide();
   	$("#selectWinnerLink").hide();
