@@ -65,7 +65,7 @@ app.get('/gamebyid', function (req, res) {
 });
 
 app.post('/joingame', function (req, res) {
-  var game = linq.From(gameList).First(function (x) { return x.gameId == req.body.id });
+  var game = linq.From(gameList).First(function (x) { return x.id == req.body.gameId });
 
   if(game.players.length == 4) {
     return null;
