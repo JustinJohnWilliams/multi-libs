@@ -3,7 +3,7 @@ var linq = require('linq');
 var app = express()
   , server = require('http').createServer(app)
 
-server.listen(80);
+server.listen(3000);
 
 var amir = { person: { id:1, name: "Amir" } } 
 var venkat = { person: { id:2, name: "Venkat" } } 
@@ -33,6 +33,10 @@ app.use('/public', express.static('public'));
 
 app.get('/', function (req, res) {
   res.render('index');
+});
+
+app.get('/game', function (req, res) {
+	res.render('game');
 });
 
 app.get('/list', function (req, res) {
