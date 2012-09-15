@@ -14,9 +14,7 @@
 			
 		</style>
 		<script type="text/javascript">
-		// $(function() { alert($(window).width()); })
 		</script>
-
 	</head>
 	<body>
 		<div class="navbar navbar-fixed-top">
@@ -54,7 +52,8 @@
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
 		<div id="actionButton">
-			<a class="btn btn-success btn-large span3" href="javascript:playCard();">Play!</a>
+			<a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
+			<a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Select Winner!</a>
 		</div>
 
 	</body>
@@ -73,16 +72,27 @@
 		var gameId = $.cookie('gameId');
 
 		var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><p>${cardValue}</p></div></li></div>';
+
 		$.getJSON('/gamebyid?id=' + gameId, function(game) {
 			var isStarted = game.isStarted;
 
-			$('#gameStatus').text(isStarted);
+      if(!isStarted) {
+        $('#gameStatus').text("waiting for others to join...please wait"); 
+        setTimeout(PollForGames, 1000);
+      }
 
 			if(isStarted) {
 				$('#blackCardText').text(game.currentBlackCard);
 			}
 
 			var thisPlayer = me(game.players);
+
+      if(thisPlayer.selectedWhiteCardId) {
+
+      }
+      else {
+
+      }
 
 			if(thisPlayer && thisPlayer.cards) {
 				jQuery.each(thisPlayer.cards, function(card) {

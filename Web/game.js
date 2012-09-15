@@ -137,6 +137,7 @@ function removeWhiteCard(game, player) {
   var cardToDelete = player.selectedWhiteCardId;
   var hand = player.cards;
   player.cards = linq.From(hand).Where(function (x) { return x != cardToDelete }).ToArray();
+  player.selectedWhiteCardId = null;
 }
 
 function drawWhiteCard(game, player) {
@@ -191,14 +192,12 @@ function reset(){
 }
 
 exports.list = list;
+exports.listAll = listAll;
 exports.addGame = addGame;
 exports.getGame = getGame;
 exports.joinGame = joinGame;
 exports.readyForNextRound = readyForNextRound;
 exports.reset = reset;
 exports.roundEnded = roundEnded;
-
-//exports selectCard (playerId, whiteCardId)
-//readyForNextRound(gameId, playerId)
 exports.selectCard = selectCard;
 exports.selectWinner = selectWinner;
