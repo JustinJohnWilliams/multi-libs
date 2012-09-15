@@ -162,10 +162,9 @@
 
     if(game.winningCardId) {
       showWinnerSelected(game.winningCardId, player);
-      setTimeout(PollForGames, 1000);
     }
 
-    if(game.isReadyForScoring || player.selectedWhiteCardId) {
+    if(game.isReadyForScoring || player.selectedWhiteCardId || game.winningCardId) {
       setTimeout(PollForGames, 1000);
     }
   }
