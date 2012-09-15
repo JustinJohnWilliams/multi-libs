@@ -43,6 +43,14 @@ app.get('/gamebyid', function (req, res) {
   res.end();
 });
 
+app.get('/selectcard', function(req, res) {
+  Game.selectCard(req.body.gameId, req.body.playerId, req.body.whiteCardId);
+  var game = Game.getGame(req.body.gameId);
+  res.writeHead(200, { 'Content-Type': 'application/json' });  
+  res.write(JSON.stringify(game));
+  res.end();
+});
+
 app.post('/joingame', function (req, res) {
   var game = Game.getGame(req.body.gameId);
 
