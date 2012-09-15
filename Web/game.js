@@ -38,6 +38,7 @@ function joinGame(game, player) {
     , selectedWhiteCardId: null
     , roundWinner: false
     , awesomePoints: 0
+    , isCzar: false
     });
 
   if(game.players.length == 4) {
@@ -50,6 +51,7 @@ function joinGame(game, player) {
 function startGame(game) {
   game.isStarted = true;
   setCurrentBlackCard(game);
+  game.players[0].isCzar = true;
   _.each(game.players, function(player) {
     player.cards = [];
     for(var i = 0; i < 7; i++) {
@@ -60,6 +62,22 @@ function startGame(game) {
 
 function roundEnded(game) {
   setCurrentBlackCard(game);
+  if(game.players[0].isCzar == true) {
+    game.players[0].isCzar = false;
+    game.players[1].isCzar = true;
+  }
+  else if(game.players[1].isCzar == true) {
+    game.players[1].isCzar = false;
+    game.players[2].isCzar = true;
+  }
+  else if(game.players[2].isCzar == true) {
+    game.players[2].isCzar = false;
+    game.players[3].isCzar = true;
+  }
+  else if(game.players[3].isCzar == true) {
+    game.players[3].isCzar = false;
+    game.players[0].isCzar = true;
+  }
   _.each(game.players, function(player) {
     removeWhiteCard(game, player);
     drawWhiteCard(game, player);
