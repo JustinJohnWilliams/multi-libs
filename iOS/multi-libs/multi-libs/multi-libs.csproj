@@ -91,14 +91,14 @@
     <Compile Include="rootViewController.designer.cs">
       <DependentUpon>rootViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="gameViewController.cs" />
-    <Compile Include="gameViewController.designer.cs">
-      <DependentUpon>gameViewController.cs</DependentUpon>
+    <Compile Include="PlayerViewController.cs" />
+    <Compile Include="PlayerViewController.designer.cs">
+      <DependentUpon>PlayerViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="rootViewController.xib" />
-    <InterfaceDefinition Include="gameViewController.xib" />
+    <InterfaceDefinition Include="PlayerViewController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

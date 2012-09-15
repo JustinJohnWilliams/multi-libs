@@ -9,6 +9,8 @@ namespace multilibs
 {
 	public partial class rootViewController : UIViewController
 	{
+		PlayerViewController playerViewController;
+
 		public rootViewController () : base ("rootViewController", null)
 		{
 		}
@@ -27,7 +29,12 @@ namespace multilibs
 			
 			// Perform any additional setup after loading the view, typically from a nib.
 			this.btnNewGame.TouchUpInside += (sender, e) => {
-				this.Title = "clicked";
+				if(this.playerViewController == null)
+				{
+					this.playerViewController = new PlayerViewController();
+				}
+
+				this.NavigationController.PushViewController(this.playerViewController, true);
 			};
 		}
 		

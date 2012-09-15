@@ -7,9 +7,9 @@ using MonoTouch.UIKit;
 
 namespace multilibs
 {
-	public partial class gameViewController : UIViewController
+	public partial class PlayerViewController : UIViewController
 	{
-		public gameViewController () : base ("gameViewController", null)
+		public PlayerViewController () : base ("PlayerViewController", null)
 		{
 		}
 		
