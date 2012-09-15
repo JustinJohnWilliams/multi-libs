@@ -10,9 +10,6 @@
     <script src="/public/jqueryCookie.js" type="text/javascript"></script>
     <script src="/public/jqueryTmpl.js" type="text/javascript"></script>
     <script src="/public/underscore.js" type="text/javascript"></script>
-    <style type="text/css">
-      
-    </style>
     <script type="text/javascript">
     </script>
   </head>
@@ -24,8 +21,8 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
-                </a>
-					<a class="brand" href="/">Multi-Libs</a>
+            </a>
+			<a class="brand" href="/">Multi-Libs</a>
           </div>
       </div>
     </div>
@@ -48,6 +45,11 @@
       <a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
       <a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Pick Winner!</a>
     </div>
+    <br />
+    <br />
+    <div>
+    	<label id="awesomePoints"></label>
+	</div>
 
   </body>
 </html>
@@ -167,6 +169,12 @@
 
   $(document).ready(function() {
     PollForGames();
+
+    var gameId = $.cookie('gameId');
+
+    $.getJSON('/gamebyid?id=' + gameId, function(game) {
+    	$('#awesomePoints').text('Awesome Points: ' + me(game.players).awesomePoints);
+    });
 
     $('.carousel').carousel({
       interval: false
