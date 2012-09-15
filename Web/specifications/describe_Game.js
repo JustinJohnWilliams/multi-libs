@@ -1,6 +1,11 @@
+var linq = require('linq');
 var _ = require('underscore');
 var Game = require('../game.js')
+
 describe('multi-libs', function() {
+  beforeEach (function () {
+    Game.reset();
+  });
   function startGame(gameId) {
     var game = Game.addGame({ gameId: gameId, name: "somename" });
     expect(Game.list().length).toBe(1);
@@ -20,6 +25,13 @@ describe('multi-libs', function() {
 
   it('game started, black card selected', function() {
     var game = startGame("newgame");
+    expect(game.currentBlackCard).toBeTruthy();
+    expect(game.deck.black.length).toBe(25);
+  });
+  
+  it('player only ready when they say so', function() {
+    var game = startGame("newgame");
+    //var readyPlayers = 
     expect(game.currentBlackCard).toBeTruthy();
     expect(game.deck.black.length).toBe(25);
   });
