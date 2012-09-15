@@ -33,3 +33,4 @@ _ReSharper*/
 .DS_Store
 tags
 ~*
+*.orig
