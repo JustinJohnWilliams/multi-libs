@@ -60,6 +60,15 @@ app.post('/selectcard', function(req, res) {
   res.end();
 });
 
+app.post('/selectWinner', function(req, res) {
+  Game.selectWinner(req.body.gameId, req.body.playerId);
+  var game = Game.getGame(req.body.gameId);
+  res.writeHead(200, { 'Content-Type': 'application/json' });  
+  res.write(JSON.stringify(game));
+  res.end();
+});
+
+
 app.post('/joingame', function (req, res) {
   var game = Game.getGame(req.body.gameId);
 
