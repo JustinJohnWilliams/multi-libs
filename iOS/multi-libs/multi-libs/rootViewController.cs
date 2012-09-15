@@ -13,6 +13,7 @@ namespace multilibs
 
 		public rootViewController () : base ("rootViewController", null)
 		{
+			this.Title = "Multi-Libs";
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -28,10 +29,8 @@ namespace multilibs
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
 			this.btnNewGame.TouchUpInside += (sender, e) => {
-				if(this.playerViewController == null)
-				{
-					this.playerViewController = new PlayerViewController();
-				}
+				var test = new PlayerViewController();
+				this.NavigationController.PushViewController(test, true);
 			};
 		}
 		
