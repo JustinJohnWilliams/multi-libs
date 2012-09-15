@@ -5772,3 +5772,21 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+
+#blackCard{
+  background-color: black;
+  color: white;
+}
+
+@media screen and (max-width: 480px)
+{
+  .card{
+    margin-left: 100px;
+    padding: 5px;
+  }
+
+  #myCarousel
+  {
+    margin-top: 10px;
+  }
+}
