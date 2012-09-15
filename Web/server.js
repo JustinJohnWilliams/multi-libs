@@ -4,6 +4,8 @@ var app = express()
 
 server.listen(80);
 
+var gameList = [];
+
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
 app.use(express.methodOverride());
@@ -19,6 +21,14 @@ app.get('/', function (req, res) {
 
 app.get('/list', function (req, res) {
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write(JSON.stringify({ games: [ { game: { name: "Name" } } ] }));
+  res.write(JSON.stringify({ games: gameList }));
+  res.end();
+});
+
+app.post('/add', function (req, res) {
+  console.log(req.body);
+  gameList.push(req.body);
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(JSON.stringify({ games: gameList }));
   res.end();
 });
