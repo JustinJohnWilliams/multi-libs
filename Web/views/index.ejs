@@ -40,7 +40,17 @@
 	$(document).ready(function() {
 
 		$.cookie('playerId', GUID());
-	
+
+		PollForGames();
+	});
+
+	function PollForGames() {
+		$('#availableGames').empty();
+		GetGames();
+		setTimeout(PollForGames, 5000);		
+	}
+
+	function GetGames(){
 		var gameTemplate = '<div class="well well-small"> <a href="javascript:;" data-gameId="${gameId}">Join Game - [${name}]</a> </div>';
 
 		$.getJSON("list", function(games) {
@@ -61,7 +71,7 @@
 				$('#availableGames').append(gameElement);
 			});
 		});
-	});
+	}
 
 	function createGame() {
 		var gameGuid = GUID();
