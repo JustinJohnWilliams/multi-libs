@@ -33,6 +33,19 @@ describe('multi-libs', function() {
     expect(game.players[2].cards.length).toBe(7);
     expect(game.players[3].cards.length).toBe(7);
   });
+
+  it('game round ended', function() {
+    var game = startGame("newgame");
+    game.players[0].selectedWhiteCardId = game.players[0].cards[0];
+    game.players[1].selectedWhiteCardId = game.players[1].cards[0];
+    game.players[2].selectedWhiteCardId = game.players[2].cards[0];
+    game.players[3].selectedWhiteCardId = game.players[3].cards[0];
+    Game.roundEnded(game);
+    expect(game.players[0].cards.length).toBe(7);
+    expect(game.players[1].cards.length).toBe(7);
+    expect(game.players[2].cards.length).toBe(7);
+    expect(game.players[3].cards.length).toBe(7);
+  });
   
   it('player only ready when they say so', function() {
     var game = startGame("newgame");

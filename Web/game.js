@@ -42,18 +42,40 @@ function joinGame(game, player) {
 }
 
 function startGame(game) {
-    game.isStarted = true;
-    var index = Math.floor(Math.random() * game.deck.black.length);
-    game.currentBlackCard = game.deck.black[index];
-    game.deck.black.splice(index, 1);
-    _.each(game.players, function(player) {
-      player.cards = [];
-      for(var i = 0; i < 7; i++) {
-        var whiteIndex = Math.floor(Math.random() * game.deck.white.length);
-        player.cards.push(game.deck.white[whiteIndex]);
-        game.deck.white.splice(whiteIndex, 1);
-      }
-    });
+  game.isStarted = true;
+  setCurrentBlackCard(game);
+  _.each(game.players, function(player) {
+    player.cards = [];
+    for(var i = 0; i < 7; i++) {
+      drawWhiteCard(game, player);
+    }
+  });
+}
+
+function roundEnded(game) {
+  setCurrentBlackCard(game);
+  _.each(game.players, function(player) {
+    removeWhiteCard(game, player);
+    drawWhiteCard(game, player);
+  });
+}
+
+function removeWhiteCard(game, player) {
+  var cardToDelete = player.selectedWhiteCardId;
+  var hand = player.cards;
+  player.cards = linq.From(hand).Where(function(x) { x != cardToDelete }).ToArray();
+}
+
+function drawWhiteCard(game, player) {
+  var whiteIndex = Math.floor(Math.random() * game.deck.white.length);
+  player.cards.push(game.deck.white[whiteIndex]);
+  game.deck.white.splice(whiteIndex, 1);
+}
+
+function setCurrentBlackCard(game) {
+  var index = Math.floor(Math.random() * game.deck.black.length);
+  game.currentBlackCard = game.deck.black[index];
+  game.deck.black.splice(index, 1);
 }
 
 function readyForNextRound(gameId, playerId) {
@@ -73,6 +95,7 @@ exports.getGame = getGame;
 exports.joinGame = joinGame;
 exports.readyForNextRound = readyForNextRound;
 exports.reset = reset;
+exports.roundEnded = roundEnded;
 
 //exports selectCard (playerId, whiteCardId)
 //readyForNextRound(gameId, playerId)
