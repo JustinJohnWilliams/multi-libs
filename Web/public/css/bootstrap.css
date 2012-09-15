@@ -5778,6 +5778,10 @@ a.badge:hover {
   color: white;
 }
 
+#actionButton{
+  margin-top: 0px;
+}
+
 @media screen and (max-width: 480px)
 {
   .card{
@@ -5786,8 +5790,13 @@ a.badge:hover {
     height: 150px !important;
   }
 
+  #actionButton{
+    margin-left: 55px;
+  }
+
   #myCarousel
   {
     margin-top: 10px;
+    margin-bottom: 0px;
   }
 }
