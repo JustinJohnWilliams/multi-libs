@@ -63,6 +63,8 @@ function list() {
 
 function addGame(game) {
   game.players = [];
+  game.isOver = false;
+  game.winnerId = null;
   game.isStarted = false;
   game.deck = getDeck();
   game.currentBlackCard = "";
@@ -173,6 +175,11 @@ function selectWinner(gameId, playerId) {
   var player = getPlayer(gameId, playerId);
   player.roundWinner = true;
   player.awesomePoints = player.awesomePoints + 1;
+  if(player.awesomePoints == 5) {
+    var game = getGame(gameId);
+    game.isOver = true;
+    game.winnerId = playerId;
+  }
 }
 
 function reset(){
