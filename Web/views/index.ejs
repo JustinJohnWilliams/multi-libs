@@ -52,6 +52,7 @@
 
 				$(gameElement).click(function() {
 					var gameId = $(gameElement).find('a').attr('data-gameId');
+					$.cookie('gameId', gameId);
 					$.post("joingame", { gameId: gameId, playerId: $.cookie('playerId'), playerName: "web guy" }, function() {
 						window.location.replace("/game");
 					});

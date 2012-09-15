@@ -74,7 +74,7 @@
 		var gameId = $.cookie('gameId');
 
 		var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><h3>Card says:</h3><p>${cardValue}</p></div></li></div>';
-
+		alert(gameId);
 		$.getJSON('/gamebyid?id=' + gameId, function(game) {
 			var isStarted = game.isStarted;
 
