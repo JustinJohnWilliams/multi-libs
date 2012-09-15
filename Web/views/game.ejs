@@ -47,7 +47,7 @@
     <div id="actionButton">
       <a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
       <a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Pick Winner!</a>
-      <a id="nextRoundLink" class="btn btn-success btn-large span3" href="javascript:ReadyForNextRound();" style="display: none;">Next Round</a>
+      <a id="nextRoundLink" class="btn btn-success btn-large span3" href="javascript:readyForNextRound();" style="display: none;">Next Round</a>
     </div>
 
   </body>
@@ -166,8 +166,13 @@
 
   }
 
-  function ReadyForNextRound(){
-
+  function readyForNextRound(){
+  	$.post("readyForNextRound", {
+  		playerId: $.cookie('playerId'),
+  		gameId: $.cookie('gameId')
+  	}), function() {
+  		setTimeout(PollForGames, 1000);
+  	};
   }
 
   function showWinner() {
