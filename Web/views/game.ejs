@@ -86,6 +86,8 @@
       }
 
       var thisPlayer = me(game.players);
+	  
+	  $('#awesomePoints').text('Awesome Points: ' + thisPlayer.awesomePoints);
 
       if(thisPlayer.isCzar) {
         renderCzar(game);
@@ -192,12 +194,6 @@
 
   $(document).ready(function() {
     PollForGames(); 
-
-    var gameId = $.cookie('gameId');
-
-    $.getJSON('/gamebyid?id=' + gameId, function(game) {
-    	$('#awesomePoints').text('Awesome Points: ' + me(game.players).awesomePoints);
-    });
 
     $('.carousel').carousel({
       interval: false
