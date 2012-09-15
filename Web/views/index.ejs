@@ -54,7 +54,7 @@
 				$(gameElement).click(function() {
 					var gameId = $(gameElement).find('a').attr('data-gameId');
 					$.post("joingame", { gameId: gameId, playerId: $.cookie('playerId'), playerName: "web guy" }, function() {
-						window.location.replace("/gamebyid?id=" + gameId);
+						window.location.replace("/game");
 					});
 				});
 
@@ -65,10 +65,12 @@
 
 	function createGame() {
 		var gameGuid = GUID();
+		$.cookie('gameId', gameGuid);
+		
 		var playerGuid = $.cookie('playerId');
 		$.post("add", { id: gameGuid, name: "browser game" }, function() {
     		$.post("joingame", { gameId: gameGuid, playerId: playerGuid, playerName: "web guy" }, function() { 
-          		window.location.replace("/gamebyid?id=" + gameGuid);
+          		window.location.replace("/game");
         	});
 		});
 	};
