@@ -17,6 +17,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/game', function (req, res) {
+  console.log('/ called');
   res.render('game');
 });
 
@@ -43,7 +44,7 @@ app.get('/gamebyid', function (req, res) {
   res.end();
 });
 
-app.get('/selectcard', function(req, res) {
+app.post('/selectcard', function(req, res) {
   Game.selectCard(req.body.gameId, req.body.playerId, req.body.whiteCardId);
   var game = Game.getGame(req.body.gameId);
   res.writeHead(200, { 'Content-Type': 'application/json' });  
