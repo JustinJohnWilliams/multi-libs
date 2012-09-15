@@ -31,3 +31,4 @@ _ReSharper*/
 *.pidb
 *.swp
 .DS_Store
+tags

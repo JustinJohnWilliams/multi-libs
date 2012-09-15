@@ -3,11 +3,14 @@ var linq = require('linq');
 
 var gameList = [];
 
-var deck = {
-  black:  ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
-  white: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
-"28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"] 
-};
+function getDeck()
+{
+  return {
+    black:  ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+    white: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
+    "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"] 
+  };
+}
 
 function list() {
   return games = linq.From(gameList)
@@ -19,7 +22,7 @@ function addGame(game) {
   
   game.players = [];
   game.isStarted = false;
-  game.deck = _.clone(deck);
+  game.deck = getDeck();
   gameList.push(game);
   return game;
 }
@@ -29,7 +32,7 @@ function getGame(id) {
 }
 
 function joinGame(game, player) {
-  game.players.push({ id: player.id, name: player.name });
+  game.players.push({ id: player.id, name: player.name, isReady: false });
 
   if(game.players.length == 4) {
     startGame(game);
@@ -43,9 +46,28 @@ function startGame(game) {
     var index = Math.floor(Math.random() * game.deck.black.length);
     game.currentBlackCard = game.deck.black[index];
     game.deck.black.splice(index, 1);
+    _.each(game.players, function(player) {
+
+    });
+}
+
+function readyForNextRound(gameId, playerId) {
+    var game = getGame(gameid);
+    var player = linq.From(game.players)
+	.First(function (x) { return x.id == playerId});
+    player.isReady = true;
+}
+
+function reset(){
+  gameList = [];
 }
 
 exports.list = list;
 exports.addGame = addGame;
 exports.getGame = getGame;
 exports.joinGame = joinGame;
+exports.readyForNextRound = readyForNextRound;
+exports.reset = reset;
+
+//exports selectCard (playerId, whiteCardId)
+//readyForNextRound(gameId, playerId)
