@@ -1,11 +1,9 @@
 var express = require('express');
-var linq = require('linq');
 var app = express()
 var server = require('http').createServer(app);
+var Game = require('./game.js')
 
 server.listen(process.env.PORT || 3000);
-
-var gameList = [];
 
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
@@ -23,9 +21,7 @@ app.get('/game', function (req, res) {
 });
 
 app.get('/list', function (req, res) {
-  var games = linq.From(gameList)
-    .Where(function(x) { return x.players.length < 4; })
-    .ToArray();
+  games = Game.list();
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write(JSON.stringify(games));
@@ -33,33 +29,31 @@ app.get('/list', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
-  var body = req.body;
-  if(body.players == null) {
-    body.players = [];
-  }
-
-  gameList.push(body);
+  var newGame = Game.addGame(req.body);
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write(JSON.stringify({ games: gameList }));
+  res.write(JSON.stringify(newGame));
   res.end();
 });
 
 app.get('/gamebyid', function (req, res) {
   var id = req.query["id"];
-  var game = linq.From(gameList).First(function (x) { return x.id == id; });
+  var game = Game.getGame(id);
   res.writeHead(200, { 'Content-Type': 'application/json' });  
   res.write(JSON.stringify(game));
   res.end();
 });
 
 app.post('/joingame', function (req, res) {
-  var game = linq.From(gameList).First(function (x) { return x.id == req.body.gameId });
+  var game = Game.getGame(req.body.gameId);
 
-  if(game.players.length == 4) {
+  if(game.isStarted) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.write(JSON.stringify({ error: "too many players" }));
+    res.end();
     return null;
   }	
   
-  game.players.push({ id: req.body.playerId, name: req.body.playerName });
+  game = Game.joinGame(game, { id: req.body.playerId, name: req.body.playerName });
 
   res.writeHead(200, { 'Content-Type': 'application/json' });  
   res.write(JSON.stringify(game));
@@ -74,3 +68,6 @@ app.post('/joingame', function (req, res) {
 //selectwinner
 //game=  player 1-4, czarId, hands, current black, score for every player
 //last round summary / round complete
+
+
+
