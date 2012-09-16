@@ -17,8 +17,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/game', function (req, res) {
-  console.log('/ called');
   res.render('game');
+});
+
+app.get('/pretty', function (req, res) {
+  res.render('pretty');
 });
 
 app.get('/list', function (req, res) {
