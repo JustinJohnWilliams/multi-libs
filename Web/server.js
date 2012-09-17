@@ -89,8 +89,14 @@ app.post('/joingame', function (req, res) {
   res.end();
 });
 
-app.post('readyForNextRound', function(req, res){
+app.post('/readyForNextRound', function(req, res){
   Game.readyForNextRound(req.body.gameId, req.body.playerId);
+
+  var game = Game.getGame(req.body.gameId);
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });  
+  res.write(JSON.stringify(game));
+  res.end();
 });
 
 //list -done

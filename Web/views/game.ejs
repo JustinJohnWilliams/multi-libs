@@ -47,55 +47,28 @@
     <div class="container">
       <div id="notificationCardCzar" class="row alert alert-info" style="font-size: 16px; text-align: center">you are the card czar</div>
       <div id="notificationWaitingOnRound" class="row alert alert-warning" style="font-size: 16px; text-align: center">waiting on round to start</div>
-      <div id="notificationWaitingOnCards" class="row alert alert-warning" style="font-size: 16px; text-align: center">waiting for buddies to play cards</div>
-      <div id="notificationSelectWinner" class="row alert alert-success" style="font-size: 16px; text-align: center">select a card to be the winner</div>
-      <div id="notificationSelectCard" class="row alert alert-success" style="font-size: 16px; text-align: center">select a card to play</div>
-      <div id="notificationRoundComplete" class="row alert alert-info" style="font-size: 16px; text-align: center">round complete</div>
-      <div id="buttonNextRound" class="row"><a href="javascript:;" class="span3 offset4 btn-large btn btn-primary">next round</a></div>
       <hr />
       <div id="blackCard" class="row well" style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px; color: #FFFFFF; background-color: #2c2c2c;">What's that sound?</div>
+      <div id="notificationSelectCard" class="row alert alert-success" style="font-size: 16px; text-align: center">select a card to play</div>
+      <div id="notificationWaitingOnCzar" class="row alert alert-warning" style="font-size: 16px; text-align: center">waiting for the Czar to pick winner</div>
+      <div id="notificationWaitingOnCards" class="row alert alert-warning" style="font-size: 16px; text-align: center">waiting for buddies to play cards</div>
+      <div id="notificationSelectWinner" class="row alert alert-success" style="font-size: 16px; text-align: center">select a card to be the winner</div>
       <div class="row">
         <table id="whiteCards" class="table">
-          <tbody id="whitCardSelection">
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Being on fire.</td>
-              <td class="span2"><a href="javascript:;" class="btn">select</a></td>
-            </tr>
-            <tr> <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Repression.</td>
-              <td class="span2"><a href="javascript:;" class="btn">select</a></td>
-            </tr>
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">A beached whale.</td>
-              <td class="span2"><a href="javascript:;" class="btn">select</a></td>
-            </tr>
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Stranger danger.</td>
-              <td class="span2"><a href="javascript:;" class="btn">select</a></td>
-            </tr>
+          <tbody id="whiteCardSelection">
           </tbody>
         </table>
       </div>
       <div class="row">
         <table id="roundSummary" class="table">
-          <tbody>
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Being on fire.</td>
-              <td class="span2"><div>&nbsp;</div></td>
-            </tr>
-            <tr> <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Repression.</td>
-              <td class="span2"><div>&nbsp;</div></td>
-            </tr>
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">A beached whale.</td>
-              <td class="span2"><div>&nbsp;</div></td>
-            </tr>
-            <tr>
-              <td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">Stranger danger.</td>
-              <td class="span2"><span style="font-size: 16px" class="label label-success">Winner!</span></td>
-            </tr>
+          <tbody id="roundSummaryEntries">
           </tbody>
         </table>
       </div>
+      <hr />
+      <div id="notificationRoundComplete" class="row alert alert-info" style="font-size: 16px; text-align: center">winner selected, next round will start when everyone is ready</div>
+      <div id="buttonNextRound" class="row"><a href="javascript:;" class="span3 offset4 btn-large btn btn-primary">next round</a></div>
+      <hr />
       <div id="points" class="row">
         <div class="well" style="font-size: 20px">Your Awesome Score: <span>4</span></div>
       </div>
@@ -116,10 +89,112 @@
       }
 
       function me(game) {
+        return _.find(game.players, function(player) {
+          return player.id == $.cookie('playerId');
+        });
+      }
 
+      function readyForNextRound() {
+        $("#buttonNextRound").attr("disabled", "disabled");
+        $.post("readyForNextRound",  { playerId: playerId, gameId: gameId }); 
+      }
+
+      function selectCard() {
+        var selectedCard = $(this).attr('data-card');
+
+        $.post("selectCard", { playerId: playerId, gameId: gameId, whiteCardId: selectedCard });
+      }
+
+      function selectWinner() {
+        var selectedCard = $(this).attr('data-card');
+
+        $.post("selectWinner", { gameId: gameId, cardId: selectedCard });
+      }
+      
+      function renderWhiteCardsWithNoEvents(cards, selectedCard) {
+        $("#whiteCardSelection").html('');
+
+        var template = '<tr><td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;">${card}</td><td class="span2"><a href="javascript:;" data-card="${card}" class="btn select-card">select</a></td></tr>';
+
+        $.each(cards, function(card) {
+          var cardRow = $.tmpl(template, { card: cards[card] });
+          $("#whiteCardSelection").append(cardRow);
+          markSelectedCard(cardRow, selectedCard);
+        });
+      }
+
+      function playerSelectedCards(game) {
+        var cards = [];
+
+        $.each(game.players, function(player) {
+          var card = game.players[player].selectedWhiteCardId;
+          if(card) cards.push(card);
+        });
+
+        return cards;
+      }
+
+      function renderSummary(game) {
+        var cards = playerSelectedCards(game);
+
+        $("#roundSummaryEntries").html('');
+
+        var template = '<tr><td style="text-align: center; font-weight: bold; font-size: 16px; line-height: 25px;"><div>${card}</div></td></tr>';
+
+        $.each(cards, function(card) {
+          var isWinner = false;
+          if(game.winningCardId == cards[card]) isWinner = true;
+          var cardRow = $.tmpl(template, { card: cards[card] });
+          if(isWinner) cardRow.find("div").prepend("WINNER: ");
+          $("#roundSummaryEntries").append(cardRow);
+        });
+      }
+
+      function markSelectedCard(cardRow, card) {
+        var link = $(cardRow).find("a");
+        if(card) link.attr('disabled', 'disabled');
+        else link.removeAttr('disabled');
+        
+        if(card && link.attr("data-card") == card) link.html('selected').addClass('btn-primary');
+        else link.html('select').removeClass('btn-primary');
+      }
+
+      function renderCzar(game, player) {
+        $("#notificationCardCzar").show();
+        $("#notificationWaitingOnCzar").hide();
+        if(!game.isReadyForScoring) $("#notificationWaitingOnCards").show();
+        if(!game.isReadyForScoring) $("#notificationSelectWinner").hide();
+        if(game.isReadyForScoring) $("#notificationSelectWinner").show();
+        if(game.isReadyForScoring) $("#notificationWaitingOnCards").hide();
+        if(game.isReadyForScoring) {
+          $("#whiteCards").show();
+
+          renderWhiteCardsWithNoEvents(playerSelectedCards(game), game.winningCardId);
+
+          if(!game.winningCardId) $(".select-card").click('once', selectWinner);
+        }
+      }
+
+      function renderNotCzar(game, player) {
+        $("#notificationCardCzar").hide();
+        $("#notificationWaitingOnCards").hide();
+        $("#notificationSelectWinner").hide();
+        $("#whiteCards").show();
+
+        if(!game.isReadyForScoring) $("#notificationSelectCard").show();
+        if(!game.isReadyForScoring) $("#notificationWaitingOnCzar").hide();
+        
+        if(game.isReadyForScoring) $("#notificationSelectCard").hide();
+        if(game.isReadyForScoring) $("#notificationWaitingOnCzar").show();
+
+        renderWhiteCardsWithNoEvents(player.cards, player.selectedWhiteCardId);
+
+        if(!game.isReadyForScoring) $(".select-card").click('once', selectCard);
       }
 
       function renderGame(game, gameId, playerId) {
+        var player = me(game);
+
         if(!game.isStarted) {
           $("#notificationWaitingOnRound").show();
           $("#notificationCardCzar").hide();
@@ -132,11 +207,41 @@
           $("#whiteCards").hide();
           $("#roundSummary").hide();
           $("#points").hide();
+          $("#notificationWaitingOnCzar").hide();
           setTimeout(startPolling, 2000);
           return;
         }
 
-        
+        $("#blackCard").html(game.currentBlackCard).show();
+        $("#points").show();
+
+        if(game.isStarted) $("#notificationWaitingOnRound").hide();
+
+        renderCzar(game, player);
+
+        if(player.isCzar) {
+          renderCzar(game, player);
+        } else { 
+          renderNotCzar(game, player);
+        }
+
+        if(!game.winningCardId) $("#notificationRoundComplete").hide();
+        if(!game.winningCardId) $("#buttonNextRound").hide();
+        if(!game.winningCardId) $("#roundSummary").hide();
+
+        if(game.winningCardId) $("#notificationRoundComplete").show();
+        if(game.winningCardId && !player.isReady) {
+          $("#buttonNextRound").show();
+          $("#buttonNextRound").click('once', readyForNextRound);
+        } else {
+          $("#buttonNextRound").hide();
+        }
+
+        if(game.winningCardId) $("#roundSummary").show();
+        if(game.winningCardId) renderSummary(game);
+        if(game.winningCardId) $("#whiteCards").hide();
+        if(game.winningCardId) $("#notificationWaitingOnCzar").hide();
+        if(game.winningCardId) $("#notificationSelectWinner").hide();
 
         setTimeout(startPolling, 2000);
       }

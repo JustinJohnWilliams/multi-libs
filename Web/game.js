@@ -112,34 +112,38 @@ function startGame(game) {
 }
 
 function roundEnded(game) {
+  game.winnerId = null;
+  game.winningCardId = null;
+  game.isReadyForScoring = false;
+
   setCurrentBlackCard(game);
+  
   if(game.players[0].isCzar == true) {
     game.players[0].isCzar = false;
     game.players[1].isCzar = true;
+    game.players[1].isReady = false;
   }
   else if(game.players[1].isCzar == true) {
     game.players[1].isCzar = false;
     game.players[2].isCzar = true;
+    game.players[2].isReady = false;
   }
   else if(game.players[2].isCzar == true) {
     game.players[2].isCzar = false;
     game.players[3].isCzar = true;
+    game.players[3].isReady = false;
   }
   else if(game.players[3].isCzar == true) {
     game.players[3].isCzar = false;
     game.players[0].isCzar = true;
+    game.players[0].isReady = false;
   }
   _.each(game.players, function(player) {
-    removeWhiteCard(game, player);
     drawWhiteCard(game, player);
+    player.isReady = false;
+    player.roundWinner = false;
+    player.selectedWhiteCardId = null;
   });
-}
-
-function removeWhiteCard(game, player) {
-  var cardToDelete = player.selectedWhiteCardId;
-  var hand = player.cards;
-  player.cards = linq.From(hand).Where(function (x) { return x != cardToDelete }).ToArray();
-  player.selectedWhiteCardId = null;
 }
 
 function drawWhiteCard(game, player) {
@@ -171,9 +175,8 @@ function readyForNextRound(gameId, playerId) {
   player.isReady = true;
 
   var game = getGame(gameId);
-  game.winningCardId = null;
   var pendingPlayers = linq.From(game.players)
-    .Any(function (x) { x.isReady == false });
+    .Any(function (x) { return x.isReady == false });
 
   if(pendingPlayers == false) {
     roundEnded(game);
@@ -183,18 +186,19 @@ function readyForNextRound(gameId, playerId) {
 function selectCard(gameId, playerId, whiteCardId) {
   var player = getPlayer(gameId, playerId);
   player.selectedWhiteCardId = whiteCardId;
+  player.isReady = false;
 
   var game = getGame(gameId);
   var readyPlayers = linq.From(game.players)
     .Where(function (x) { return x.selectedWhiteCardId != null })
     .ToArray();
+
   if(readyPlayers.length == 3) {
     game.isReadyForScoring = true;
   }
 }
 
 function selectWinner(gameId, cardId) {
-  console.log(cardId);
   var player = getPlayerByCardId(gameId, cardId);
   var game = getGame(gameId);
   game.winningCardId = cardId;
