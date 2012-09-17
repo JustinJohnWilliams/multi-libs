@@ -70,7 +70,7 @@
       <div id="buttonNextRound" class="row"><a href="javascript:;" class="span3 offset4 btn-large btn btn-primary">next round</a></div>
       <hr />
       <div id="points" class="row">
-        <div class="well" style="font-size: 20px">Your Awesome Score: <span>4</span></div>
+        <div class="well" style="font-size: 20px">Your Awesome Score: <span id="pointsValue">0</span></div>
       </div>
     </div> <!-- /container -->
     <script>
@@ -95,7 +95,7 @@
       }
 
       function readyForNextRound() {
-        $("#buttonNextRound").attr("disabled", "disabled");
+        $("#buttonNextRound").hide();
         $.post("readyForNextRound",  { playerId: playerId, gameId: gameId }); 
       }
 
@@ -242,6 +242,8 @@
         if(game.winningCardId) $("#whiteCards").hide();
         if(game.winningCardId) $("#notificationWaitingOnCzar").hide();
         if(game.winningCardId) $("#notificationSelectWinner").hide();
+
+        $("#pointsValue").html(player.awesomePoints);
 
         setTimeout(startPolling, 2000);
       }

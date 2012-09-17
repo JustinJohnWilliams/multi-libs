@@ -55,6 +55,11 @@ function getDeck()
   };
 }
 
+function removeFromArray(array, item) {
+  var index = array.indexOf(item);
+  if(index) array.splice(index, 1);
+}
+
 function list() {
   return games = linq.From(gameList)
     .Where(function(x) { return x.players.length < 4; })
@@ -84,7 +89,7 @@ function getGame(id) {
 
 function joinGame(game, player) {
   game.players.push({ id: player.id
-    , name: player.name
+    , name: player.nameobj
     , isReady: false
     , selectedWhiteCardId: null
     , roundWinner: false
@@ -140,6 +145,7 @@ function roundEnded(game) {
   }
   _.each(game.players, function(player) {
     drawWhiteCard(game, player);
+    removeFromArray(player.cards, player.selectedWhiteCardId);
     player.isReady = false;
     player.roundWinner = false;
     player.selectedWhiteCardId = null;
@@ -225,3 +231,4 @@ exports.reset = reset;
 exports.roundEnded = roundEnded;
 exports.selectCard = selectCard;
 exports.selectWinner = selectWinner;
+exports.removeFromArray = removeFromArray;
