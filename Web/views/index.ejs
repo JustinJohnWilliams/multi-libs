@@ -55,8 +55,9 @@
     </div>
   </body>
   <script type="text/javascript">
+    var playerId = GUID();
+    var gameId = GUID();
     $(document).ready(function() {
-      $.cookie('playerId', GUID());
       PollForGames();
     });
 
@@ -77,10 +78,10 @@
           });
 
           $(gameElement).click(function() {
-            var gameId = $(gameElement).find('a').attr('data-gameId');
-            $.cookie('gameId', gameId);
-            $.post("joingame", { gameId: gameId, playerId: $.cookie('playerId'), playerName: "web guy" }, function() {
-              window.location.replace("/game");
+              var gameId = $(gameElement).find('a').attr('data-gameId');
+              $.cookie('gameId', gameId);
+              $.post("joingame", { gameId: gameId, playerId: playerId, playerName: "web guy" }, function() {
+              window.location.replace("/game?gameId=" + gameId + "&playerId=" + playerId);
             });
           });
 
@@ -90,13 +91,9 @@
     }
 
     function createGame() {
-      var gameGuid = GUID();
-      $.cookie('gameId', gameGuid);
-      
-      var playerGuid = $.cookie('playerId');
-      $.post("add", { id: gameGuid, name: "browser game" }, function() {
-          $.post("joingame", { gameId: gameGuid, playerId: playerGuid, playerName: "web guy" }, function() { 
-                window.location.replace("/game");
+      $.post("add", { id: gameId, name: "browser game" }, function() {
+          $.post("joingame", { gameId: gameId, playerId: playerId, playerName: "web guy" }, function() { 
+                window.location.replace("/game?gameId=" + gameId + "&playerId=" + playerId);
             });
       });
     };

@@ -76,9 +76,19 @@
     <script>
       var gameId = "";
       var playerId = "";
+
+      function querystring(key) {
+        var re=new RegExp('(?:\\?|&)'+key+'=(.*?)(?=&|$)','gi');
+        var r=[], m;
+        while ((m=re.exec(document.location.search)) != null) r.push(m[1]);
+        return r;
+      }
+
       $(function() {
-        gameId = $.cookie("gameId");
-        playerId = $.cookie("playerId");
+        gameId = querystring("gameId");
+        playerId = querystring("playerId");
+        alert(gameId);
+        alert(playerId);
         startPolling();
       });
 
@@ -90,7 +100,7 @@
 
       function me(game) {
         return _.find(game.players, function(player) {
-          return player.id == $.cookie('playerId');
+          return player.id == playerId;
         });
       }
 
