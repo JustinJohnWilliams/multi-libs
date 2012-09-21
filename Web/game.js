@@ -57,7 +57,7 @@ function getDeck()
 
 function removeFromArray(array, item) {
   var index = array.indexOf(item);
-  if(index) array.splice(index, 1);
+  if(index != -1) array.splice(index, 1);
 }
 
 function list() {
@@ -79,6 +79,8 @@ function addGame(game) {
   game.deck = getDeck();
   game.currentBlackCard = "";
   game.isReadyForScoring = false;
+  game.isReadyForReview = false;
+  game.pointsToWin = 5;
   gameList.push(game);
   return game;
 }
@@ -89,10 +91,9 @@ function getGame(id) {
 
 function joinGame(game, player) {
   game.players.push({ id: player.id
-    , name: player.nameobj
+    , name: player.name
     , isReady: false
     , selectedWhiteCardId: null
-    , roundWinner: false
     , awesomePoints: 0
     , isCzar: false
     });
@@ -120,9 +121,20 @@ function roundEnded(game) {
   game.winnerId = null;
   game.winningCardId = null;
   game.isReadyForScoring = false;
+  game.isReadyForReview = false;
 
   setCurrentBlackCard(game);
-  
+
+  _.each(game.players, function(player) {
+    if(!player.isCzar) {
+      removeFromArray(player.cards, player.selectedWhiteCardId);
+      drawWhiteCard(game, player);
+    }
+
+    player.isReady = false;
+    player.selectedWhiteCardId = null;
+  });
+
   if(game.players[0].isCzar == true) {
     game.players[0].isCzar = false;
     game.players[1].isCzar = true;
@@ -143,13 +155,6 @@ function roundEnded(game) {
     game.players[0].isCzar = true;
     game.players[0].isReady = false;
   }
-  _.each(game.players, function(player) {
-    drawWhiteCard(game, player);
-    removeFromArray(player.cards, player.selectedWhiteCardId);
-    player.isReady = false;
-    player.roundWinner = false;
-    player.selectedWhiteCardId = null;
-  });
 }
 
 function drawWhiteCard(game, player) {
@@ -208,9 +213,9 @@ function selectWinner(gameId, cardId) {
   var player = getPlayerByCardId(gameId, cardId);
   var game = getGame(gameId);
   game.winningCardId = cardId;
-  player.roundWinner = true;
+  game.isReadyForReview = true;
   player.awesomePoints = player.awesomePoints + 1;
-  if(player.awesomePoints == 5) {
+  if(player.awesomePoints == game.pointsToWin) {
     var game = getGame(gameId);
     game.isOver = true;
     game.winnerId = player.id;
@@ -232,3 +237,4 @@ exports.roundEnded = roundEnded;
 exports.selectCard = selectCard;
 exports.selectWinner = selectWinner;
 exports.removeFromArray = removeFromArray;
+exports.getDeck = getDeck;
