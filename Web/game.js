@@ -61,13 +61,22 @@ function removeFromArray(array, item) {
 }
 
 function list() {
-  return games = linq.From(gameList)
+  return toInfo(games = linq.From(gameList)
     .Where(function(x) { return x.players.length < 4; })
-    .ToArray();
+    .ToArray());
 }
 
 function listAll() {
-  return gameList;
+  return toInfo(gameList);
+}
+
+function toInfo(fullGameList) {
+  var infoGames = [];
+  _.each(fullGameList, function(game) { 
+    infoGames.push({ id: game.id, name: game.name });
+  });
+
+  return infoGames;
 }
 
 function addGame(game) {
