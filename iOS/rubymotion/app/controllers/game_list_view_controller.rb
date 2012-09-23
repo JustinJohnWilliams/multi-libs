@@ -9,6 +9,11 @@ class GameListViewController < UIViewController
 
     @table.dataSource = self
     @table.delegate = self
+    
+    rightButton = UIBarButtonItem.alloc.initWithTitle("Create Game", style: UIBarButtonItemStyleBordered, target: self, action: :push)
+
+    self.navigationItem.rightBarButtonItem = rightButton
+
 
     @games = []
 
