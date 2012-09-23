@@ -87,6 +87,13 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="GameListViewController.cs" />
+    <Compile Include="GameListViewController.designer.cs">
+      <DependentUpon>GameListViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <InterfaceDefinition Include="GameListViewController.xib" />
+  </ItemGroup>
 </Project>
