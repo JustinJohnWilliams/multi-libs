@@ -8,8 +8,8 @@ using MonoTouch.Foundation;
 
 namespace multilibs
 {
-	[Register ("GameListViewController")]
-	partial class GameListViewController
+	[Register ("GameViewController")]
+	partial class GameViewController
 	{
 		void ReleaseDesignerOutlets ()
 		{

@@ -87,13 +87,21 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="GameListViewController.cs" />
-    <Compile Include="GameListViewController.designer.cs">
-      <DependentUpon>GameListViewController.cs</DependentUpon>
+    <Compile Include="Screens\HomeViewController.cs" />
+    <Compile Include="Screens\HomeViewController.designer.cs">
+      <DependentUpon>HomeViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\GameViewController.cs" />
+    <Compile Include="Screens\GameViewController.designer.cs">
+      <DependentUpon>GameViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <InterfaceDefinition Include="GameListViewController.xib" />
+    <InterfaceDefinition Include="Screens\HomeViewController.xib" />
+    <InterfaceDefinition Include="Screens\GameViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Screens\" />
   </ItemGroup>
 </Project>

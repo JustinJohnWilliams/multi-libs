@@ -7,11 +7,11 @@ using MonoTouch.UIKit;
 
 namespace multilibs
 {
-	public partial class GameListViewController : UIViewController
+	public partial class GameViewController : UIViewController
 	{
-		public GameListViewController () : base ("GameListViewController", null)
+		public GameViewController () : base ("GameViewController", null)
 		{
-			Title = NSBundle.MainBundle.LocalizedString ("Summary", "Summary");
+			Title = NSBundle.MainBundle.LocalizedString ("Name", "Name");
 		}
 		
 		public override void DidReceiveMemoryWarning ()

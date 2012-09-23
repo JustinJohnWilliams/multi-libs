@@ -34,8 +34,8 @@ namespace multilibs
 			// If you have defined a view, add it here:
 			// window.AddSubview (navigationController.View);
 
-			var mainViewController = new GameListViewController();
-			window.RootViewController = new UINavigationController(mainViewController);
+			var homeViewController = new HomeViewController();
+			window.RootViewController = new UINavigationController(homeViewController);
 			
 			return true;
 		}
