@@ -1,6 +1,7 @@
 
 using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -45,10 +46,27 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			//GamesTable = new UITableView(View
-			//GamesTable = new UITableView(View.Bounds); // defaults to Plain style
-			string[] tableItems = new string[] {"Vegetables","Fruits","Flower Buds","Legumes","Bulbs","Tubers"};
-			GamesTable.Source = new ActiveGamesTableSource(tableItems);
+
+			var tableItems = new List<TableItemGroup>();
+
+			TableItemGroup tGroup;
+
+			// My games Section
+			tGroup = new TableItemGroup() { Name = "My Games"};
+			tGroup.Items.Add("Game 1");
+			tGroup.Items.Add("Game 2");
+			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
+			tableItems.Add(tGroup);
+
+			// Web games Section
+			tGroup = new TableItemGroup{ Name = "Web Games"};
+			tGroup.Items.Add("Web Game 1");
+			tGroup.Items.Add("Web Game 2");
+			tGroup.Items.Add("Web Game 3");
+			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
+			tableItems.Add(tGroup);
+
+			GamesTable.Source = new TableSource(tableItems);
 			Add (GamesTable);
 		}
 		

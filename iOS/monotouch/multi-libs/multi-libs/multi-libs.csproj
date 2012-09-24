@@ -96,6 +96,8 @@
       <DependentUpon>GameViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ActiveGamesTableSource.cs" />
+    <Compile Include="Models\TableItemGroup.cs" />
+    <Compile Include="Models\TableSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
