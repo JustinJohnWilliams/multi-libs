@@ -45,6 +45,11 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			//GamesTable = new UITableView(View
+			//GamesTable = new UITableView(View.Bounds); // defaults to Plain style
+			string[] tableItems = new string[] {"Vegetables","Fruits","Flower Buds","Legumes","Bulbs","Tubers"};
+			GamesTable.Source = new ActiveGamesTableSource(tableItems);
+			Add (GamesTable);
 		}
 		
 		public override void ViewDidUnload ()

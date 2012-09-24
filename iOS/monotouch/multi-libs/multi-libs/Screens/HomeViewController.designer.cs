@@ -11,11 +11,18 @@ namespace multilibs
 	[Register ("HomeViewController")]
 	partial class HomeViewController
 	{
+		[Outlet]
+		MonoTouch.UIKit.UITableView GamesTable { get; set; }
+
 		[Action ("CreateClicked:")]
 		partial void CreateClicked (MonoTouch.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (GamesTable != null) {
+				GamesTable.Dispose ();
+				GamesTable = null;
+			}
 		}
 	}
 }

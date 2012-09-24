@@ -95,6 +95,7 @@
     <Compile Include="Screens\GameViewController.designer.cs">
       <DependentUpon>GameViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActiveGamesTableSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -103,5 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
