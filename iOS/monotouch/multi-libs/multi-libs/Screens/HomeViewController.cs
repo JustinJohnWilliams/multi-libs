@@ -43,6 +43,11 @@ namespace multilibs
 			
 			// Perform any additional setup after loading the view, typically from a nib.
 			_activeGames = new ActiveGamesTableSource();
+
+			_activeGames.GameClicked += (gameName) => {
+				var gameView = new GameViewController(gameName);
+				this.NavigationController.PushViewController(gameView, true);
+			};
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 		}
@@ -67,8 +72,11 @@ namespace multilibs
 
 		partial void CreateClicked (NSObject sender)
 		{
-			var gameView = new GameViewController();
+			var gameName = string.Format("Game {0}", System.DateTime.Today.Millisecond);
+			_activeGames.AddGame(gameName);
+			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
+			GamesTable.ReloadData();
 		}
 	}
 }

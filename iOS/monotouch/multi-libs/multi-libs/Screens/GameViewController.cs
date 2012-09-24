@@ -9,9 +9,11 @@ namespace multilibs
 {
 	public partial class GameViewController : UIViewController
 	{
-		public GameViewController () : base ("GameViewController", null)
+		public GameViewController () : this("Game"){}
+
+		public GameViewController (string gameName) : base("GameViewController", null)
 		{
-			Title = NSBundle.MainBundle.LocalizedString ("Name", "Name");
+			Title = NSBundle.MainBundle.LocalizedString (gameName, "Name");
 		}
 		
 		public override void DidReceiveMemoryWarning ()
