@@ -10,6 +10,8 @@ namespace multilibs
 {
 	public partial class HomeViewController : UIViewController
 	{
+		private ActiveGamesTableSource _activeGames;
+
 		public HomeViewController () : base ("HomeViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Games", "Games");
@@ -34,39 +36,14 @@ namespace multilibs
 			base.ViewWillDisappear (animated);
 			this.NavigationController.SetNavigationBarHidden (false, animated);
 		}
-
-		partial void CreateClicked (NSObject sender)
-		{
-			var gameView = new GameViewController();
-			this.NavigationController.PushViewController(gameView, true);
-		}
 		
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-
-			var tableItems = new List<TableItemGroup>();
-
-			TableItemGroup tGroup;
-
-			// My games Section
-			tGroup = new TableItemGroup() { Name = "My Games"};
-			tGroup.Items.Add("Game 1");
-			tGroup.Items.Add("Game 2");
-			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
-			tableItems.Add(tGroup);
-
-			// Web games Section
-			tGroup = new TableItemGroup{ Name = "Web Games"};
-			tGroup.Items.Add("Web Game 1");
-			tGroup.Items.Add("Web Game 2");
-			tGroup.Items.Add("Web Game 3");
-			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
-			tableItems.Add(tGroup);
-
-			GamesTable.Source = new TableSource(tableItems);
+			_activeGames = new ActiveGamesTableSource();
+			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 		}
 		
@@ -86,6 +63,12 @@ namespace multilibs
 		{
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+		}
+
+		partial void CreateClicked (NSObject sender)
+		{
+			var gameView = new GameViewController();
+			this.NavigationController.PushViewController(gameView, true);
 		}
 	}
 }
