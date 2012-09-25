@@ -1,25 +1,22 @@
 class GameViewController < UIViewController
-  attr_accessor :game
+  attr_accessor :id
 
   def viewDidLoad
     super
 
-    self.title = game['name']
-
     @table = UITableView.alloc.initWithFrame(self.view.bounds)
-    self.view.addSubview @table
-
     @table.dataSource = self
     @table.delegate = self
+    self.view.addSubview @table
 
-    @cards = game['deck'].values.flatten
-
-    puts game.inspect
+    @game = { "name" => "loading...", "cards" => Array.new }
+    get_game
+    #@game_poll = EM.add_periodic_timer(1.0) { get_game }
   end
 
   def initWithGame(game)
     initWithNibName(nil, bundle: nil)
-    self.game = game
+    self.id = game["id"]
     self
   end
 
@@ -30,13 +27,21 @@ class GameViewController < UIViewController
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault,
                                           reuseIdentifier: @reuseIdentifier)
 
-    card = @cards[indexPath.row]
+    card = @game["cards"][indexPat.row]
     cell.textLabel.text = card
 
     cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    @cards.size
+    return 0
+  end
+
+  def get_game
+    BW::HTTP.get("http://dry-peak-5299.herokuapp.com/gamebyid?id=" + self.id) do |response|
+      @game = BW::JSON.parse response.body.to_str
+      @table.reloadData
+      self.title = @game["name"]
+    end
   end
 end

@@ -11,9 +11,10 @@ class GameListViewController < UIViewController
     
     @games = []
     get_games
-    @game_poll = EM.add_periodic_timer(1.0) { get_games }
 
     add_create_game_button
+
+    puts "loaded"
   end
 
   def add_create_game_button
@@ -24,8 +25,20 @@ class GameListViewController < UIViewController
   def viewDidUnload
     super
 
-    EM.cancel_timer(@game_poll)
+    EM.cancel_timer(@games_poll)
   end
+
+  def loadView
+    super
+
+  end
+
+  def viewDidAppear animated
+    super
+
+    @games_poll = EM.add_periodic_timer(1.0) { get_games }
+  end
+
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "CELL_IDENTIFIER"
@@ -35,6 +48,7 @@ class GameListViewController < UIViewController
                                           reuseIdentifier: @reuseIdentifier)
 
     game = @games[indexPath.row]
+
     cell.textLabel.text = game['name']
 
     cell
@@ -45,10 +59,11 @@ class GameListViewController < UIViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
-    # tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
     game = @games[indexPath.row]
+
     game_view_controller = GameViewController.alloc.initWithGame(game)
+
+    EM.cancel_timer(@games_poll)
 
     self.navigationController.pushViewController(game_view_controller, animated: true)
   end
@@ -58,5 +73,11 @@ class GameListViewController < UIViewController
       @games = BW::JSON.parse response.body.to_str
       @table.reloadData
     end
+  end
+
+  def create_game
+    game_view_controller = GameViewController.alloc.initWithGame({ "id" => "this is a game", "name" => "hiii" })
+
+    self.navigationController.pushViewController(game_view_controller, animated: true)
   end
 end
