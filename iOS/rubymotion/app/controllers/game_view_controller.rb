@@ -10,14 +10,26 @@ class GameViewController < UIViewController
     self.view.addSubview @table
 
     @game = { "name" => "loading...", "cards" => Array.new }
-    get_game
-    #@game_poll = EM.add_periodic_timer(1.0) { get_game }
+
   end
 
   def initWithGame(game)
     initWithNibName(nil, bundle: nil)
     self.id = game["id"]
     self
+  end
+  
+  def viewDidAppear animated
+    get_game
+    @game_poll = EM.add_periodic_timer(1.0) { get_game }
+
+    super
+  end
+
+  def viewWillDisappear animated
+    super
+
+    EM.cancel_timer(@game_poll)
   end
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)

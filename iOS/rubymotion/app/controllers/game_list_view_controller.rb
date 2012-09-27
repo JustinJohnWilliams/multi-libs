@@ -10,11 +10,10 @@ class GameListViewController < UIViewController
     self.view.addSubview @table
     
     @games = []
-    get_games
 
     add_create_game_button
 
-    puts "loaded"
+    @player_id = BW.create_uuid.to_s
   end
 
   def add_create_game_button
@@ -22,30 +21,22 @@ class GameListViewController < UIViewController
     self.navigationItem.rightBarButtonItem = rightButton
   end
 
-  def viewDidUnload
-    super
-
+  def viewWillDisappear animated
     EM.cancel_timer(@games_poll)
-  end
-
-  def loadView
     super
-
   end
 
   def viewDidAppear animated
-    super
-
+    get_games
     @games_poll = EM.add_periodic_timer(1.0) { get_games }
+    super
   end
-
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "CELL_IDENTIFIER"
 
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) ||
-      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault,
-                                          reuseIdentifier: @reuseIdentifier)
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @reuseIdentifier)
 
     game = @games[indexPath.row]
 
@@ -60,12 +51,16 @@ class GameListViewController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
     game = @games[indexPath.row]
+    @next_game_id = game[:id]
+    
+    data = { gameId: @next_game_id, playerId: @player_id, playerName: "iphone dude"  }
+    BW::HTTP.post("http://dry-peak-5299.herokuapp.com/joingame", { payload: data }) do |response|
+      game_view_controller = GameViewController
+        .alloc
+        .initWithGame({ "id" => @next_game_id, "name" => "iphone game" })
 
-    game_view_controller = GameViewController.alloc.initWithGame(game)
-
-    EM.cancel_timer(@games_poll)
-
-    self.navigationController.pushViewController(game_view_controller, animated: true)
+      self.navigationController.pushViewController(game_view_controller, animated: true)
+    end
   end
 
   def get_games
@@ -76,8 +71,16 @@ class GameListViewController < UIViewController
   end
 
   def create_game
-    game_view_controller = GameViewController.alloc.initWithGame({ "id" => "this is a game", "name" => "hiii" })
+    @next_game_id = BW.create_uuid.to_s
 
-    self.navigationController.pushViewController(game_view_controller, animated: true)
+    data = { id: @next_game_id, name: "iphone game" }
+    BW::HTTP.post("http://dry-peak-5299.herokuapp.com/add", { payload: data }) do |response|
+      game_view_controller = GameViewController
+        .alloc
+        .initWithGame({ "id" => @next_game_id, "name" => "iphone game" })
+
+      self.navigationController.pushViewController(game_view_controller, animated: true)
+    end
   end
+
 end
