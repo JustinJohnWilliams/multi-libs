@@ -4,13 +4,30 @@ class GameViewController < UIViewController
   def viewDidLoad
     super
 
-    @table = UITableView.alloc.initWithFrame(self.view.bounds)
+    self.view.backgroundColor = UIColor.whiteColor
+
+    @table = UITableView.alloc.initWithFrame(CGRectMake(0,0,10,10))
+    @table.frame = [[0, 100], [320, 370]]
     @table.dataSource = self
     @table.delegate = self
     self.view.addSubview @table
 
     @game = { "name" => "loading...", "cards" => Array.new }
 
+    @label = UILabel.alloc.initWithFrame(CGRectZero)
+    @label.frame = [[7,3],[310, 95]]
+    @label.text = "To be or not to be ___________ that is the question, whether tis nobler in the mind the suffer the pangs and arrows of outrageous fortune."
+    @label.lineBreakMode = UILineBreakModeWordWrap
+    @label.numberOfLines = 4
+    self.view.addSubview @label
+=begin
+    @search = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    @search.setTitle("Search", forState:UIControlStateNormal)
+    @search.setTitle("Loading", forState:UIControlStateDisabled)
+    @search.frame = [[0,0], [100,100]]
+    @search.sizeToFit
+    self.view.addSubview @search
+=end
   end
 
   def initWithGame(game)
