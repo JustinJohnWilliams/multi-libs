@@ -13,11 +13,19 @@
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{ 
+    
+    // Create Game List controller 
+    GameListViewController *gameListViewController = [[GameListViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *navigationController = [[UINavigationController alloc] 
+                                                    initWithRootViewController:gameListViewController];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    self.window.rootViewController = navigationController;
     return YES;
 }
 
