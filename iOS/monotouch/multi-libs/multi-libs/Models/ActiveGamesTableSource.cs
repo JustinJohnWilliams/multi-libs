@@ -61,26 +61,21 @@ namespace multilibs
 
 		public void AddGame(string gameName)
 		{
-			tableItems.Single(i => i.Name == "My Games").Items.Add(gameName);
+			var gameId = Guid.NewGuid();
 
 //			var baseUri = "http://dry-peak-5299.herokuapp.com/";
-//			
-//			var restFacilitator = new RestFacilitator();
-//			
-//			var restService = new RestService(restFacilitator, baseUri);
-//			
-//			var asyncDelegation = new AsyncDelegation(restService);
-//			
-//			asyncDelegation
-//				.Post("add")
-//					.
-//
-////			$.post("add", { id: gameId, name: "browser game" }, function() {
-////				$.post("joingame", { gameId: gameId, playerId: playerId, playerName: "web guy" }, function() { 
-////					window.location.replace("/game?gameId=" + gameId + "&playerId=" + playerId);
-////				});
-////			});
-//			asyncDelegation.Go();
+			var baseUri = "http://localhost:3000/";
+
+			var restFacilitator = new RestFacilitator();
+			
+			var restService = new RestService(restFacilitator, baseUri);
+			
+			var asyncDelegation = new AsyncDelegation(restService);
+			
+			asyncDelegation
+				.Post("add", new { id = gameId.ToString(), name="MonoTouch Game "+ gameId.ToString().Substring(0, 5) })
+					.WhenFinished(() => { });			
+			asyncDelegation.Go();
 		}
 
 		public override string TitleForFooter (UITableView tableView, int section)

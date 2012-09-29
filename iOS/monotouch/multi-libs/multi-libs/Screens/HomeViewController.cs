@@ -78,8 +78,12 @@ namespace multilibs
 			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
 			GamesTable.ReloadData();
-
 		}
+
+//		partial void RefreshClicked(NSObject sender)
+//		{
+//			GamesTable.ReloadData();
+//		}
 	}
 }
 
