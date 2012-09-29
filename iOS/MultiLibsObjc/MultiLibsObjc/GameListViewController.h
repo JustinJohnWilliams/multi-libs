@@ -9,5 +9,7 @@
 
 
 @interface GameListViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *gameTableView;
+@property (nonatomic, retain) NSArray *listData;
 
 @end

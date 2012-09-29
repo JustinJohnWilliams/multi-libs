@@ -7,6 +7,7 @@
 //
 
 #import "MLAppDelegate.h"
+#import "GameListViewController.h"
 
 @implementation MLAppDelegate
 
