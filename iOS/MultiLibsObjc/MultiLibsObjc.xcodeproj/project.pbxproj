@@ -13,6 +13,8 @@
 		2953EA91161783EC00CCEA4C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2953EA8F161783EC00CCEA4C /* InfoPlist.strings */; };
 		2953EA93161783EC00CCEA4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2953EA92161783EC00CCEA4C /* main.m */; };
 		2953EA97161783EC00CCEA4C /* MLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2953EA96161783EC00CCEA4C /* MLAppDelegate.m */; };
+		F400ECDC16178926008FCBA2 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F400ECDA16178926008FCBA2 /* GameListViewController.m */; };
+		F400ECDD16178926008FCBA2 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F400ECDB16178926008FCBA2 /* GameListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,9 @@
 		2953EA94161783EC00CCEA4C /* MultiLibsObjc-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiLibsObjc-Prefix.pch"; sourceTree = "<group>"; };
 		2953EA95161783EC00CCEA4C /* MLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLAppDelegate.h; sourceTree = "<group>"; };
 		2953EA96161783EC00CCEA4C /* MLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLAppDelegate.m; sourceTree = "<group>"; };
+		F400ECD916178926008FCBA2 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
+		F400ECDA16178926008FCBA2 /* GameListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewController.m; sourceTree = "<group>"; };
+		F400ECDB16178926008FCBA2 /* GameListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,9 @@
 				2953EA95161783EC00CCEA4C /* MLAppDelegate.h */,
 				2953EA96161783EC00CCEA4C /* MLAppDelegate.m */,
 				2953EA8D161783EC00CCEA4C /* Supporting Files */,
+				F400ECD916178926008FCBA2 /* GameListViewController.h */,
+				F400ECDA16178926008FCBA2 /* GameListViewController.m */,
+				F400ECDB16178926008FCBA2 /* GameListViewController.xib */,
 			);
 			path = MultiLibsObjc;
 			sourceTree = "<group>";
@@ -142,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2953EA91161783EC00CCEA4C /* InfoPlist.strings in Resources */,
+				F400ECDD16178926008FCBA2 /* GameListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +163,7 @@
 			files = (
 				2953EA93161783EC00CCEA4C /* main.m in Sources */,
 				2953EA97161783EC00CCEA4C /* MLAppDelegate.m in Sources */,
+				F400ECDC16178926008FCBA2 /* GameListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +267,7 @@
 				2953EA9C161783EC00CCEA4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
