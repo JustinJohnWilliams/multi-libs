@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="RestAdapter\sample-usage.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -98,6 +99,13 @@
     <Compile Include="Models\ActiveGamesTableSource.cs" />
     <Compile Include="Models\TableItemGroup.cs" />
     <Compile Include="Models\TableSource.cs" />
+    <Compile Include="RestAdapter\AsyncDelegation.cs" />
+    <Compile Include="RestAdapter\GetWrapper.cs" />
+    <Compile Include="RestAdapter\PostWrapper.cs" />
+    <Compile Include="RestAdapter\RestConverter.cs" />
+    <Compile Include="RestAdapter\RestFacilitator.cs" />
+    <Compile Include="RestAdapter\RestService.cs" />
+    <Compile Include="RestAdapter\RestWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -107,5 +115,6 @@
   <ItemGroup>
     <Folder Include="Screens\" />
     <Folder Include="Models\" />
+    <Folder Include="RestAdapter\" />
   </ItemGroup>
 </Project>
