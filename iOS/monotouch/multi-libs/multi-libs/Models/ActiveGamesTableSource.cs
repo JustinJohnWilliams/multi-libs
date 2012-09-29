@@ -21,7 +21,6 @@ namespace multilibs
 			tGroup = new TableItemGroup() { Name = "My Games"};
 			tGroup.Items.Add("Game 1");
 			tGroup.Items.Add("Game 2");
-			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
 			tableItems.Add(tGroup);
 			
 			// Web games Section
@@ -29,13 +28,17 @@ namespace multilibs
 			tGroup.Items.Add("Web Game 1");
 			tGroup.Items.Add("Web Game 2");
 			tGroup.Items.Add("Web Game 3");
-			tGroup.Footer = string.Format("{0} Games", tGroup.Items.Count);
 			tableItems.Add(tGroup);
 		}
 
 		public void AddGame(string gameName)
 		{
 			tableItems.Single(i => i.Name == "My Games").Items.Add(gameName);
+		}
+
+		public override string TitleForFooter (UITableView tableView, int section)
+		{
+			return string.Format("{0} Games", tableItems[section].Items.Count);
 		}
 
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)

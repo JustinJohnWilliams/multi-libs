@@ -50,6 +50,7 @@ namespace multilibs
 			};
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
+
 		}
 		
 		public override void ViewDidUnload ()
@@ -76,7 +77,8 @@ namespace multilibs
 			_activeGames.AddGame(gameName);
 			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
-			GamesTable.ReloadData();
+//			GamesTable.ReloadData();
+
 		}
 	}
 }
