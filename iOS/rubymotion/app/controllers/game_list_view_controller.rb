@@ -42,6 +42,8 @@ class GameListViewController < UIViewController
 
     cell.textLabel.text = game['name']
 
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
+
     cell
   end
 
@@ -75,10 +77,8 @@ class GameListViewController < UIViewController
 
     data = { id: @next_game_id, name: "iphone game" }
     BW::HTTP.post("http://dry-peak-5299.herokuapp.com/add", { payload: data }) do |response|
-      puts "game created"
       data = { gameId: @next_game_id, playerId: @player_id, playerName: "iphone dude"  }
       BW::HTTP.post("http://dry-peak-5299.herokuapp.com/joingame", { payload: data }) do |response2|
-        puts "game joined"
         game_view_controller = GameViewController
           .alloc
           .initWithGame({ "id" => @next_game_id, "name" => "iphone game" }, @player_id)
@@ -87,5 +87,4 @@ class GameListViewController < UIViewController
       end
     end
   end
-
 end

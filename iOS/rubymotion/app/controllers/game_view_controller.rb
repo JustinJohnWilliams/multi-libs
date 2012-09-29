@@ -20,15 +20,7 @@ class GameViewController < UIViewController
     @label.numberOfLines = 4
     self.view.addSubview @label
     
-    @cards = ("A".."G").to_a
-=begin
-    @search = UIButton.buttonWithType(UIButtonTypeRoundedRect)
-    @search.setTitle("Search", forState:UIControlStateNormal)
-    @search.setTitle("Loading", forState:UIControlStateDisabled)
-    @search.frame = [[0,0], [100,100]]
-    @search.sizeToFit
-    self.view.addSubview @search
-=end
+    @cards = []
   end
 
   def initWithGame(game, player_id)
@@ -55,30 +47,43 @@ class GameViewController < UIViewController
     @reuseIdentifier ||= "CELL_IDENTIFIER"
 
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) ||
-      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault,
-                                          reuseIdentifier: @reuseIdentifier)
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @reuseIdentifier)
 
     card = @cards[indexPath.row]
+
     cell.textLabel.text = card
 
     cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    return @cards.count
+    @cards.length
   end
 
   def get_game
     BW::HTTP.get("http://dry-peak-5299.herokuapp.com/gamebyid?id=" + self.id) do |response|
       @game = BW::JSON.parse response.body.to_str
+      set_cards
       @table.reloadData
-      me
+=begin
+      if(@cards.length > 0)
+        @table.selectRowAtIndexPath(NSIndexPath.indexPathForRow(0, inSection: 0), animated: false, scrollPosition: UITableViewScrollPositionNone)
+      end
+=end
       self.title = @game["name"]
       @label.text = @game["currentBlackCard"]
     end
   end
 
+  def set_cards
+    @cards = me[:cards] || []
+  end
+
   def me
-    puts self.player_id
+    return nil if !@game["players"]
+
+    found_player = @game["players"].find { |p| p["id"] == @player_id }
+
+    return found_player
   end
 end
