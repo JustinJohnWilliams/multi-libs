@@ -16,6 +16,9 @@ namespace multilibs
 
 		[Action ("CreateClicked:")]
 		partial void CreateClicked (MonoTouch.Foundation.NSObject sender);
+
+		[Action ("RefreshClicked:")]
+		partial void RefreshClicked (MonoTouch.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

@@ -15,6 +15,8 @@ namespace multilibs
 		public event TestHandler GameClicked;
 		public delegate void TestHandler(string gameName);
 
+		private String baseUri = "http://localhost:3000/";
+
 		public ActiveGamesTableSource (): base(new List<TableItemGroup>())
 		{			
 			TableItemGroup tGroup;
@@ -28,7 +30,7 @@ namespace multilibs
 
 
 
-			var baseUri = "http://dry-peak-5299.herokuapp.com/";
+//			var baseUri = "http://dry-peak-5299.herokuapp.com/";
 			
 			var restFacilitator = new RestFacilitator();
 			
@@ -64,7 +66,7 @@ namespace multilibs
 			var gameId = Guid.NewGuid();
 
 //			var baseUri = "http://dry-peak-5299.herokuapp.com/";
-			var baseUri = "http://localhost:3000/";
+//			var baseUri = "http://localhost:3000/";
 
 			var restFacilitator = new RestFacilitator();
 			

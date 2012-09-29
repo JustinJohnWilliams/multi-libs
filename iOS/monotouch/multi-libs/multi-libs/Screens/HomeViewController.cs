@@ -80,10 +80,10 @@ namespace multilibs
 			GamesTable.ReloadData();
 		}
 
-//		partial void RefreshClicked(NSObject sender)
-//		{
-//			GamesTable.ReloadData();
-//		}
+		partial void RefreshClicked(NSObject sender)
+		{
+			GamesTable.ReloadData();
+		}
 	}
 }
 
