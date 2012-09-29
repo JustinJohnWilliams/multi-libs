@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
+using RestfulAdapter;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
@@ -22,7 +24,30 @@ namespace multilibs
 			tGroup.Items.Add("Game 1");
 			tGroup.Items.Add("Game 2");
 			tableItems.Add(tGroup);
+
+			var baseUri = "http://dry-peak-5299.herokuapp.com/";
 			
+			var restFacilitator = new RestFacilitator();
+			
+			var restService = new RestService(restFacilitator, baseUri);
+			
+			var asyncDelegation = new AsyncDelegation(restService);
+			
+			//call http://search.twitter.com/search.json?q=#haiku
+			asyncDelegation.Get<Hash>("search.json", new { q = "#haiku" })
+				.WhenFinished(
+					result =>
+					{
+					List<string> tweets = new List<string>();
+					textBlockTweets.Text = "";
+					foreach (var tweetObject in result["results"].ToHashes())
+					{
+						textBlockTweets.Text += HttpUtility.HtmlDecode(tweetObject["text"].ToString()) + Environment.NewLine + Environment.NewLine;
+					}
+				});
+			
+			asyncDelegation.Go();
+
 			// Web games Section
 			tGroup = new TableItemGroup{ Name = "Web Games"};
 			tGroup.Items.Add("Web Game 1");

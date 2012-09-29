@@ -80,6 +80,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="System.Json" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\ExternalLibraries\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -106,6 +110,10 @@
     <Compile Include="RestAdapter\RestFacilitator.cs" />
     <Compile Include="RestAdapter\RestService.cs" />
     <Compile Include="RestAdapter\RestWrapper.cs" />
+    <Compile Include="RestAdapter\DictionaryExtensions.cs" />
+    <Compile Include="RestAdapter\Hash.cs" />
+    <Compile Include="RestAdapter\Hashes.cs" />
+    <Compile Include="RestAdapter\JsonVisualization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
