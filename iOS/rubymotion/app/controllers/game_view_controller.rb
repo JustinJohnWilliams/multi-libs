@@ -1,5 +1,5 @@
 class GameViewController < UIViewController
-  attr_accessor :id
+  attr_accessor :id, :player_id
 
   def viewDidLoad
     super
@@ -15,11 +15,12 @@ class GameViewController < UIViewController
     @game = { "name" => "loading...", "cards" => Array.new }
 
     @label = UILabel.alloc.initWithFrame(CGRectZero)
-    @label.frame = [[7,3],[310, 95]]
-    @label.text = "To be or not to be ___________ that is the question, whether tis nobler in the mind the suffer the pangs and arrows of outrageous fortune."
+    @label.frame = [[7,3],[300, 95]]
     @label.lineBreakMode = UILineBreakModeWordWrap
     @label.numberOfLines = 4
     self.view.addSubview @label
+    
+    @cards = ("A".."G").to_a
 =begin
     @search = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     @search.setTitle("Search", forState:UIControlStateNormal)
@@ -30,15 +31,16 @@ class GameViewController < UIViewController
 =end
   end
 
-  def initWithGame(game)
+  def initWithGame(game, player_id)
     initWithNibName(nil, bundle: nil)
     self.id = game["id"]
+    self.player_id = player_id
     self
   end
   
   def viewDidAppear animated
     get_game
-    @game_poll = EM.add_periodic_timer(1.0) { get_game }
+    @game_poll = EM.add_periodic_timer(5.0) { get_game }
 
     super
   end
@@ -56,21 +58,27 @@ class GameViewController < UIViewController
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault,
                                           reuseIdentifier: @reuseIdentifier)
 
-    card = @game["cards"][indexPat.row]
+    card = @cards[indexPath.row]
     cell.textLabel.text = card
 
     cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    return 0
+    return @cards.count
   end
 
   def get_game
     BW::HTTP.get("http://dry-peak-5299.herokuapp.com/gamebyid?id=" + self.id) do |response|
       @game = BW::JSON.parse response.body.to_str
       @table.reloadData
+      me
       self.title = @game["name"]
+      @label.text = @game["currentBlackCard"]
     end
+  end
+
+  def me
+    puts self.player_id
   end
 end
