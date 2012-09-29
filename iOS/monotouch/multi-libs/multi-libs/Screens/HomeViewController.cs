@@ -77,7 +77,7 @@ namespace multilibs
 			_activeGames.AddGame(gameName);
 			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
-//			GamesTable.ReloadData();
+			GamesTable.ReloadData();
 
 		}
 	}

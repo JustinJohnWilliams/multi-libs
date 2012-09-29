@@ -20,10 +20,13 @@ namespace multilibs
 			TableItemGroup tGroup;
 			
 			// My games Section
-			tGroup = new TableItemGroup() { Name = "My Games"};
-			tGroup.Items.Add("Game 1");
-			tGroup.Items.Add("Game 2");
-			tableItems.Add(tGroup);
+//			tGroup = new TableItemGroup() { Name = "My Games"};
+//			tGroup.Items.Add("Game 1");
+//			tGroup.Items.Add("Game 2");
+//			tableItems.Add(tGroup);
+
+
+
 
 			var baseUri = "http://dry-peak-5299.herokuapp.com/";
 			
@@ -32,33 +35,52 @@ namespace multilibs
 			var restService = new RestService(restFacilitator, baseUri);
 			
 			var asyncDelegation = new AsyncDelegation(restService);
-			
-			//call http://search.twitter.com/search.json?q=#haiku
-			asyncDelegation.Get<Hash>("search.json", new { q = "#haiku" })
+
+			asyncDelegation.Get<Hashes>("list", new { q = "list" })
 				.WhenFinished(
 					result =>
 					{
-					List<string> tweets = new List<string>();
-					textBlockTweets.Text = "";
-					foreach (var tweetObject in result["results"].ToHashes())
+					// Web games Section
+					tGroup = new TableItemGroup{ Name = "Web Games"};
+					foreach(var hash in result)
 					{
-						textBlockTweets.Text += HttpUtility.HtmlDecode(tweetObject["text"].ToString()) + Environment.NewLine + Environment.NewLine;
+						var name = hash["name"].ToString();
+						tGroup.Items.Add(name);
 					}
+					tableItems.Add(tGroup);
 				});
 			
 			asyncDelegation.Go();
 
-			// Web games Section
-			tGroup = new TableItemGroup{ Name = "Web Games"};
-			tGroup.Items.Add("Web Game 1");
-			tGroup.Items.Add("Web Game 2");
-			tGroup.Items.Add("Web Game 3");
-			tableItems.Add(tGroup);
+
+//			tGroup.Items.Add("Web Game 1");
+//			tGroup.Items.Add("Web Game 2");
+//			tGroup.Items.Add("Web Game 3");
+
 		}
 
 		public void AddGame(string gameName)
 		{
 			tableItems.Single(i => i.Name == "My Games").Items.Add(gameName);
+
+//			var baseUri = "http://dry-peak-5299.herokuapp.com/";
+//			
+//			var restFacilitator = new RestFacilitator();
+//			
+//			var restService = new RestService(restFacilitator, baseUri);
+//			
+//			var asyncDelegation = new AsyncDelegation(restService);
+//			
+//			asyncDelegation
+//				.Post("add")
+//					.
+//
+////			$.post("add", { id: gameId, name: "browser game" }, function() {
+////				$.post("joingame", { gameId: gameId, playerId: playerId, playerName: "web guy" }, function() { 
+////					window.location.replace("/game?gameId=" + gameId + "&playerId=" + playerId);
+////				});
+////			});
+//			asyncDelegation.Go();
 		}
 
 		public override string TitleForFooter (UITableView tableView, int section)
