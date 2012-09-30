@@ -7,6 +7,7 @@
 //
 
 #import "GameListViewController.h"
+#import "GameViewController.h"
 
 @implementation GameListViewController
 @synthesize gameTableView;
@@ -35,9 +36,8 @@
 {
     self.title = @"Games";
     
-    NSArray *array = [[NSArray alloc] initWithObjects:@"iPhone", @"iPad", nil];
-    
-    self.listData = array;
+
+    self.listData = [[NSArray alloc] init];
     
     
     gameTableView.dataSource = self;
@@ -46,9 +46,49 @@
     [self addCreateGameButton];
     
     
+    NSString *urlAsString = @"http://42fm.localtunnel.com/list";
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setTimeoutInterval:30.0f];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:queue
+     completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+         NSDictionary* json = [NSJSONSerialization 
+                               JSONObjectWithData:data //1
+                               options:kNilOptions 
+                               error:&error];
+         
+         self.listData = (NSArray*)json;
+         
+         [self performSelectorOnMainThread:@selector(updateGameList:) withObject:self waitUntilDone:NO];
+     }];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+}
+     
+- (void) updateGameList:(id)paramSender
+{
+    [gameTableView reloadData];
+}
+
+- (void)fetchedData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData:responseData //1
+                          options:kNilOptions 
+                          error:&error];
+
+    self.listData = (NSArray*)json;
+    
+    [gameTableView reloadData]; 
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -67,7 +107,9 @@
     
     NSUInteger row = [indexPath row];
     
-    cell.textLabel.text = [listData objectAtIndex:row];
+    NSDictionary* game = [listData objectAtIndex:row];
+    
+    cell.textLabel.text = [game objectForKey:@"name"];
     
     return cell;
 }
@@ -76,6 +118,44 @@
 {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStyleBordered target:self action: @selector(createGame:)];
     self.navigationItem.rightBarButtonItem = rightButton;
+}
+
+- (void) createGame:(id)paramSender
+{
+    
+    NSString *urlAsString = @"http://42fm.localtunnel.com/add";
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setTimeoutInterval:30.0f];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setValue:@"50" forHTTPHeaderField:@"Content-Length"];
+    
+    
+    NSString *body = @"{ 'id':'someothergameid', 'name':'NSString Game' }";
+    
+    [urlRequest setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+    
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:queue
+     completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+         NSDictionary* json = [NSJSONSerialization 
+                               JSONObjectWithData:data //1
+                               options:kNilOptions 
+                               error:&error];
+         
+         //self.listData = (NSArray*)json;
+         
+         //[self performSelectorOnMainThread:@selector(updateGameList:) withObject:self waitUntilDone:NO];
+     }];
+    
+    GameViewController *gameView = [[GameViewController alloc] init];
+    
+    [self.navigationController pushViewController:gameView animated:YES];
 }
 
 - (void)viewDidUnload
