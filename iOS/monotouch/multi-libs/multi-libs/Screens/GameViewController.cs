@@ -7,13 +7,13 @@ using MonoTouch.UIKit;
 
 namespace multilibs
 {
-	public partial class rootViewController : UIViewController
+	public partial class GameViewController : UIViewController
 	{
-		PlayerViewController playerViewController;
+		public GameViewController () : this("Game"){}
 
-		public rootViewController () : base ("rootViewController", null)
+		public GameViewController (string gameName) : base("GameViewController", null)
 		{
-			this.Title = "Multi-Libs";
+			Title = NSBundle.MainBundle.LocalizedString (gameName, "Name");
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -27,11 +27,8 @@ namespace multilibs
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			
 			// Perform any additional setup after loading the view, typically from a nib.
-			this.btnNewGame.TouchUpInside += (sender, e) => {
-				var test = new PlayerViewController();
-				this.NavigationController.PushViewController(test, true);
-			};
 		}
 		
 		public override void ViewDidUnload ()

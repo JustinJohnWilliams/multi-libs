@@ -15,8 +15,6 @@ namespace multilibs
 	{
 		// class-level declarations
 		UIWindow window;
-		rootViewController viewController;
-//		PlayerViewController viewController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -27,12 +25,17 @@ namespace multilibs
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-			
-			viewController = new rootViewController ();
-//			viewController = new PlayerViewController();
-			window.RootViewController = viewController;
+
+			// make the window visible
 			window.MakeKeyAndVisible ();
+
+			// If you have defined a view, add it here:
+			// window.AddSubview (navigationController.View);
+
+			var homeViewController = new HomeViewController();
+			window.RootViewController = new UINavigationController(homeViewController);
 			
 			return true;
 		}

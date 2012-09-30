@@ -1,0 +1,6 @@
+methods.grep /bounds/
+bounds
+bounds.height=300
+bounds.height
+bounds.size.height=300
+bounds.size.height=200
