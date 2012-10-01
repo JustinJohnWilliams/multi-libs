@@ -16,67 +16,26 @@ namespace multilibs
 		public delegate void TestHandler(string gameName);
 
 		private String baseUri = "http://localhost:3000/";
+//		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
 
 		public ActiveGamesTableSource (): base(new List<TableItemGroup>())
-		{			
-			TableItemGroup tGroup;
-			
-			// My games Section
-//			tGroup = new TableItemGroup() { Name = "My Games"};
-//			tGroup.Items.Add("Game 1");
-//			tGroup.Items.Add("Game 2");
-//			tableItems.Add(tGroup);
+		{
+		}
 
-
-
-
-//			var baseUri = "http://dry-peak-5299.herokuapp.com/";
-			
-			var restFacilitator = new RestFacilitator();
-			
-			var restService = new RestService(restFacilitator, baseUri);
-			
-			var asyncDelegation = new AsyncDelegation(restService);
-
-			asyncDelegation.Get<Hashes>("list", new { q = "list" })
-				.WhenFinished(
-					result =>
-					{
-					// Web games Section
-					tGroup = new TableItemGroup{ Name = "Web Games"};
-					foreach(var hash in result)
-					{
-						var name = hash["name"].ToString();
-						tGroup.Items.Add(name);
-					}
-					tableItems.Add(tGroup);
-				});
-			
-			asyncDelegation.Go();
-
-
-//			tGroup.Items.Add("Web Game 1");
-//			tGroup.Items.Add("Web Game 2");
-//			tGroup.Items.Add("Web Game 3");
+		public ActiveGamesTableSource (List<TableItemGroup> items) : base(items)
+		{
 
 		}
 
-		public void AddGame(string gameName)
+		public void AddGame(Guid gameId, string gameName)
 		{
-			var gameId = Guid.NewGuid();
 
-//			var baseUri = "http://dry-peak-5299.herokuapp.com/";
-//			var baseUri = "http://localhost:3000/";
-
-			var restFacilitator = new RestFacilitator();
-			
-			var restService = new RestService(restFacilitator, baseUri);
-			
-			var asyncDelegation = new AsyncDelegation(restService);
-			
+			var restFacilitator = new RestFacilitator();			
+			var restService = new RestService(restFacilitator, baseUri);			
+			var asyncDelegation = new AsyncDelegation(restService);			
 			asyncDelegation
-				.Post("add", new { id = gameId.ToString(), name="MonoTouch Game "+ gameId.ToString().Substring(0, 5) })
-					.WhenFinished(() => { });			
+				.Post("add", new { id = gameId.ToString(), name=gameName })
+					.WhenFinished(() => { });
 			asyncDelegation.Go();
 		}
 
@@ -92,6 +51,8 @@ namespace multilibs
 			}
 			tableView.DeselectRow (indexPath, true); // normal iOS behaviour is to remove the blue highlight
 		}
+
+
 	}
 }
 

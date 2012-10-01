@@ -5,12 +5,15 @@ using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using RestfulAdapter;
 
 namespace multilibs
 {
 	public partial class HomeViewController : UIViewController
 	{
 		private ActiveGamesTableSource _activeGames;
+		private List<TableItemGroup> _games;
+		private String baseUri = "http://localhost:3000/";
 
 		public HomeViewController () : base ("HomeViewController", null)
 		{
@@ -42,7 +45,8 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			_activeGames = new ActiveGamesTableSource();
+			_games = new List<TableItemGroup>();
+			_activeGames = new ActiveGamesTableSource(_games);
 
 			_activeGames.GameClicked += (gameName) => {
 				var gameView = new GameViewController(gameName);
@@ -51,6 +55,7 @@ namespace multilibs
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 
+			this.InvokeOnMainThread(GamesTable.ReloadData);			
 		}
 		
 		public override void ViewDidUnload ()
@@ -73,8 +78,10 @@ namespace multilibs
 
 		partial void CreateClicked (NSObject sender)
 		{
-			var gameName = string.Format("Game {0}", System.DateTime.Today.Millisecond);
-			_activeGames.AddGame(gameName);
+			var gameId = Guid.NewGuid();
+			var gameName = "MonoTouch Game "+ gameId.ToString().Substring(0, 5);
+			_activeGames.AddGame(gameId,gameName);
+
 			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
 			GamesTable.ReloadData();
@@ -82,7 +89,33 @@ namespace multilibs
 
 		partial void RefreshClicked(NSObject sender)
 		{
-			GamesTable.ReloadData();
+			FetchData();
+		}
+
+		public void FetchData()
+		{
+			_games = new List<TableItemGroup>();
+			
+			// Web games Section
+			var tGroup = new TableItemGroup{ Name = "Active Games"};
+			_games.Add(tGroup);
+
+			var restFacilitator = new RestFacilitator();			
+			var restService = new RestService(restFacilitator, baseUri);			
+			var asyncDelegation = new AsyncDelegation(restService);
+			asyncDelegation.Get<Hashes>("list", new { q = "list" })
+				.WhenFinished(
+					result =>
+					{
+					foreach(var hash in result)
+					{
+						tGroup.Items.Add(hash["name"].ToString());
+					}
+					
+					this.InvokeOnMainThread(GamesTable.ReloadData);	
+				});			
+			asyncDelegation.Go();
+
 		}
 	}
 }
