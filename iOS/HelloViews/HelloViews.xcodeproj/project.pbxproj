@@ -1,0 +1,294 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		298B21E7161B9A6A00288CFC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B21E6161B9A6A00288CFC /* UIKit.framework */; };
+		298B21E9161B9A6A00288CFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B21E8161B9A6A00288CFC /* Foundation.framework */; };
+		298B21EB161B9A6A00288CFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B21EA161B9A6A00288CFC /* CoreGraphics.framework */; };
+		298B21ED161B9A6A00288CFC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B21EC161B9A6A00288CFC /* CoreData.framework */; };
+		298B21F3161B9A6A00288CFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 298B21F1161B9A6A00288CFC /* InfoPlist.strings */; };
+		298B21F5161B9A6A00288CFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B21F4161B9A6A00288CFC /* main.m */; };
+		298B21F9161B9A6A00288CFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B21F8161B9A6A00288CFC /* AppDelegate.m */; };
+		298B21FC161B9A6A00288CFC /* HelloViews.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 298B21FA161B9A6A00288CFC /* HelloViews.xcdatamodeld */; };
+		298B2205161B9AD800288CFC /* TapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B2203161B9AD800288CFC /* TapViewController.m */; };
+		298B2206161B9AD800288CFC /* TapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B2204161B9AD800288CFC /* TapViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		298B21E2161B9A6A00288CFC /* HelloViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		298B21E6161B9A6A00288CFC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		298B21E8161B9A6A00288CFC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		298B21EA161B9A6A00288CFC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		298B21EC161B9A6A00288CFC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		298B21F0161B9A6A00288CFC /* HelloViews-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloViews-Info.plist"; sourceTree = "<group>"; };
+		298B21F2161B9A6A00288CFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		298B21F4161B9A6A00288CFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		298B21F6161B9A6A00288CFC /* HelloViews-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloViews-Prefix.pch"; sourceTree = "<group>"; };
+		298B21F7161B9A6A00288CFC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		298B21F8161B9A6A00288CFC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		298B21FB161B9A6A00288CFC /* HelloViews.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HelloViews.xcdatamodel; sourceTree = "<group>"; };
+		298B2202161B9AD800288CFC /* TapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapViewController.h; sourceTree = "<group>"; };
+		298B2203161B9AD800288CFC /* TapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapViewController.m; sourceTree = "<group>"; };
+		298B2204161B9AD800288CFC /* TapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TapViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		298B21DF161B9A6A00288CFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B21E7161B9A6A00288CFC /* UIKit.framework in Frameworks */,
+				298B21E9161B9A6A00288CFC /* Foundation.framework in Frameworks */,
+				298B21EB161B9A6A00288CFC /* CoreGraphics.framework in Frameworks */,
+				298B21ED161B9A6A00288CFC /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		298B21D7161B9A6A00288CFC = {
+			isa = PBXGroup;
+			children = (
+				298B21EE161B9A6A00288CFC /* HelloViews */,
+				298B21E5161B9A6A00288CFC /* Frameworks */,
+				298B21E3161B9A6A00288CFC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		298B21E3161B9A6A00288CFC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				298B21E2161B9A6A00288CFC /* HelloViews.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		298B21E5161B9A6A00288CFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				298B21E6161B9A6A00288CFC /* UIKit.framework */,
+				298B21E8161B9A6A00288CFC /* Foundation.framework */,
+				298B21EA161B9A6A00288CFC /* CoreGraphics.framework */,
+				298B21EC161B9A6A00288CFC /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		298B21EE161B9A6A00288CFC /* HelloViews */ = {
+			isa = PBXGroup;
+			children = (
+				298B21F7161B9A6A00288CFC /* AppDelegate.h */,
+				298B21F8161B9A6A00288CFC /* AppDelegate.m */,
+				298B21FA161B9A6A00288CFC /* HelloViews.xcdatamodeld */,
+				298B21EF161B9A6A00288CFC /* Supporting Files */,
+				298B2202161B9AD800288CFC /* TapViewController.h */,
+				298B2203161B9AD800288CFC /* TapViewController.m */,
+				298B2204161B9AD800288CFC /* TapViewController.xib */,
+			);
+			path = HelloViews;
+			sourceTree = "<group>";
+		};
+		298B21EF161B9A6A00288CFC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				298B21F0161B9A6A00288CFC /* HelloViews-Info.plist */,
+				298B21F1161B9A6A00288CFC /* InfoPlist.strings */,
+				298B21F4161B9A6A00288CFC /* main.m */,
+				298B21F6161B9A6A00288CFC /* HelloViews-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		298B21E1161B9A6A00288CFC /* HelloViews */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 298B21FF161B9A6A00288CFC /* Build configuration list for PBXNativeTarget "HelloViews" */;
+			buildPhases = (
+				298B21DE161B9A6A00288CFC /* Sources */,
+				298B21DF161B9A6A00288CFC /* Frameworks */,
+				298B21E0161B9A6A00288CFC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HelloViews;
+			productName = HelloViews;
+			productReference = 298B21E2161B9A6A00288CFC /* HelloViews.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		298B21D9161B9A6A00288CFC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 298B21DC161B9A6A00288CFC /* Build configuration list for PBXProject "HelloViews" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 298B21D7161B9A6A00288CFC;
+			productRefGroup = 298B21E3161B9A6A00288CFC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				298B21E1161B9A6A00288CFC /* HelloViews */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		298B21E0161B9A6A00288CFC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B21F3161B9A6A00288CFC /* InfoPlist.strings in Resources */,
+				298B2206161B9AD800288CFC /* TapViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		298B21DE161B9A6A00288CFC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B21F5161B9A6A00288CFC /* main.m in Sources */,
+				298B21F9161B9A6A00288CFC /* AppDelegate.m in Sources */,
+				298B21FC161B9A6A00288CFC /* HelloViews.xcdatamodeld in Sources */,
+				298B2205161B9AD800288CFC /* TapViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		298B21F1161B9A6A00288CFC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				298B21F2161B9A6A00288CFC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		298B21FD161B9A6A00288CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		298B21FE161B9A6A00288CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		298B2200161B9A6A00288CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HelloViews/HelloViews-Prefix.pch";
+				INFOPLIST_FILE = "HelloViews/HelloViews-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		298B2201161B9A6A00288CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HelloViews/HelloViews-Prefix.pch";
+				INFOPLIST_FILE = "HelloViews/HelloViews-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		298B21DC161B9A6A00288CFC /* Build configuration list for PBXProject "HelloViews" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				298B21FD161B9A6A00288CFC /* Debug */,
+				298B21FE161B9A6A00288CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		298B21FF161B9A6A00288CFC /* Build configuration list for PBXNativeTarget "HelloViews" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				298B2200161B9A6A00288CFC /* Debug */,
+				298B2201161B9A6A00288CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		298B21FA161B9A6A00288CFC /* HelloViews.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				298B21FB161B9A6A00288CFC /* HelloViews.xcdatamodel */,
+			);
+			currentVersion = 298B21FB161B9A6A00288CFC /* HelloViews.xcdatamodel */;
+			path = HelloViews.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 298B21D9161B9A6A00288CFC /* Project object */;
+}
