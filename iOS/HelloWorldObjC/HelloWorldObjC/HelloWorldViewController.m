@@ -13,10 +13,14 @@
 @end
 
 @implementation HelloWorldViewController
+{
+    NSInteger count;
+    UILabel *labelShowCount;
+}    
+
 @synthesize buttonCount;
 @synthesize buttonSayHello;
 @synthesize labelSayHello;
-@synthesize count;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,12 +34,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.count = 1;
+    count = 1;
     
     [buttonCount 
      addTarget:self 
      action:@selector(buttonCountClicked:) 
      forControlEvents:UIControlEventTouchUpInside];
+    
+    labelShowCount = 
+        [[UILabel alloc] 
+         initWithFrame:CGRectMake(
+                                  20, 
+                                  250, 
+                                  labelSayHello.bounds.size.width, 
+                                  labelSayHello.bounds.size.height)];
+    
+    [labelShowCount setText:[NSString stringWithFormat:@"%d", count]];
+    labelShowCount.textAlignment = UITextAlignmentCenter;
+    labelShowCount.backgroundColor = [UIColor blackColor];
+    labelShowCount.textColor = [UIColor whiteColor];
+    
+    [self.view addSubview:labelShowCount];
 }
 
 - (void)viewDidUnload
@@ -61,9 +80,9 @@
 
 - (void)buttonCountClicked:(id)sender
 {
-    self.count += 1;
+    count += 1;
     
-    [labelSayHello setText:[NSString stringWithFormat:@"%d", self.count]];
+    [labelShowCount setText:[NSString stringWithFormat:@"%d", count]];
 }
 
 @end

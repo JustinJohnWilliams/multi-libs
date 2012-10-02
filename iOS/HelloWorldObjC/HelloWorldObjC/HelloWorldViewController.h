@@ -13,6 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSayHello;
 - (IBAction)buttonSayHelloClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *buttonCount;
-@property (nonatomic) NSInteger count;
 
 @end
