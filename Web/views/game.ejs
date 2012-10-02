@@ -109,12 +109,18 @@
 
       function selectCard() {
         var selectedCard = $(this).attr('data-card');
-
+        $("#whiteCardSelection tr").each(function() {
+          markSelectedCard(this, selectedCard);
+        });
         $.post("selectCard", { playerId: playerId, gameId: gameId, whiteCardId: selectedCard });
       }
 
       function selectWinner() {
         var selectedCard = $(this).attr('data-card');
+
+        $("#whiteCardSelection tr").each(function() {
+          markSelectedCard(this, selectedCard);
+        });
 
         $.post("selectWinner", { gameId: gameId, cardId: selectedCard });
       }
@@ -170,6 +176,7 @@
       function renderCzar(game, player) {
         $("#notificationCardCzar").show();
         $("#notificationWaitingOnCzar").hide();
+        $("#notificationSelectCard").hide();
         if(!game.isReadyForScoring) $("#notificationWaitingOnCards").show();
         if(!game.isReadyForScoring) $("#notificationSelectWinner").hide();
         if(game.isReadyForScoring) $("#notificationSelectWinner").show();
@@ -179,7 +186,7 @@
 
           renderWhiteCardsWithNoEvents(playerSelectedCards(game), game.winningCardId);
 
-          if(!game.winningCardId) $(".select-card").click('once', selectWinner);
+          if(!game.isReadyForReview) $(".select-card").click('once', selectWinner);
         }
       }
 
@@ -233,23 +240,23 @@
           renderNotCzar(game, player);
         }
 
-        if(!game.winningCardId) $("#notificationRoundComplete").hide();
-        if(!game.winningCardId) $("#buttonNextRound").hide();
-        if(!game.winningCardId) $("#roundSummary").hide();
+        if(!game.isReadyForReview) $("#notificationRoundComplete").hide();
+        if(!game.isReadyForReview) $("#buttonNextRound").hide();
+        if(!game.isReadyForReview) $("#roundSummary").hide();
 
-        if(game.winningCardId) $("#notificationRoundComplete").show();
-        if(game.winningCardId && !player.isReady) {
+        if(game.isReadyForReview) $("#notificationRoundComplete").show();
+        if(game.isReadyForReview && !player.isReady) {
           $("#buttonNextRound").show();
           $("#buttonNextRound").click('once', readyForNextRound);
         } else {
           $("#buttonNextRound").hide();
         }
 
-        if(game.winningCardId) $("#roundSummary").show();
-        if(game.winningCardId) renderSummary(game);
-        if(game.winningCardId) $("#whiteCards").hide();
-        if(game.winningCardId) $("#notificationWaitingOnCzar").hide();
-        if(game.winningCardId) $("#notificationSelectWinner").hide();
+        if(game.isReadyForReview) $("#roundSummary").show();
+        if(game.isReadyForReview) renderSummary(game);
+        if(game.isReadyForReview) $("#whiteCards").hide();
+        if(game.isReadyForReview) $("#notificationWaitingOnCzar").hide();
+        if(game.isReadyForReview) $("#notificationSelectWinner").hide();
 
         $("#pointsValue").html(player.awesomePoints);
 
