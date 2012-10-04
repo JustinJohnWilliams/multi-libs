@@ -1,3 +1,5 @@
+//curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"Name":"bob"}' http://localhost:3000/add
+
 var express = require('express');
 var app = express()
 var server = require('http').createServer(app);
