@@ -58,9 +58,9 @@ namespace multilibs
 
 			FetchGames();
 
-			_activeGames.GameClicked += (gameName) => {
-//				var gameView = new GameViewController(gameName);
-//				this.NavigationController.PushViewController(gameView, true);
+			_activeGames.GameClicked += (gameId) => {
+				var gameView = new GameViewController(gameId);
+				this.NavigationController.PushViewController(gameView, true);
 			};
 
 
@@ -113,6 +113,7 @@ namespace multilibs
 					foreach(var hash in result)
 					{
 						tGroup.Items.Add(hash["name"].ToString());
+						tGroup.ItemIds.Add(new Guid(hash["id"].ToString()));
 					}
 					_games.Clear();
 					_games.Add(tGroup);
