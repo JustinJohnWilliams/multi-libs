@@ -14,10 +14,15 @@ namespace multilibs
 		private ActiveGamesTableSource _activeGames;
 		private List<TableItemGroup> _games;
 		private String baseUri = "http://localhost:3000/";
+//		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
+		private RestFacilitator restFacilitator;
+		private RestService restService;
 
 		public HomeViewController () : base ("HomeViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Games", "Games");
+			restFacilitator = new RestFacilitator();
+			restService = new RestService(restFacilitator, baseUri);
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -47,17 +52,20 @@ namespace multilibs
 			// Perform any additional setup after loading the view, typically from a nib.
 			_games = new List<TableItemGroup>();
 			_activeGames = new ActiveGamesTableSource(_games);
+			GamesTable.Source = _activeGames;
+			Add (GamesTable);
+
+			FetchGames();
 
 			_activeGames.GameClicked += (gameName) => {
 				var gameView = new GameViewController(gameName);
 				this.NavigationController.PushViewController(gameView, true);
 			};
-			GamesTable.Source = _activeGames;
-			Add (GamesTable);
 
-			this.InvokeOnMainThread(GamesTable.ReloadData);			
+
 		}
-		
+
+		[Obsolete]
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -69,7 +77,8 @@ namespace multilibs
 			
 			ReleaseDesignerOutlets ();
 		}
-		
+
+		[Obsolete]
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
@@ -79,43 +88,45 @@ namespace multilibs
 		partial void CreateClicked (NSObject sender)
 		{
 			var gameId = Guid.NewGuid();
-			var gameName = "MonoTouch Game "+ gameId.ToString().Substring(0, 5);
-			_activeGames.AddGame(gameId,gameName);
+			var gameName = "Mono Game "+ gameId.ToString().Substring(0, 5);
+			AddGame(gameId,gameName);
 
 			var gameView = new GameViewController(gameName);
 			this.NavigationController.PushViewController(gameView, true);
-			GamesTable.ReloadData();
 		}
 
 		partial void RefreshClicked(NSObject sender)
 		{
-			FetchData();
+			FetchGames();
 		}
 
-		public void FetchData()
+		private void FetchGames()
 		{
-			_games = new List<TableItemGroup>();
-			
-			// Web games Section
-			var tGroup = new TableItemGroup{ Name = "Active Games"};
-			_games.Add(tGroup);
-
-			var restFacilitator = new RestFacilitator();			
-			var restService = new RestService(restFacilitator, baseUri);			
 			var asyncDelegation = new AsyncDelegation(restService);
 			asyncDelegation.Get<Hashes>("list", new { q = "list" })
 				.WhenFinished(
 					result =>
-					{
+					{					
+					// Web games Section
+					var tGroup = new TableItemGroup{ Name = "Active Games"};
 					foreach(var hash in result)
 					{
 						tGroup.Items.Add(hash["name"].ToString());
 					}
-					
-					this.InvokeOnMainThread(GamesTable.ReloadData);	
+					_games.Clear();
+					_games.Add(tGroup);
+					InvokeOnMainThread(GamesTable.ReloadData);
 				});			
 			asyncDelegation.Go();
+		}
 
+		private void AddGame(Guid gameId, string gameName)
+		{		
+			var asyncDelegation = new AsyncDelegation(restService);			
+			asyncDelegation
+				.Post("add", new { id = gameId.ToString(), name=gameName })
+					.WhenFinished(() => FetchGames());
+			asyncDelegation.Go();
 		}
 	}
 }

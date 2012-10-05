@@ -30,7 +30,8 @@ namespace multilibs
 			
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
-		
+
+		[Obsolete]
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -42,7 +43,8 @@ namespace multilibs
 			
 			ReleaseDesignerOutlets ();
 		}
-		
+
+		[Obsolete]
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
