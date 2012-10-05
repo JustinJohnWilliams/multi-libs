@@ -51,6 +51,9 @@ namespace multilibs
 					result =>
 					{
 					Title = result["name"].ToString();
+					JsonVisualization jsonVisualization = new JsonVisualization();
+					jsonVisualization.Parse("root", result, 0);
+					TextView.Text = jsonVisualization.JsonResult;
 				});			
 			asyncDelegation.Go();
 		}

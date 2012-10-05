@@ -11,8 +11,23 @@ namespace multilibs
 	[Register ("GameViewController")]
 	partial class GameViewController
 	{
+		[Outlet]
+		MonoTouch.UIKit.UITextView TextView { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UILabel BlackCard { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
+			if (TextView != null) {
+				TextView.Dispose ();
+				TextView = null;
+			}
+
+			if (BlackCard != null) {
+				BlackCard.Dispose ();
+				BlackCard = null;
+			}
 		}
 	}
 }
