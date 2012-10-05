@@ -13,6 +13,7 @@ namespace multilibs
 	{
 		private ActiveGamesTableSource _activeGames;
 		private List<TableItemGroup> _games;
+
 		private String baseUri = "http://localhost:3000/";
 //		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
 		private RestFacilitator restFacilitator;
@@ -58,8 +59,8 @@ namespace multilibs
 			FetchGames();
 
 			_activeGames.GameClicked += (gameName) => {
-				var gameView = new GameViewController(gameName);
-				this.NavigationController.PushViewController(gameView, true);
+//				var gameView = new GameViewController(gameName);
+//				this.NavigationController.PushViewController(gameView, true);
 			};
 
 
@@ -91,7 +92,7 @@ namespace multilibs
 			var gameName = "Mono Game "+ gameId.ToString().Substring(0, 5);
 			AddGame(gameId,gameName);
 
-			var gameView = new GameViewController(gameName);
+			var gameView = new GameViewController(gameId);
 			this.NavigationController.PushViewController(gameView, true);
 		}
 

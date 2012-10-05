@@ -4,16 +4,27 @@ using System.Drawing;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using RestfulAdapter;
 
 namespace multilibs
 {
 	public partial class GameViewController : UIViewController
 	{
-		public GameViewController () : this("Game"){}
+		private String baseUri = "http://localhost:3000/";
+//		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
+		private RestFacilitator restFacilitator;
+		private RestService restService;
 
-		public GameViewController (string gameName) : base("GameViewController", null)
+		private Guid _gameId;
+
+		public GameViewController () : this(Guid.Empty){}
+
+		public GameViewController (Guid gameId) : base("GameViewController", null)
 		{
-			Title = NSBundle.MainBundle.LocalizedString (gameName, "Name");
+			Title = NSBundle.MainBundle.LocalizedString ("Name", "Name");
+			restFacilitator = new RestFacilitator();
+			restService = new RestService(restFacilitator, baseUri);
+			_gameId = gameId;
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -29,6 +40,19 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			var asyncDelegation = new AsyncDelegation(restService);
+			asyncDelegation.Get<Hash>("gamebyid", new { id = _gameId })
+				.WhenFinished(
+					result =>
+					{
+					Title = result["name"].ToString();
+				});			
+			asyncDelegation.Go();
 		}
 
 		[Obsolete]
