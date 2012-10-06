@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PeopleViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *peopleTableView;
 
 @end

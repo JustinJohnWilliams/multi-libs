@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "PeopleViewController.h"
 
 @implementation AppDelegate
 
@@ -21,6 +22,13 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    PeopleViewController *peopleViewController = [[PeopleViewController alloc] init];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:peopleViewController];
+    
+    self.window.rootViewController = nav;
+
     return YES;
 }
 

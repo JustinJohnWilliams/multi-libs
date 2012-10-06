@@ -9,6 +9,8 @@
 #import "GameListViewController.h"
 #import "GameViewController.h"
 
+typedef void (^PostBlock)();
+
 @implementation GameListViewController
 @synthesize gameTableView;
 @synthesize listData;
@@ -32,13 +34,14 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
+- (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     self.title = @"Games";
     
 
     self.listData = [[NSArray alloc] init];
-    
     
     gameTableView.dataSource = self;
     gameTableView.delegate = self;
@@ -46,7 +49,7 @@
     [self addCreateGameButton];
     
     
-    NSString *urlAsString = @"http://42fm.localtunnel.com/list";
+    NSString *urlAsString = @"http://localhost:3000/list";
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setTimeoutInterval:30.0f];
@@ -69,7 +72,6 @@
          [self performSelectorOnMainThread:@selector(updateGameList:) withObject:self waitUntilDone:NO];
      }];
     
-    [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
      
@@ -122,37 +124,52 @@
 
 - (void) createGame:(id)paramSender
 {
+    NSArray *objects = [NSArray arrayWithObjects: @"AGameId", @"AGameName", nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"id", @"name", nil];
+    NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
     
-    NSString *urlAsString = @"http://42fm.localtunnel.com/add";
-    NSURL *url = [NSURL URLWithString:urlAsString];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setTimeoutInterval:30.0f];
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:@"50" forHTTPHeaderField:@"Content-Length"];
+    [self post:@"http://localhost:3000/add" withPayload:jsonDict callback:nil];
+}
+
+-(void)aCallback:(id)sender
+{
     
+}
+
+- (NSMutableURLRequest *)createPost:(NSString *)uri withPayload:(NSDictionary *)payload
+{
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload options:kNilOptions error:nil];
+    NSString *jsonRequest = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    NSString *body = @"{ 'id':'someothergameid', 'name':'NSString Game' }";
+    NSURL *url = [NSURL URLWithString:uri];
     
-    [urlRequest setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
     
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody: requestData];
+    
+    return request;
+}
+
+- (void)post:(NSString *)uri withPayload:(NSDictionary *)payload callback:(PostBlock *)callback
+{
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     
-    
     [NSURLConnection
-     sendAsynchronousRequest:urlRequest
+     sendAsynchronousRequest:[self createPost:uri withPayload:payload]
      queue:queue
      completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-         NSDictionary* json = [NSJSONSerialization 
-                               JSONObjectWithData:data //1
-                               options:kNilOptions 
-                               error:&error];
-         
-         //self.listData = (NSArray*)json;
-         
-         //[self performSelectorOnMainThread:@selector(updateGameList:) withObject:self waitUntilDone:NO];
+         //[self performSelector:@selector(callback) withObject:self];
+         [self performSelectorOnMainThread:@selector(joinGame:) withObject:self waitUntilDone:NO]; 
      }];
-    
+}
+
+- (void)joinGame:(id)sender
+{
     GameViewController *gameView = [[GameViewController alloc] init];
     
     [self.navigationController pushViewController:gameView animated:YES];
