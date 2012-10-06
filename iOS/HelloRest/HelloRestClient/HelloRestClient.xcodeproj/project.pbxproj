@@ -15,6 +15,8 @@
 		298B4825161E4C12009F533A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4824161E4C12009F533A /* main.m */; };
 		298B4829161E4C12009F533A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4828161E4C12009F533A /* AppDelegate.m */; };
 		298B482C161E4C12009F533A /* HelloRestClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 298B482A161E4C12009F533A /* HelloRestClient.xcdatamodeld */; };
+		298B4835161E4C2B009F533A /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4833161E4C2B009F533A /* PeopleViewController.m */; };
+		298B4836161E4C2B009F533A /* PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B4834161E4C2B009F533A /* PeopleViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,13 +25,16 @@
 		298B4818161E4C12009F533A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		298B481A161E4C12009F533A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		298B481C161E4C12009F533A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		298B4820161E4C12009F533A /* HelloRestClient-Info.plist */ = {isa = PBXFileReference; path = "HelloRestClient-Info.plist"; sourceTree = "<group>"; };
+		298B4820161E4C12009F533A /* HelloRestClient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloRestClient-Info.plist"; sourceTree = "<group>"; };
 		298B4822161E4C12009F533A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		298B4824161E4C12009F533A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		298B4826161E4C12009F533A /* HelloRestClient-Prefix.pch */ = {isa = PBXFileReference; path = "HelloRestClient-Prefix.pch"; sourceTree = "<group>"; };
-		298B4827161E4C12009F533A /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		298B4826161E4C12009F533A /* HelloRestClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloRestClient-Prefix.pch"; sourceTree = "<group>"; };
+		298B4827161E4C12009F533A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B4828161E4C12009F533A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		298B482B161E4C12009F533A /* HelloRestClient.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HelloRestClient.xcdatamodel; sourceTree = "<group>"; };
+		298B4832161E4C2B009F533A /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleViewController.h; sourceTree = "<group>"; };
+		298B4833161E4C2B009F533A /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleViewController.m; sourceTree = "<group>"; };
+		298B4834161E4C2B009F533A /* PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +87,9 @@
 				298B4828161E4C12009F533A /* AppDelegate.m */,
 				298B482A161E4C12009F533A /* HelloRestClient.xcdatamodeld */,
 				298B481F161E4C12009F533A /* Supporting Files */,
+				298B4832161E4C2B009F533A /* PeopleViewController.h */,
+				298B4833161E4C2B009F533A /* PeopleViewController.m */,
+				298B4834161E4C2B009F533A /* PeopleViewController.xib */,
 			);
 			path = HelloRestClient;
 			sourceTree = "<group>";
@@ -148,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B4823161E4C12009F533A /* InfoPlist.strings in Resources */,
+				298B4836161E4C2B009F533A /* PeopleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +170,7 @@
 				298B4825161E4C12009F533A /* main.m in Sources */,
 				298B4829161E4C12009F533A /* AppDelegate.m in Sources */,
 				298B482C161E4C12009F533A /* HelloRestClient.xcdatamodeld in Sources */,
+				298B4835161E4C2B009F533A /* PeopleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
