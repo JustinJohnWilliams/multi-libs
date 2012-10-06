@@ -5,16 +5,25 @@ using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using RestfulAdapter;
 
 namespace multilibs
 {
 	public partial class HomeViewController : UIViewController
 	{
 		private ActiveGamesTableSource _activeGames;
+		private List<TableItemGroup> _games;
+
+		private String baseUri = "http://localhost:3000/";
+//		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
+		private RestFacilitator restFacilitator;
+		private RestService restService;
 
 		public HomeViewController () : base ("HomeViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Games", "Games");
+			restFacilitator = new RestFacilitator();
+			restService = new RestService(restFacilitator, baseUri);
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -42,17 +51,22 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			_activeGames = new ActiveGamesTableSource();
-
-			_activeGames.GameClicked += (gameName) => {
-				var gameView = new GameViewController(gameName);
-				this.NavigationController.PushViewController(gameView, true);
-			};
+			_games = new List<TableItemGroup>();
+			_activeGames = new ActiveGamesTableSource(_games);
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 
+			FetchGames();
+
+			_activeGames.GameClicked += (gameId) => {
+				var gameView = new GameViewController(gameId);
+				this.NavigationController.PushViewController(gameView, true);
+			};
+
+
 		}
-		
+
+		[Obsolete]
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -64,7 +78,8 @@ namespace multilibs
 			
 			ReleaseDesignerOutlets ();
 		}
-		
+
+		[Obsolete]
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
@@ -73,16 +88,47 @@ namespace multilibs
 
 		partial void CreateClicked (NSObject sender)
 		{
-			var gameName = string.Format("Game {0}", System.DateTime.Today.Millisecond);
-			_activeGames.AddGame(gameName);
-			var gameView = new GameViewController(gameName);
+			var gameId = Guid.NewGuid();
+			var gameName = "Mono Game "+ gameId.ToString().Substring(0, 5);
+			AddGame(gameId,gameName);
+
+			var gameView = new GameViewController(gameId);
 			this.NavigationController.PushViewController(gameView, true);
-			GamesTable.ReloadData();
 		}
 
 		partial void RefreshClicked(NSObject sender)
 		{
-			GamesTable.ReloadData();
+			FetchGames();
+		}
+
+		private void FetchGames()
+		{
+			var asyncDelegation = new AsyncDelegation(restService);
+			asyncDelegation.Get<Hashes>("list", new { q = "list" })
+				.WhenFinished(
+					result =>
+					{					
+					// Web games Section
+					var tGroup = new TableItemGroup{ Name = "Active Games"};
+					foreach(var hash in result)
+					{
+						tGroup.Items.Add(hash["name"].ToString());
+						tGroup.ItemIds.Add(new Guid(hash["id"].ToString()));
+					}
+					_games.Clear();
+					_games.Add(tGroup);
+					InvokeOnMainThread(GamesTable.ReloadData);
+				});			
+			asyncDelegation.Go();
+		}
+
+		private void AddGame(Guid gameId, string gameName)
+		{		
+			var asyncDelegation = new AsyncDelegation(restService);			
+			asyncDelegation
+				.Post("add", new { id = gameId.ToString(), name=gameName })
+					.WhenFinished(() => FetchGames());
+			asyncDelegation.Go();
 		}
 	}
 }

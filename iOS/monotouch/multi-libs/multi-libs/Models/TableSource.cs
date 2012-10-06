@@ -34,7 +34,8 @@ namespace multilibs
 
 		public override string TitleForFooter (UITableView tableView, int section)
 		{
-			return this.tableItems[section].Footer;
+//			return this.tableItems[section].Footer;
+			return string.Empty;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
