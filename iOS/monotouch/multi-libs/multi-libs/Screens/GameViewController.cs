@@ -53,6 +53,7 @@ namespace multilibs
 				var asyncDelegation = new AsyncDelegation(restService);
 				asyncDelegation.Post("selectCard", new {gameId = _gameId, playerId = Application.PlayerId, whiteCardId = cardId})
 					.WhenFinished(()=> {
+						FetchGame();
 					});
 				asyncDelegation.Go();
 			};
@@ -91,28 +92,33 @@ namespace multilibs
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 		}
 
-		private void PollGameData ()
+		void PollGameData ()
 		{
 			if(!shouldPool) 
 				return;
 
-			var asyncDelegation = new AsyncDelegation (restService);
-			asyncDelegation.Get<Game> ("gamebyid", new { id = _gameId, playerId = Application.PlayerId })
-				.WhenFinished (
-					result =>
-					{
-					InvokeOnMainThread(() => {
-						UpdateView(result);
-					});
-				});			
-			asyncDelegation.Go ();
+			FetchGame();
 
 			NSTimer.CreateScheduledTimer (6.0, delegate {
 				PollGameData();
 			});
 		}
 
-		private void UpdateView (Game game)
+		void FetchGame ()
+		{
+			var asyncDelegation = new AsyncDelegation (restService);
+			asyncDelegation.Get<Game> ("gamebyid", new {
+				id = _gameId,
+				playerId = Application.PlayerId
+			}).WhenFinished (result =>  {
+				InvokeOnMainThread (() =>  {
+					UpdateView (result);
+				});
+			});
+			asyncDelegation.Go ();
+		}
+
+		void UpdateView (Game game)
 		{
 			Title = game.Name;
 
@@ -129,7 +135,9 @@ namespace multilibs
 			// Web games Section
 			var tGroup = new TableItemGroup{ Name = "Select a card to play"};
 			if (game.Players.Any (p => p.Id == Application.PlayerId)) {
+
 				var player = game.Players.First(p=> p.Id == Application.PlayerId);
+
 				if(string.IsNullOrWhiteSpace(player.SelectedWhiteCardId)){
 					foreach (var whiteCard in player.Cards) {
 						tGroup.Items.Add (whiteCard);
@@ -137,6 +145,17 @@ namespace multilibs
 					}
 				}else{
 					tGroup.Name = player.SelectedWhiteCardId;
+
+				}
+
+				PointsLabel.Text = string.Format ("{0}", player.AwesomePoints);
+
+				if(!string.IsNullOrWhiteSpace(game.WinningCardId)){
+					if(game.WinningCardId == player.SelectedWhiteCardId){
+						tGroup.Name = "You the winner!";
+					}else{
+						tGroup.Name = string.Format("The winner is '{0}'", game.WinningCardId);
+					}
 				}
 			}
 			_whiteCards.Clear();
