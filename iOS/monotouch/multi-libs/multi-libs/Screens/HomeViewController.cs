@@ -59,9 +59,14 @@ namespace multilibs
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 
-			_activeGames.GameClicked += (gameId) => {
-				var gameView = new GameViewController(gameId);
-				this.NavigationController.PushViewController(gameView, true);
+			_activeGames.RowClicked += (gameId) => {
+				var asyncDelegation = new AsyncDelegation(restService);
+				asyncDelegation.Post("joingame", new {gameId = gameId, playerId = Application.PlayerId, playerName = "Mono Touch"})
+					.WhenFinished(()=> {
+						var gameView = new GameViewController(gameId);
+						this.NavigationController.PushViewController(gameView, true);
+					});
+				asyncDelegation.Go();
 			};
 		}
 
@@ -145,7 +150,7 @@ namespace multilibs
 			asyncDelegation
 				.Post("add", new { id = gameId, name=gameName })
 					.WhenFinished(()=>{})
-					.Go();
+					.Go();			
 		}
 	}
 }

@@ -12,8 +12,7 @@ namespace multilibs
 {
 	public class ActiveGamesTableSource : TableSource
 	{
-		public event TestHandler GameClicked;
-		public delegate void TestHandler(string gameId);
+
 
 		public ActiveGamesTableSource (): base(new List<TableItemGroup>())
 		{
@@ -31,13 +30,9 @@ namespace multilibs
 
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
-			if (GameClicked != null) {
-				GameClicked(tableItems[indexPath.Section].ItemIds[indexPath.Row]);
-			}
+			base.RowSelected (tableView, indexPath);
 			tableView.DeselectRow (indexPath, true); // normal iOS behaviour is to remove the blue highlight
 		}
-
-
 	}
 }
 

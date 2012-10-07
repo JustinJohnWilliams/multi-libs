@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -48,11 +49,13 @@ namespace multilibs
 			_whiteCardSource = new TableSource(_whiteCards);
 			WhiteCardTable.Source = _whiteCardSource;
 
-			var asyncDelegation2 = new AsyncDelegation(restService);
-			asyncDelegation2.Post("joingame", new {gameId = _gameId, playerId = Application.PlayerId, playerName = "Mono Touch"})
-				.WhenFinished(()=> {
-				});
-			asyncDelegation2.Go();
+			_whiteCardSource.RowClicked += (cardId) => {
+				var asyncDelegation = new AsyncDelegation(restService);
+				asyncDelegation.Post("selectCard", new {gameId = _gameId, playerId = Application.PlayerId, whiteCardId = cardId})
+					.WhenFinished(()=> {
+					});
+				asyncDelegation.Go();
+			};
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -122,11 +125,19 @@ namespace multilibs
 
 			PointsLabel.Text = string.Format ("{0}", 0);
 
+
 			// Web games Section
 			var tGroup = new TableItemGroup{ Name = "Select a card to play"};
-			foreach (var whiteCard in game.WhiteCards) {
-				tGroup.Items.Add(whiteCard);
-				tGroup.ItemIds.Add(whiteCard);
+			if (game.Players.Any (p => p.Id == Application.PlayerId)) {
+				var player = game.Players.First(p=> p.Id == Application.PlayerId);
+				if(string.IsNullOrWhiteSpace(player.SelectedWhiteCardId)){
+					foreach (var whiteCard in player.Cards) {
+						tGroup.Items.Add (whiteCard);
+						tGroup.ItemIds.Add (whiteCard);
+					}
+				}else{
+					tGroup.Name = player.SelectedWhiteCardId;
+				}
 			}
 			_whiteCards.Clear();
 			_whiteCards.Add(tGroup);

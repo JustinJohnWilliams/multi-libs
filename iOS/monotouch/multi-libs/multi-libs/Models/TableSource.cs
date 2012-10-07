@@ -12,6 +12,9 @@ namespace multilibs
 		protected List<TableItemGroup> tableItems;
 		protected string cellIdentifier = "TableCell";
 
+		public event RowClickedHandler RowClicked;
+		public delegate void RowClickedHandler(string rowId);
+
 		public TableSource(List<TableItemGroup> items)
 		{
 			this.tableItems = items;
@@ -53,6 +56,13 @@ namespace multilibs
 			// set arrow indicator
 			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 			return cell;
+		}
+
+		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
+		{
+			if (RowClicked != null) {
+				RowClicked(tableItems[indexPath.Section].ItemIds[indexPath.Row]);
+			}
 		}
 	}
 }
