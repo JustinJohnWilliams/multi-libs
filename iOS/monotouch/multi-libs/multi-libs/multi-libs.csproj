@@ -114,6 +114,7 @@
     <Compile Include="RestAdapter\Hash.cs" />
     <Compile Include="RestAdapter\Hashes.cs" />
     <Compile Include="RestAdapter\JsonVisualization.cs" />
+    <Compile Include="Models\Game.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

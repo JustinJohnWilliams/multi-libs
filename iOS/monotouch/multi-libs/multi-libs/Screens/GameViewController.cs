@@ -88,9 +88,20 @@ namespace multilibs
 				{					
 					JsonVisualization jsonVisualization = new JsonVisualization ();
 					jsonVisualization.Parse ("root", result, 0);
+					var game = new Game()
+					{ 
+						Id = _gameId,
+						Name = result["name"].String(),
+						CurrentBlackCard = result["currentBlackCard"].String(),
+						IsOver = (bool) result["isOver"],
+						IsStarted = (bool) result["isStarted"],
+						IsReadyForScoring = (bool) result["isReadyForScoring"],
+						IsReadyForReview = (bool) result["isReadyForReview"]
+
+					};
 					InvokeOnMainThread(() => {
 						TextView.Text = jsonVisualization.JsonResult;
-						Title = result ["name"].ToString ();
+						UpdateView(game);
 					});
 				});			
 			asyncDelegation.Go ();
@@ -98,6 +109,17 @@ namespace multilibs
 			NSTimer.CreateScheduledTimer (6.0, delegate {
 				PollGameData();
 			});
+		}
+
+		private void UpdateView (Game game)
+		{
+			Title = game.Name;
+
+			if (game.IsStarted) {
+				BlackCard.Text = game.CurrentBlackCard;
+			} else {
+				BlackCard.Text = "waiting on round to start";
+			}
 		}
 	}
 }
