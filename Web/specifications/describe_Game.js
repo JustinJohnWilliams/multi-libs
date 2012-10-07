@@ -3,164 +3,168 @@ var _ = require('underscore');
 var Game = require('../game.js')
 
 describe('multi-libs', function() {
-  beforeEach (function () {
-    Game.reset();
-  });
-  function startGame(gameId) {
-    var game = Game.addGame({ id: gameId, name: "somename" });
-    expect(Game.list().length).toBe(1);
-    game = Game.getGame(gameId);
-    Game.joinGame(game, { id: "player1", name: "player1" });
-    Game.joinGame(game, { id: "player2", name: "player2" });
-    Game.joinGame(game, { id: "player3", name: "player3" });
-    Game.joinGame(game, { id: "player4", name: "player4" });
-    game = Game.getGame(gameId);
-    return game;
+  var player1 = "Player1";
+  var player2 = "Player2";
+  var player3 = "Player3";
+  var player4 = "Player4";
+  var gameId = "ANewGame";
+  var currentGame;
+
+  function createGame() {
+    Game.addGame({ id: gameId, name: "some game" });
+    currentGame = Game.getGame(gameId);
   }
 
-  it('game started', function() {
-    var game = startGame("newgame");
-    expect(game.isStarted).toBe(true);
+  function joinCurrentGame(playerId) {
+    Game.joinGame(currentGame, { id: playerId, name: playerId });
+  }
+
+  function playCard(playerId) {
+    var player = linq
+      .From(currentGame.players)
+      .Where(function(p) { return p.id == playerId; })
+      .First();
+
+    expect(player.isCzar).toBe(false);
+
+    Game.selectCard(currentGame.id, playerId, player.cards[0]);
+
+    currentGame = Game.getGame(gameId);
+  }
+
+  function startGame() {
+    createGame();
+    joinCurrentGame(player1);
+    joinCurrentGame(player2);
+    joinCurrentGame(player3);
+    joinCurrentGame(player4);
+    currentGame = Game.getGame(gameId);
+  }
+
+  beforeEach(function() {
+    Game.reset();
   });
 
-  it('game started, black card selected, white cards distributed', function() {
-    var game = startGame("newgame");
-    expect(game.currentBlackCard).toBeTruthy();
-    expect(game.deck.black.length).toBe(40);
-    expect(game.deck.white.length).toBe(170);
-    expect(game.players[0].cards.length).toBe(7);
-    expect(game.players[1].cards.length).toBe(7);
-    expect(game.players[2].cards.length).toBe(7);
-    expect(game.players[3].cards.length).toBe(7);
+  describe('creating a game', function() {
+    beforeEach(function() {
+      createGame();
+    });
+
+    it('the game isn\'t considered started', function() {
+      expect(currentGame.isStarted).toBe(false);
+    });
+
+    it('a deck is created', function() {
+      expect(currentGame.deck.black.length).toBe(Game.getDeck().black.length);
+      expect(currentGame.deck.white.length).toBe(Game.getDeck().white.length);
+    });
+
+    it('the game is listed for joining', function() {
+      expect(Game.list()[0].id).toBe(gameId);
+    });
   });
 
-  it('game round ended', function() {
-    var game = startGame("newgame");
-    Game.selectCard(game.id, game.players[0].id, game.players[0].cards[0]);
-    Game.selectCard(game.id, game.players[1].id, game.players[1].cards[0]);
-    Game.selectCard(game.id, game.players[2].id, game.players[2].cards[0]);
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);
-    Game.roundEnded(game);
-    game = Game.getGame(game.id);
-    expect(game.players[0].cards.length).toBe(7);
-    expect(game.players[1].cards.length).toBe(7);
-    expect(game.players[2].cards.length).toBe(7);
-    expect(game.players[3].cards.length).toBe(7);
+  describe('4 people join a game', function() {
+    beforeEach(function() {
+      startGame();
+    });
+
+    it('the game is no longer listed', function() {
+      expect(Game.list().length).toBe(0);
+    });
+
+    it('the game is started with', function() {
+      expect(currentGame.isStarted).toBe(true);
+    });
+
+    it('the black card is selected for play', function() {
+      expect(currentGame.currentBlackCard).toBeTruthy();
+    });
+
+    it('player one is selected as the Card Czar', function() {
+      expect(currentGame.players[0].isCzar).toBe(true);
+    });
+
+    it('each player has 7 cards drawn', function() {
+      expect(currentGame.players[0].cards.length).toBe(7);
+      expect(currentGame.players[1].cards.length).toBe(7);
+      expect(currentGame.players[2].cards.length).toBe(7);
+      expect(currentGame.players[3].cards.length).toBe(7);
+    });
   });
 
-  it('isReadyForScoring', function() {
-    var game = startGame("newgame");
-    game = Game.getGame(game.id);
-    expect(game.isReadyForScoring).toBe(false);
+  describe('round', function() {
+    beforeEach(function() {
+      startGame();
+    });
 
-    Game.selectCard(game.id, game.players[0].id, game.players[0].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isReadyForScoring).toBe(false);
-    
-    Game.selectCard(game.id, game.players[1].id, game.players[1].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isReadyForScoring).toBe(false);
-    
-    Game.selectCard(game.id, game.players[2].id, game.players[2].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isReadyForScoring).toBe(true);
+    describe('each player except the czar plays a card', function() {
+      beforeEach(function() {
+        playCard(player2);
+        playCard(player3);
+        playCard(player4);
+      });
+
+      it('the round is ready for scoring', function() {
+        expect(currentGame.isReadyForScoring).toBe(true);
+      });
+
+      describe('card czar selects winner', function() {
+        var cardId;
+        beforeEach(function() {
+          cardId = currentGame.players[1].cards[0];
+          Game.selectWinner(gameId, cardId);
+          currentGame = Game.getGame(gameId);
+        });
+
+        it('sets the winning card for the round', function() {
+          expect(currentGame.winningCardId).toBe(cardId);
+        });
+
+        it('the round is ready for review', function() {
+          expect(currentGame.isReadyForReview).toBe(true);
+        });
+
+        it('player is given awesome points', function() {
+          expect(currentGame.players[1].awesomePoints).toBe(1);
+        });
+
+        describe('everyone has reviewed the cards', function() {
+          var whiteCardCount;
+          var blackCardCount
+          var blackCard;
+          beforeEach(function() {
+            whiteCardCount = currentGame.deck.white.length;
+            blackCardCount = currentGame.deck.black.length;
+            blackCard = currentGame.currentBlackCard;
+            Game.readyForNextRound(gameId, currentGame.players[0].id);
+            Game.readyForNextRound(gameId, currentGame.players[1].id);
+            Game.readyForNextRound(gameId, currentGame.players[2].id);
+            Game.readyForNextRound(gameId, currentGame.players[3].id);
+            currentGame = Game.getGame(gameId);
+          });
+
+          it("the round is restarted with new czar", function() {
+            expect(currentGame.isReadyForScoring).toBe(false);
+            expect(currentGame.isReadyForReview).toBe(false);
+            expect(currentGame.winningCardId).toBe(null);
+            expect(currentGame.players[1].isCzar).toBe(true);
+          });
+
+          it("a new black card is selected", function() {
+            expect(currentGame.deck.black.length).toBe(blackCardCount - 1);
+            expect(currentGame.currentBlackCard).toNotBe(blackCard);
+          });
+
+          it("each player (except the czar) is given a new white card", function() {
+            expect(currentGame.deck.white.length).toBe(whiteCardCount - 3);
+            expect(currentGame.players[0].cards.length).toBe(7);
+            expect(currentGame.players[1].cards.length).toBe(7);
+            expect(currentGame.players[2].cards.length).toBe(7);
+            expect(currentGame.players[3].cards.length).toBe(7);
+          });
+        });
+      });
+    });
   });
-
-  
-  it('player only ready when they say so', function() {
-    var game = startGame("newgame");
-    expect(game.players[0].isReady).toBe(false);
-    Game.readyForNextRound("newgame", "player1");
-    var game = Game.getGame(game.id);
-    expect(game.players[0].isReady).toBe(true);
-    Game.readyForNextRound("newgame", "player3");
-    var game = Game.getGame(game.id);
-    expect(game.players[2].isReady).toBe(true);
-  });
-
-  it('selecting white card works', function() {
-    var whiteCardId = "Coffee";
-    var game = startGame("newgame");
-    Game.selectCard("newgame", "player1", whiteCardId);
-    var game = Game.getGame(game.id);
-    expect(game.players[0].selectedWhiteCardId).toBe(whiteCardId);
-  });
-
-  it('picking round winner works', function() {
-    var winningPlayerId = "player4"
-    var game = startGame("newgame");
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0])
-    Game.selectWinner(game.id, game.players[3].cards[0])
-    var game = Game.getGame(game.id);
-    expect(game.players[3].roundWinner).toBe(true);
-  });
-
-  it('winner gets awesome points', function() {
-    var winningPlayerId = "player4"
-    var game = startGame("newgame");
-    expect(game.players[3].awesomePoints).toBe(0);
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0])
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    var game = Game.getGame(game.id);
-    expect(game.players[3].awesomePoints).toBe(1);
-  });
-
-  it('new game player 1 is czar', function() {
-    var game = startGame("newgame");
-    expect(game.players[0].isCzar).toBe(true);
-  });
-
-  it('after 1 round player 2 is czar', function() {
-    var game = startGame("newgame");
-    expect(game.players[0].isCzar).toBe(true);
-    Game.roundEnded(game);
-    var game = Game.getGame(game.id);
-    expect(game.players[0].isCzar).toBe(false);
-    expect(game.players[1].isCzar).toBe(true);
-  });
-
-  it('after winning 5 points player is winner', function() {
-    var winningPlayerId = "player4"
-    var game = startGame("newgame");
-    expect(game.isOver).toBe(false);
-    expect(game.winnerId).toBe(null);
-    expect(game.players[3].awesomePoints).toBe(0);
-
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);    
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isOver).toBe(false);
-    expect(game.winnerId).toBe(null);
-    expect(game.players[3].awesomePoints).toBe(1);
-    
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isOver).toBe(false);
-    expect(game.winnerId).toBe(null);
-    expect(game.players[3].awesomePoints).toBe(2);
-
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);    
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isOver).toBe(false);
-    expect(game.winnerId).toBe(null);
-    expect(game.players[3].awesomePoints).toBe(3);
-
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isOver).toBe(false);
-    expect(game.winnerId).toBe(null);
-    expect(game.players[3].awesomePoints).toBe(4);
-
-    Game.selectCard(game.id, game.players[3].id, game.players[3].cards[0]);   
-    Game.selectWinner(game.id, game.players[3].cards[0]);
-    game = Game.getGame(game.id);
-    expect(game.isOver).toBe(true);
-    expect(game.winnerId).toBe(winningPlayerId);
-    expect(game.players[3].awesomePoints).toBe(5);
-
-  });
-
 });

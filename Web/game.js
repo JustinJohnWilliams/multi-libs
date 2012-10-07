@@ -26,7 +26,7 @@ function getDeck()
               "I ______ in your general direction.", "My Mama always said, 'Life was like a box of ______; you never know what you're gonna get.'",
               "It's good to be ______!"],
     white: [ "Being on fire.", "Old-people smell.", "Women in yogurt commercials.", "Not caring about the Third World.", "Medication.", "Oversized lollipops.",
-"African children.", "The hardworking Mexican.", "Boogers.", "A tiny horse.", "Soup that is too hot.", "The Big Bang.", "The Tempur-Pedic Swedish Sleep System.",
+"Happy children.", "The hardworking Mexican.", "Boogers.", "A tiny horse.", "Soup that is too hot.", "The Big Bang.", "The Tempur-Pedic Swedish Sleep System.",
 "Switching to Geico.", "Dry heaving.", "Skeletor.", "Darth Vader.", "Figgy pudding.", "Five-Dollar Footlongs.", "Elderly men.", "Free samples.", "Famine.", "Men.",
 "Heartwarming orphans.", "A bag of magic beans.", "Repression.", "Prancing.", "My relationship status.", "Overcompensation.",
 "The Devil himself.", "The World of Warcraft.", "Dick Cheney.", "Being fabulous.", "The Amish.", "Sarah Palin.", "Feeding Rosie O'Donnell.",
@@ -55,14 +55,28 @@ function getDeck()
   };
 }
 
+function removeFromArray(array, item) {
+  var index = array.indexOf(item);
+  if(index != -1) array.splice(index, 1);
+}
+
 function list() {
-  return games = linq.From(gameList)
+  return toInfo(games = linq.From(gameList)
     .Where(function(x) { return x.players.length < 4; })
-    .ToArray();
+    .ToArray());
 }
 
 function listAll() {
-  return gameList;
+  return toInfo(gameList);
+}
+
+function toInfo(fullGameList) {
+  var infoGames = [];
+  _.each(fullGameList, function(game) { 
+    infoGames.push({ id: game.id, name: game.name });
+  });
+
+  return infoGames;
 }
 
 function addGame(game) {
@@ -74,6 +88,8 @@ function addGame(game) {
   game.deck = getDeck();
   game.currentBlackCard = "";
   game.isReadyForScoring = false;
+  game.isReadyForReview = false;
+  game.pointsToWin = 5;
   gameList.push(game);
   return game;
 }
@@ -87,7 +103,6 @@ function joinGame(game, player) {
     , name: player.name
     , isReady: false
     , selectedWhiteCardId: null
-    , roundWinner: false
     , awesomePoints: 0
     , isCzar: false
     });
@@ -112,34 +127,43 @@ function startGame(game) {
 }
 
 function roundEnded(game) {
+  game.winnerId = null;
+  game.winningCardId = null;
+  game.isReadyForScoring = false;
+  game.isReadyForReview = false;
+
   setCurrentBlackCard(game);
+
+  _.each(game.players, function(player) {
+    if(!player.isCzar) {
+      removeFromArray(player.cards, player.selectedWhiteCardId);
+      drawWhiteCard(game, player);
+    }
+
+    player.isReady = false;
+    player.selectedWhiteCardId = null;
+  });
+
   if(game.players[0].isCzar == true) {
     game.players[0].isCzar = false;
     game.players[1].isCzar = true;
+    game.players[1].isReady = false;
   }
   else if(game.players[1].isCzar == true) {
     game.players[1].isCzar = false;
     game.players[2].isCzar = true;
+    game.players[2].isReady = false;
   }
   else if(game.players[2].isCzar == true) {
     game.players[2].isCzar = false;
     game.players[3].isCzar = true;
+    game.players[3].isReady = false;
   }
   else if(game.players[3].isCzar == true) {
     game.players[3].isCzar = false;
     game.players[0].isCzar = true;
+    game.players[0].isReady = false;
   }
-  _.each(game.players, function(player) {
-    removeWhiteCard(game, player);
-    drawWhiteCard(game, player);
-  });
-}
-
-function removeWhiteCard(game, player) {
-  var cardToDelete = player.selectedWhiteCardId;
-  var hand = player.cards;
-  player.cards = linq.From(hand).Where(function (x) { return x != cardToDelete }).ToArray();
-  player.selectedWhiteCardId = null;
 }
 
 function drawWhiteCard(game, player) {
@@ -171,9 +195,8 @@ function readyForNextRound(gameId, playerId) {
   player.isReady = true;
 
   var game = getGame(gameId);
-  game.winningCardId = null;
   var pendingPlayers = linq.From(game.players)
-    .Any(function (x) { x.isReady == false });
+    .Any(function (x) { return x.isReady == false });
 
   if(pendingPlayers == false) {
     roundEnded(game);
@@ -183,24 +206,25 @@ function readyForNextRound(gameId, playerId) {
 function selectCard(gameId, playerId, whiteCardId) {
   var player = getPlayer(gameId, playerId);
   player.selectedWhiteCardId = whiteCardId;
+  player.isReady = false;
 
   var game = getGame(gameId);
   var readyPlayers = linq.From(game.players)
     .Where(function (x) { return x.selectedWhiteCardId != null })
     .ToArray();
+
   if(readyPlayers.length == 3) {
     game.isReadyForScoring = true;
   }
 }
 
 function selectWinner(gameId, cardId) {
-  console.log(cardId);
   var player = getPlayerByCardId(gameId, cardId);
   var game = getGame(gameId);
   game.winningCardId = cardId;
-  player.roundWinner = true;
+  game.isReadyForReview = true;
   player.awesomePoints = player.awesomePoints + 1;
-  if(player.awesomePoints == 5) {
+  if(player.awesomePoints == game.pointsToWin) {
     var game = getGame(gameId);
     game.isOver = true;
     game.winnerId = player.id;
@@ -221,3 +245,5 @@ exports.reset = reset;
 exports.roundEnded = roundEnded;
 exports.selectCard = selectCard;
 exports.selectWinner = selectWinner;
+exports.removeFromArray = removeFromArray;
+exports.getDeck = getDeck;

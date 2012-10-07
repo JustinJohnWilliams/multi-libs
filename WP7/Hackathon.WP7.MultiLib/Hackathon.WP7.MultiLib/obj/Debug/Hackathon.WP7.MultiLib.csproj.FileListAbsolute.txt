@@ -1,0 +1,15 @@
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\ApplicationIcon.png
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\Background.png
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\Hackathon.WP7.MultiLib.dll
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\Hackathon.WP7.MultiLib.pdb
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\AppManifest.xaml
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\Hackathon.WP7.MultiLib.xap
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\Hackathon.WP7.MultiLib.g.resources
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\Hackathon.WP7.MultiLib.dll
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\Hackathon.WP7.MultiLib.pdb
+c:\users\jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\XapCacheFile.xml
+C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Debug\Newtonsoft.Json.WindowsPhone.dll
+C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\Hackathon.WP7.MultiLib.csprojResolveAssemblyReference.cache
+C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\App.g.i.cs
+C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\GameBoard.g.i.cs
+C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Debug\MainPage.g.i.cs

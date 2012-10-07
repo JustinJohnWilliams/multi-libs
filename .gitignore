@@ -32,3 +32,5 @@ _ReSharper*/
 *.swp
 .DS_Store
 tags
+~*
+*.orig

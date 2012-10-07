@@ -1,0 +1,294 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		298B4817161E4C12009F533A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B4816161E4C12009F533A /* UIKit.framework */; };
+		298B4819161E4C12009F533A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B4818161E4C12009F533A /* Foundation.framework */; };
+		298B481B161E4C12009F533A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B481A161E4C12009F533A /* CoreGraphics.framework */; };
+		298B481D161E4C12009F533A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298B481C161E4C12009F533A /* CoreData.framework */; };
+		298B4823161E4C12009F533A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 298B4821161E4C12009F533A /* InfoPlist.strings */; };
+		298B4825161E4C12009F533A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4824161E4C12009F533A /* main.m */; };
+		298B4829161E4C12009F533A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4828161E4C12009F533A /* AppDelegate.m */; };
+		298B482C161E4C12009F533A /* HelloRestClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 298B482A161E4C12009F533A /* HelloRestClient.xcdatamodeld */; };
+		298B4835161E4C2B009F533A /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B4833161E4C2B009F533A /* PeopleViewController.m */; };
+		298B4836161E4C2B009F533A /* PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B4834161E4C2B009F533A /* PeopleViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		298B4812161E4C12009F533A /* HelloRestClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloRestClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		298B4816161E4C12009F533A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		298B4818161E4C12009F533A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		298B481A161E4C12009F533A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		298B481C161E4C12009F533A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		298B4820161E4C12009F533A /* HelloRestClient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloRestClient-Info.plist"; sourceTree = "<group>"; };
+		298B4822161E4C12009F533A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		298B4824161E4C12009F533A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		298B4826161E4C12009F533A /* HelloRestClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloRestClient-Prefix.pch"; sourceTree = "<group>"; };
+		298B4827161E4C12009F533A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		298B4828161E4C12009F533A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		298B482B161E4C12009F533A /* HelloRestClient.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HelloRestClient.xcdatamodel; sourceTree = "<group>"; };
+		298B4832161E4C2B009F533A /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleViewController.h; sourceTree = "<group>"; };
+		298B4833161E4C2B009F533A /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleViewController.m; sourceTree = "<group>"; };
+		298B4834161E4C2B009F533A /* PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		298B480F161E4C12009F533A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B4817161E4C12009F533A /* UIKit.framework in Frameworks */,
+				298B4819161E4C12009F533A /* Foundation.framework in Frameworks */,
+				298B481B161E4C12009F533A /* CoreGraphics.framework in Frameworks */,
+				298B481D161E4C12009F533A /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		298B4807161E4C12009F533A = {
+			isa = PBXGroup;
+			children = (
+				298B481E161E4C12009F533A /* HelloRestClient */,
+				298B4815161E4C12009F533A /* Frameworks */,
+				298B4813161E4C12009F533A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		298B4813161E4C12009F533A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				298B4812161E4C12009F533A /* HelloRestClient.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		298B4815161E4C12009F533A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				298B4816161E4C12009F533A /* UIKit.framework */,
+				298B4818161E4C12009F533A /* Foundation.framework */,
+				298B481A161E4C12009F533A /* CoreGraphics.framework */,
+				298B481C161E4C12009F533A /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		298B481E161E4C12009F533A /* HelloRestClient */ = {
+			isa = PBXGroup;
+			children = (
+				298B4827161E4C12009F533A /* AppDelegate.h */,
+				298B4828161E4C12009F533A /* AppDelegate.m */,
+				298B482A161E4C12009F533A /* HelloRestClient.xcdatamodeld */,
+				298B481F161E4C12009F533A /* Supporting Files */,
+				298B4832161E4C2B009F533A /* PeopleViewController.h */,
+				298B4833161E4C2B009F533A /* PeopleViewController.m */,
+				298B4834161E4C2B009F533A /* PeopleViewController.xib */,
+			);
+			path = HelloRestClient;
+			sourceTree = "<group>";
+		};
+		298B481F161E4C12009F533A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				298B4820161E4C12009F533A /* HelloRestClient-Info.plist */,
+				298B4821161E4C12009F533A /* InfoPlist.strings */,
+				298B4824161E4C12009F533A /* main.m */,
+				298B4826161E4C12009F533A /* HelloRestClient-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		298B4811161E4C12009F533A /* HelloRestClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 298B482F161E4C12009F533A /* Build configuration list for PBXNativeTarget "HelloRestClient" */;
+			buildPhases = (
+				298B480E161E4C12009F533A /* Sources */,
+				298B480F161E4C12009F533A /* Frameworks */,
+				298B4810161E4C12009F533A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HelloRestClient;
+			productName = HelloRestClient;
+			productReference = 298B4812161E4C12009F533A /* HelloRestClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		298B4809161E4C12009F533A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 298B480C161E4C12009F533A /* Build configuration list for PBXProject "HelloRestClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 298B4807161E4C12009F533A;
+			productRefGroup = 298B4813161E4C12009F533A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				298B4811161E4C12009F533A /* HelloRestClient */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		298B4810161E4C12009F533A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B4823161E4C12009F533A /* InfoPlist.strings in Resources */,
+				298B4836161E4C2B009F533A /* PeopleViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		298B480E161E4C12009F533A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				298B4825161E4C12009F533A /* main.m in Sources */,
+				298B4829161E4C12009F533A /* AppDelegate.m in Sources */,
+				298B482C161E4C12009F533A /* HelloRestClient.xcdatamodeld in Sources */,
+				298B4835161E4C2B009F533A /* PeopleViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		298B4821161E4C12009F533A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				298B4822161E4C12009F533A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		298B482D161E4C12009F533A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		298B482E161E4C12009F533A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		298B4830161E4C12009F533A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HelloRestClient/HelloRestClient-Prefix.pch";
+				INFOPLIST_FILE = "HelloRestClient/HelloRestClient-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		298B4831161E4C12009F533A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HelloRestClient/HelloRestClient-Prefix.pch";
+				INFOPLIST_FILE = "HelloRestClient/HelloRestClient-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		298B480C161E4C12009F533A /* Build configuration list for PBXProject "HelloRestClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				298B482D161E4C12009F533A /* Debug */,
+				298B482E161E4C12009F533A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		298B482F161E4C12009F533A /* Build configuration list for PBXNativeTarget "HelloRestClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				298B4830161E4C12009F533A /* Debug */,
+				298B4831161E4C12009F533A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		298B482A161E4C12009F533A /* HelloRestClient.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				298B482B161E4C12009F533A /* HelloRestClient.xcdatamodel */,
+			);
+			currentVersion = 298B482B161E4C12009F533A /* HelloRestClient.xcdatamodel */;
+			path = HelloRestClient.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 298B4809161E4C12009F533A /* Project object */;
+}

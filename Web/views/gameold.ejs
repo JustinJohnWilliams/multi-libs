@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <link href="/public/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js" type="text/javascript"></script>
+        <script src="/public/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/public/jqueryCookie.js" type="text/javascript"></script>
+    <script src="/public/jqueryTmpl.js" type="text/javascript"></script>
+    <script src="/public/underscore.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+            </a>
+			<a class="brand" href="/">Multi-Libs</a>
+          </div>
+      </div>
+    </div>
+    <hr />
+		<br />
+    <div id="blackCard" class="card">     	
+      <p id="blackCardText"></p>
+    </div>
+    <br>
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <ul id="availableCards" class="thumbnails">
+          
+        </ul>
+      </div>
+      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+    <div id="actionButton">
+      <a id="playCardLink" class="btn btn-success btn-large span3" href="javascript:playCard();">Play Card!</a>
+      <a id="selectWinnerLink" class="btn btn-success btn-large span3" href="javascript:selectWinner();">Pick Winner!</a>
+      <a id="nextRoundLink" class="btn btn-success btn-large span3" href="javascript:readyForNextRound();" style="display: none;">Next Round</a>
+    </div>
+    <br />
+    <br />
+    <div>
+    	<label id="awesomePoints"></label>
+    </div>
+    <div>
+    	<label id="winningCard"></label>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+  var stopPolling = false;
+
+  function me(players){
+    return _.find(players, function(player) {
+      return player.id == $.cookie('playerId');
+    });
+  }
+
+  var cardTemplate = '<div class="item cardwrap"><li class="span3"><div data-cardId="${cardValue}" class="card"><span id="winnerIcon" style="display: none;" class="badge badge-success pull-right"><i class="icon-thumbs-up icon-white"></i>&nbsp;</span><p>${cardValue}</p></div></li></div>';
+
+  function PollForGames() {
+
+    var gameId = $.cookie('gameId');
+
+    $.getJSON('/gamebyid?id=' + gameId, function(game) {
+      var isStarted = game.isStarted;
+
+      if(!isStarted) {
+        $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
+        $("#selectWinnerLink").hide();
+        setTimeout(PollForGames, 1000);
+        return;
+      }
+
+      if(isStarted) {
+        $('#blackCardText').text(game.currentBlackCard);
+      }
+
+      var thisPlayer = me(game.players);
+	  
+
+      if(thisPlayer.isCzar) {
+        renderCzar(game, thisPlayer);
+      } else {
+        renderNotCzar(thisPlayer, game);
+      }
+    });
+  };
+
+  function renderCzar(game, player) {
+    $("#playCardLink").hide();
+    $("#selectWinnerLink").show();
+    
+    if(game.isReadyForScoring) {
+      $("#playCardLink").html("Pick Winner!").removeAttr("disabled");
+    } else  {
+      $("#selectWinnerLink").html("Waiting...").attr("disabled", "disabled");
+    }
+
+    var cards = [];
+
+    if(!game.isReadyForScoring) {
+        setTimeout(PollForGames, 1000);
+    }
+    else {
+      if(game.winningCardId) {
+        showWinnerSelected(game.winningCardId, player);
+      }
+      else {
+        jQuery.each(game.players, function(player) {
+          if(game.players[player].selectedWhiteCardId) {
+            cards.push(game.players[player].selectedWhiteCardId);
+          }
+        });
+
+        jQuery.each(cards, function(card) {
+          var cardElement = $.tmpl(cardTemplate, {
+            cardValue: cards[card]
+          });
+
+          $('#availableCards').append(cardElement);
+          $('.cardwrap').removeClass('active');
+          $('.cardwrap').first().addClass('active');
+        });
+        $("#selectWinnerLink").html("Pick Winner!").removeAttr("disabled");
+      }
+    }
+  }
+
+  function renderNotCzar(player, game) {
+    $("#playCardLink").show();
+    $("#selectWinnerLink").hide();
+
+    if(player.selectedWhiteCardId) {
+      $("#playCardLink").html("Waiting...").attr("disabled", "disabled");
+      setTimeout(PollForGames, 1000);
+    } else {
+      $("#playCardLink").html("Play Card!").removeAttr("disabled");
+    }
+
+    if(player && player.cards) {
+      jQuery.each(player.cards, function(card) {
+        var cardElement = $.tmpl(cardTemplate, {
+          cardValue: player.cards[card]
+        });
+
+        $('#availableCards').append(cardElement);
+        $('.cardwrap').removeClass('active');
+        $('.cardwrap').first().addClass('active');
+      });
+    }
+
+    if(game.winningCardId) {
+      showWinnerSelected(game.winningCardId, player);
+    }
+
+    if(game.isReadyForScoring || player.selectedWhiteCardId || game.winningCardId) {
+      setTimeout(PollForGames, 1000);
+    }
+  }
+
+  function playCard() {
+    var cardValue = $('.active .card').attr('data-cardId');
+    $.post("selectCard", {
+        playerId: $.cookie('playerId'),
+        gameId: $.cookie('gameId'),
+        whiteCardId: cardValue
+      }, function() {
+       setTimeout(PollForGames, 1000);
+      });
+  }
+
+  function selectWinner() {
+    var cardValue = $('.active .card').attr('data-cardId');
+    $.post("selectWinner", {
+        gameId: $.cookie('gameId'),
+        cardId: cardValue
+      }, function() {
+       setTimeout(PollForGames, 1000);
+      });
+  }
+
+  function readyForNextRound(){
+  	$.post("readyForNextRound", {
+  		playerId: $.cookie('playerId'),
+  		gameId: $.cookie('gameId')
+  	}), function() {
+  		setTimeout(PollForGames, 1000);
+  	};
+  }
+
+  function showWinnerSelected(card, player) {
+    $("#winningCard").html("here was the winning phrase: " + card);
+	  $('#awesomePoints').html('Awesome Points: ' + player.awesomePoints);
+  	$("#nextRoundLink").show();
+  	$("#playCardLink").hide();
+  	$("#selectWinnerLink").hide();
+  }
+
+  $(document).ready(function() {
+    PollForGames(); 
+
+    $('.carousel').carousel({
+      interval: false
+    });
+  });
+</script>

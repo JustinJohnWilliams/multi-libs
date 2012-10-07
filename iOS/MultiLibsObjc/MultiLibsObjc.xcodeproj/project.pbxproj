@@ -1,0 +1,287 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2953EA87161783EC00CCEA4C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2953EA86161783EC00CCEA4C /* UIKit.framework */; };
+		2953EA89161783EC00CCEA4C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2953EA88161783EC00CCEA4C /* Foundation.framework */; };
+		2953EA8B161783EC00CCEA4C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2953EA8A161783EC00CCEA4C /* CoreGraphics.framework */; };
+		2953EA91161783EC00CCEA4C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2953EA8F161783EC00CCEA4C /* InfoPlist.strings */; };
+		2953EA93161783EC00CCEA4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2953EA92161783EC00CCEA4C /* main.m */; };
+		2953EA97161783EC00CCEA4C /* MLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2953EA96161783EC00CCEA4C /* MLAppDelegate.m */; };
+		29A46DA61618D0FB005932C7 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A46DA41618D0FB005932C7 /* GameViewController.m */; };
+		29A46DA71618D0FB005932C7 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A46DA51618D0FB005932C7 /* GameViewController.xib */; };
+		F400ECDC16178926008FCBA2 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F400ECDA16178926008FCBA2 /* GameListViewController.m */; };
+		F400ECDD16178926008FCBA2 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F400ECDB16178926008FCBA2 /* GameListViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2953EA82161783EC00CCEA4C /* MultiLibsObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiLibsObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2953EA86161783EC00CCEA4C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2953EA88161783EC00CCEA4C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2953EA8A161783EC00CCEA4C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2953EA8E161783EC00CCEA4C /* MultiLibsObjc-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MultiLibsObjc-Info.plist"; sourceTree = "<group>"; };
+		2953EA90161783EC00CCEA4C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2953EA92161783EC00CCEA4C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2953EA94161783EC00CCEA4C /* MultiLibsObjc-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiLibsObjc-Prefix.pch"; sourceTree = "<group>"; };
+		2953EA95161783EC00CCEA4C /* MLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLAppDelegate.h; sourceTree = "<group>"; };
+		2953EA96161783EC00CCEA4C /* MLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLAppDelegate.m; sourceTree = "<group>"; };
+		29A46DA31618D0FB005932C7 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		29A46DA41618D0FB005932C7 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		29A46DA51618D0FB005932C7 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
+		F400ECD916178926008FCBA2 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
+		F400ECDA16178926008FCBA2 /* GameListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewController.m; sourceTree = "<group>"; };
+		F400ECDB16178926008FCBA2 /* GameListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2953EA7F161783EC00CCEA4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2953EA87161783EC00CCEA4C /* UIKit.framework in Frameworks */,
+				2953EA89161783EC00CCEA4C /* Foundation.framework in Frameworks */,
+				2953EA8B161783EC00CCEA4C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2953EA77161783EC00CCEA4C = {
+			isa = PBXGroup;
+			children = (
+				2953EA8C161783EC00CCEA4C /* MultiLibsObjc */,
+				2953EA85161783EC00CCEA4C /* Frameworks */,
+				2953EA83161783EC00CCEA4C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2953EA83161783EC00CCEA4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2953EA82161783EC00CCEA4C /* MultiLibsObjc.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2953EA85161783EC00CCEA4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2953EA86161783EC00CCEA4C /* UIKit.framework */,
+				2953EA88161783EC00CCEA4C /* Foundation.framework */,
+				2953EA8A161783EC00CCEA4C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2953EA8C161783EC00CCEA4C /* MultiLibsObjc */ = {
+			isa = PBXGroup;
+			children = (
+				2953EA95161783EC00CCEA4C /* MLAppDelegate.h */,
+				2953EA96161783EC00CCEA4C /* MLAppDelegate.m */,
+				2953EA8D161783EC00CCEA4C /* Supporting Files */,
+				F400ECD916178926008FCBA2 /* GameListViewController.h */,
+				F400ECDA16178926008FCBA2 /* GameListViewController.m */,
+				F400ECDB16178926008FCBA2 /* GameListViewController.xib */,
+				29A46DA31618D0FB005932C7 /* GameViewController.h */,
+				29A46DA41618D0FB005932C7 /* GameViewController.m */,
+				29A46DA51618D0FB005932C7 /* GameViewController.xib */,
+			);
+			path = MultiLibsObjc;
+			sourceTree = "<group>";
+		};
+		2953EA8D161783EC00CCEA4C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2953EA8E161783EC00CCEA4C /* MultiLibsObjc-Info.plist */,
+				2953EA8F161783EC00CCEA4C /* InfoPlist.strings */,
+				2953EA92161783EC00CCEA4C /* main.m */,
+				2953EA94161783EC00CCEA4C /* MultiLibsObjc-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2953EA81161783EC00CCEA4C /* MultiLibsObjc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2953EA9A161783EC00CCEA4C /* Build configuration list for PBXNativeTarget "MultiLibsObjc" */;
+			buildPhases = (
+				2953EA7E161783EC00CCEA4C /* Sources */,
+				2953EA7F161783EC00CCEA4C /* Frameworks */,
+				2953EA80161783EC00CCEA4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MultiLibsObjc;
+			productName = MultiLibsObjc;
+			productReference = 2953EA82161783EC00CCEA4C /* MultiLibsObjc.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2953EA79161783EC00CCEA4C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ML;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 2953EA7C161783EC00CCEA4C /* Build configuration list for PBXProject "MultiLibsObjc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2953EA77161783EC00CCEA4C;
+			productRefGroup = 2953EA83161783EC00CCEA4C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2953EA81161783EC00CCEA4C /* MultiLibsObjc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2953EA80161783EC00CCEA4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2953EA91161783EC00CCEA4C /* InfoPlist.strings in Resources */,
+				F400ECDD16178926008FCBA2 /* GameListViewController.xib in Resources */,
+				29A46DA71618D0FB005932C7 /* GameViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2953EA7E161783EC00CCEA4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2953EA93161783EC00CCEA4C /* main.m in Sources */,
+				2953EA97161783EC00CCEA4C /* MLAppDelegate.m in Sources */,
+				F400ECDC16178926008FCBA2 /* GameListViewController.m in Sources */,
+				29A46DA61618D0FB005932C7 /* GameViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2953EA8F161783EC00CCEA4C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2953EA90161783EC00CCEA4C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2953EA98161783EC00CCEA4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2953EA99161783EC00CCEA4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2953EA9B161783EC00CCEA4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MultiLibsObjc/MultiLibsObjc-Prefix.pch";
+				INFOPLIST_FILE = "MultiLibsObjc/MultiLibsObjc-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2953EA9C161783EC00CCEA4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MultiLibsObjc/MultiLibsObjc-Prefix.pch";
+				INFOPLIST_FILE = "MultiLibsObjc/MultiLibsObjc-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2953EA7C161783EC00CCEA4C /* Build configuration list for PBXProject "MultiLibsObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2953EA98161783EC00CCEA4C /* Debug */,
+				2953EA99161783EC00CCEA4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2953EA9A161783EC00CCEA4C /* Build configuration list for PBXNativeTarget "MultiLibsObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2953EA9B161783EC00CCEA4C /* Debug */,
+				2953EA9C161783EC00CCEA4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2953EA79161783EC00CCEA4C /* Project object */;
+}

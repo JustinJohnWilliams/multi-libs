@@ -17,8 +17,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/game', function (req, res) {
-  console.log('/ called');
   res.render('game');
+});
+
+app.get('/pretty', function (req, res) {
+  res.render('pretty');
 });
 
 app.get('/list', function (req, res) {
@@ -61,7 +64,7 @@ app.post('/selectcard', function(req, res) {
 });
 
 app.post('/selectWinner', function(req, res) {
-  Game.selectWinner(req.body.gameId, req.body.playerId);
+  Game.selectWinner(req.body.gameId, req.body.cardId);
   var game = Game.getGame(req.body.gameId);
   res.writeHead(200, { 'Content-Type': 'application/json' });  
   res.write(JSON.stringify(game));
@@ -80,6 +83,16 @@ app.post('/joingame', function (req, res) {
   }	
   
   game = Game.joinGame(game, { id: req.body.playerId, name: req.body.playerName });
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });  
+  res.write(JSON.stringify(game));
+  res.end();
+});
+
+app.post('/readyForNextRound', function(req, res){
+  Game.readyForNextRound(req.body.gameId, req.body.playerId);
+
+  var game = Game.getGame(req.body.gameId);
 
   res.writeHead(200, { 'Content-Type': 'application/json' });  
   res.write(JSON.stringify(game));
