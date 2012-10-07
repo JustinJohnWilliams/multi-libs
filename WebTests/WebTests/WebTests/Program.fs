@@ -5,7 +5,6 @@ open runner
 
 let switchTo b = browser <- b
 let index = "http://dry-peak-5299.herokuapp.com/"
-let createGame = ".nav li a"
 let cardCzar = "#notificationCardCzar"
 let waiting = "#notificationWaitingOnRound"
 let join = "#availableGames div a"
@@ -19,13 +18,17 @@ let playFirstCard _ =
     click select
     select *= "selected"
 
-start firefox
+let createGame () =
+    click ".btn.btn-navbar"
+    click ".nav li a"
+
+start chrome
 let player1 = browser
-start firefox
+start chrome
 let player2 = browser
-start firefox
+start chrome
 let player3 = browser
-start firefox
+start chrome
 let player4 = browser
 
 tile [player1; player2; player3; player4]
@@ -34,7 +37,7 @@ test (fun _ ->
     describe "create a new game and wait"
     switchTo player1
     url index
-    click createGame    
+    createGame ()
     waiting == "waiting on round to start")
 
 test (fun _ ->
