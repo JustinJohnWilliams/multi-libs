@@ -47,6 +47,12 @@ namespace multilibs
 			_whiteCards = new List<TableItemGroup>();
 			_whiteCardSource = new TableSource(_whiteCards);
 			WhiteCardTable.Source = _whiteCardSource;
+
+			var asyncDelegation2 = new AsyncDelegation(restService);
+			asyncDelegation2.Post("joingame", new {gameId = _gameId, playerId = Application.PlayerId, playerName = "Mono Touch"})
+				.WhenFinished(()=> {
+				});
+			asyncDelegation2.Go();
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -88,10 +94,10 @@ namespace multilibs
 				return;
 
 			var asyncDelegation = new AsyncDelegation (restService);
-			asyncDelegation.Get<Game> ("gamebyid", new { id = _gameId })
+			asyncDelegation.Get<Game> ("gamebyid", new { id = _gameId, playerId = Application.PlayerId })
 				.WhenFinished (
-				result =>
-				{
+					result =>
+					{
 					InvokeOnMainThread(() => {
 						UpdateView(result);
 					});
