@@ -99,8 +99,8 @@ namespace multilibs
 
 		partial void CreateClicked (NSObject sender)
 		{
-			var gameId = Guid.NewGuid();
-			var gameName = "Mono Game "+ gameId.ToString().Substring(0, 5);
+			var gameId = Guid.NewGuid().ToString();
+			var gameName = "Mono Game "+ gameId.Substring(0, 5);
 			AddGame(gameId,gameName);
 
 			var gameView = new GameViewController(gameId);
@@ -124,7 +124,7 @@ namespace multilibs
 					foreach(var hash in result)
 					{
 						tGroup.Items.Add(hash["name"].ToString());
-						tGroup.ItemIds.Add(new Guid(hash["id"].ToString()));
+						tGroup.ItemIds.Add(hash["id"].ToString());
 					}
 					_games.Clear();
 					_games.Add(tGroup);
@@ -144,11 +144,11 @@ namespace multilibs
 			});
 		}
 
-		private void AddGame(Guid gameId, string gameName)
+		private void AddGame(string gameId, string gameName)
 		{		
 			var asyncDelegation = new AsyncDelegation(restService);			
 			asyncDelegation
-				.Post("add", new { id = gameId.ToString(), name=gameName })
+				.Post("add", new { id = gameId, name=gameName })
 					.WhenFinished(()=>{})
 					.Go();
 		}

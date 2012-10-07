@@ -16,11 +16,11 @@ namespace multilibs
 		private RestService restService;
 		private bool shouldPool;
 
-		private Guid _gameId;
+		private string _gameId;
 
-		public GameViewController () : this(Guid.Empty){}
+		public GameViewController () : this(string.Empty){}
 
-		public GameViewController (Guid gameId) : base("GameViewController", null)
+		public GameViewController (string gameId) : base("GameViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Name", "Name");
 			restFacilitator = new RestFacilitator();
@@ -50,9 +50,9 @@ namespace multilibs
 			PollGameData();
 		}
 
-		public override void ViewDidDisappear (bool animated)
+		public override void ViewWillDisappear (bool animated)
 		{
-			base.ViewDidDisappear (animated);
+			base.ViewWillDisappear (animated);
 			shouldPool = false;
 		}
 

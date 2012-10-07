@@ -4,7 +4,7 @@ namespace multilibs
 {
 	public class Game
 	{
-		public Guid Id { get; set; }
+		public string Id { get; set; }
 		public String Name { get; set; }
 		public bool IsOver { get; set; }
 		public Guid winnerId { get; set; }

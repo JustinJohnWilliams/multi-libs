@@ -13,7 +13,7 @@ namespace multilibs
 	public class ActiveGamesTableSource : TableSource
 	{
 		public event TestHandler GameClicked;
-		public delegate void TestHandler(Guid gameId);
+		public delegate void TestHandler(string gameId);
 
 		public ActiveGamesTableSource (): base(new List<TableItemGroup>())
 		{
