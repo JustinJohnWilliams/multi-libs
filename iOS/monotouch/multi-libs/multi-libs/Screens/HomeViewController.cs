@@ -46,6 +46,7 @@ namespace multilibs
 		{
 			base.ViewWillDisappear (animated);
 			this.NavigationController.SetNavigationBarHidden (false, animated);
+			shouldPool = true;
 		}
 		
 		public override void ViewDidLoad ()
@@ -89,12 +90,6 @@ namespace multilibs
 			base.ViewDidAppear (animated);
 			shouldPool = true;
 			PollGames();
-		}
-
-		public override void ViewDidDisappear (bool animated)
-		{
-			base.ViewDidDisappear (animated);
-			shouldPool = false;
 		}
 
 		partial void CreateClicked (NSObject sender)
