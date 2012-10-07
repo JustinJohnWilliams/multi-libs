@@ -135,12 +135,12 @@ namespace multilibs
 
 		private void PollGames ()
 		{
+			if(!shouldPool)
+				return;
 			FetchGames ();
-			if (shouldPool) {
-				NSTimer.CreateScheduledTimer (6.0, delegate {
-					PollGames ();
-				});
-			}
+			NSTimer.CreateScheduledTimer (6.0, delegate {
+				PollGames ();
+			});
 		}
 
 		private void AddGame(Guid gameId, string gameName)

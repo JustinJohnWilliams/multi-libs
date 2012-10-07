@@ -14,6 +14,7 @@ namespace multilibs
 //		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
 		private RestFacilitator restFacilitator;
 		private RestService restService;
+		private bool shouldPool;
 
 		private Guid _gameId;
 
@@ -45,17 +46,14 @@ namespace multilibs
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
-			var asyncDelegation = new AsyncDelegation(restService);
-			asyncDelegation.Get<Hash>("gamebyid", new { id = _gameId })
-				.WhenFinished(
-					result =>
-					{
-					Title = result["name"].ToString();
-					JsonVisualization jsonVisualization = new JsonVisualization();
-					jsonVisualization.Parse("root", result, 0);
-					TextView.Text = jsonVisualization.JsonResult;
-				});			
-			asyncDelegation.Go();
+			shouldPool = true;
+			PollGameData();
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			shouldPool = false;
 		}
 
 		[Obsolete]
@@ -76,6 +74,31 @@ namespace multilibs
 		{
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+		}
+
+		private void PollGameData ()
+		{
+			if(!shouldPool) 
+				return;
+
+			var asyncDelegation = new AsyncDelegation (restService);
+			asyncDelegation.Get<Hash> ("gamebyid", new { id = _gameId })
+				.WhenFinished (
+				result =>
+				{
+					
+					JsonVisualization jsonVisualization = new JsonVisualization ();
+					jsonVisualization.Parse ("root", result, 0);
+					InvokeOnMainThread(() => {
+						TextView.Text = jsonVisualization.JsonResult;
+						Title = result ["name"].ToString ();
+					});
+				});			
+			asyncDelegation.Go ();
+
+			NSTimer.CreateScheduledTimer (6.0, delegate {
+				PollGameData();
+			});
 		}
 	}
 }
