@@ -8,8 +8,11 @@ namespace HelloWorld
 {
 	public partial class HelloWorldViewController : UIViewController
 	{
+		private int count;
+
 		public HelloWorldViewController () : base ("HelloWorldViewController", null)
 		{
+			count = 0;
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -25,8 +28,32 @@ namespace HelloWorld
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+
+			var countLabel = new UILabel();
+			countLabel.Text = "0";
+			countLabel.BackgroundColor = UIColor.Black;
+			countLabel.TextColor = UIColor.White;
+			countLabel.Frame = new RectangleF(20f, 260f, 280f, 53f);
+			countLabel.TextAlignment = UITextAlignment.Center;
+
+			var countButton = UIButton.FromType(UIButtonType.RoundedRect);
+			countButton.Frame = new RectangleF(80f, 200f, 150f, 44f);
+			countButton.SetTitle("Count", UIControlState.Normal);
+			countButton.TouchUpInside += (sender, e) => {
+				count++;
+				countLabel.Text = count.ToString();
+			};
+
+			this.View.Add(countLabel);
+			this.View.Add(countButton);
 		}
-		
+
+		partial void sayHelloClicked (NSObject sender)
+		{
+			HelloLabel.Text = "Hello, iPhone";
+		}
+
+		[Obsolete]
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -38,7 +65,8 @@ namespace HelloWorld
 			
 			ReleaseDesignerOutlets ();
 		}
-		
+
+		[Obsolete]
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
