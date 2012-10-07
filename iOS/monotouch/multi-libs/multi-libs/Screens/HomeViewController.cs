@@ -137,6 +137,7 @@ namespace multilibs
 		{
 			if(!shouldPool)
 				return;
+
 			FetchGames ();
 			NSTimer.CreateScheduledTimer (6.0, delegate {
 				PollGames ();

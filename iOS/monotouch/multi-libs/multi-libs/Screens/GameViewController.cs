@@ -85,8 +85,7 @@ namespace multilibs
 			asyncDelegation.Get<Hash> ("gamebyid", new { id = _gameId })
 				.WhenFinished (
 				result =>
-				{
-					
+				{					
 					JsonVisualization jsonVisualization = new JsonVisualization ();
 					jsonVisualization.Parse ("root", result, 0);
 					InvokeOnMainThread(() => {
