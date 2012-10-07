@@ -88,26 +88,12 @@ namespace multilibs
 				return;
 
 			var asyncDelegation = new AsyncDelegation (restService);
-			asyncDelegation.Get<Hash> ("gamebyid", new { id = _gameId })
+			asyncDelegation.Get<Game> ("gamebyid", new { id = _gameId })
 				.WhenFinished (
 				result =>
 				{
-					var game = new Game()
-					{ 
-						Id = _gameId,
-						Name = result["name"].String(),
-						CurrentBlackCard = result["currentBlackCard"].String(),
-						IsOver = (bool) result["isOver"],
-						IsStarted = (bool) result["isStarted"],
-						IsReadyForScoring = (bool) result["isReadyForScoring"],
-						IsReadyForReview = (bool) result["isReadyForReview"]
-					};
-					JsonVisualization jsonVisualization = new JsonVisualization();
-					jsonVisualization.Parse("root", result, 0);
-//					textAreaOutput.Text = jsonVisualization.JsonResult;
-					var cards = result["deck"];
 					InvokeOnMainThread(() => {
-						UpdateView(game);
+						UpdateView(result);
 					});
 				});			
 			asyncDelegation.Go ();
@@ -125,6 +111,7 @@ namespace multilibs
 				BlackCard.Text = game.CurrentBlackCard;
 			} else {
 				BlackCard.Text = "waiting on round to start";
+				return;
 			}
 
 			PointsLabel.Text = string.Format ("{0}", 0);

@@ -8,17 +8,18 @@ namespace multilibs
 		public string Id { get; set; }
 		public String Name { get; set; }
 		public bool IsOver { get; set; }
-		public Guid winnerId { get; set; }
+		public string winnerId { get; set; }
 		public bool IsStarted { get; set; }
 		public String CurrentBlackCard { get; set; }
 		public bool IsReadyForScoring { get; set; }
 		public bool IsReadyForReview { get; set; }
 
-		public List<string> WhiteCards { get; set; }
+		public List<string> WhiteCards { get { return Deck ["white"]; } }
+		public Dictionary<string, List<string>> Deck { get; set; }
 
 		public Game ()
 		{
-			WhiteCards = new List<string>();
+			Deck = new Dictionary<string, List<string>>();
 		}
 	}
 }
