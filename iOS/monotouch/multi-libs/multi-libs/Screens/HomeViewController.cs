@@ -18,12 +18,14 @@ namespace multilibs
 //		private String baseUri = "http://dry-peak-5299.herokuapp.com/";
 		private RestFacilitator restFacilitator;
 		private RestService restService;
+		private bool shouldPool;
 
 		public HomeViewController () : base ("HomeViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Games", "Games");
 			restFacilitator = new RestFacilitator();
 			restService = new RestService(restFacilitator, baseUri);
+			shouldPool = false;
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -56,14 +58,10 @@ namespace multilibs
 			GamesTable.Source = _activeGames;
 			Add (GamesTable);
 
-			FetchGames();
-
 			_activeGames.GameClicked += (gameId) => {
 				var gameView = new GameViewController(gameId);
 				this.NavigationController.PushViewController(gameView, true);
 			};
-
-
 		}
 
 		[Obsolete]
@@ -84,6 +82,19 @@ namespace multilibs
 		{
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			shouldPool = true;
+			PollGames();
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			shouldPool = false;
 		}
 
 		partial void CreateClicked (NSObject sender)
@@ -122,13 +133,23 @@ namespace multilibs
 			asyncDelegation.Go();
 		}
 
+		private void PollGames ()
+		{
+			FetchGames ();
+			if (shouldPool) {
+				NSTimer.CreateScheduledTimer (6.0, delegate {
+					PollGames ();
+				});
+			}
+		}
+
 		private void AddGame(Guid gameId, string gameName)
 		{		
 			var asyncDelegation = new AsyncDelegation(restService);			
 			asyncDelegation
 				.Post("add", new { id = gameId.ToString(), name=gameName })
-					.WhenFinished(() => FetchGames());
-			asyncDelegation.Go();
+					.WhenFinished(()=>{})
+					.Go();
 		}
 	}
 }
