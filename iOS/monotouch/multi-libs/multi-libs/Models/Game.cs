@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace multilibs
 {
@@ -13,8 +14,11 @@ namespace multilibs
 		public bool IsReadyForScoring { get; set; }
 		public bool IsReadyForReview { get; set; }
 
+		public List<string> WhiteCards { get; set; }
+
 		public Game ()
 		{
+			WhiteCards = new List<string>();
 		}
 	}
 }

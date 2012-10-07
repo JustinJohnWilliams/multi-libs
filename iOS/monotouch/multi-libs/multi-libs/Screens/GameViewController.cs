@@ -1,6 +1,7 @@
 
 using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -16,6 +17,8 @@ namespace multilibs
 		private RestService restService;
 		private bool shouldPool;
 
+		private TableSource _whiteCardSource;
+		private List<TableItemGroup> _whiteCards;
 		private string _gameId;
 
 		public GameViewController () : this(string.Empty){}
@@ -41,6 +44,9 @@ namespace multilibs
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			_whiteCards = new List<TableItemGroup>();
+			_whiteCardSource = new TableSource(_whiteCards);
+			WhiteCardTable.Source = _whiteCardSource;
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -85,9 +91,7 @@ namespace multilibs
 			asyncDelegation.Get<Hash> ("gamebyid", new { id = _gameId })
 				.WhenFinished (
 				result =>
-				{					
-					JsonVisualization jsonVisualization = new JsonVisualization ();
-					jsonVisualization.Parse ("root", result, 0);
+				{
 					var game = new Game()
 					{ 
 						Id = _gameId,
@@ -97,10 +101,12 @@ namespace multilibs
 						IsStarted = (bool) result["isStarted"],
 						IsReadyForScoring = (bool) result["isReadyForScoring"],
 						IsReadyForReview = (bool) result["isReadyForReview"]
-
 					};
+					JsonVisualization jsonVisualization = new JsonVisualization();
+					jsonVisualization.Parse("root", result, 0);
+//					textAreaOutput.Text = jsonVisualization.JsonResult;
+					var cards = result["deck"];
 					InvokeOnMainThread(() => {
-						TextView.Text = jsonVisualization.JsonResult;
 						UpdateView(game);
 					});
 				});			
@@ -120,6 +126,18 @@ namespace multilibs
 			} else {
 				BlackCard.Text = "waiting on round to start";
 			}
+
+			PointsLabel.Text = string.Format ("{0}", 0);
+
+			// Web games Section
+			var tGroup = new TableItemGroup{ Name = "Select a card to play"};
+			foreach (var whiteCard in game.WhiteCards) {
+				tGroup.Items.Add(whiteCard);
+				tGroup.ItemIds.Add(whiteCard);
+			}
+			_whiteCards.Clear();
+			_whiteCards.Add(tGroup);
+			WhiteCardTable.ReloadData();
 		}
 	}
 }
