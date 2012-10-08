@@ -196,6 +196,22 @@ namespace multilibs
 					alert.Show();
 					shouldPool = false;
 				}
+
+				if(player.IsCzar){
+					status = new TableItemGroup{ Name = "You are the Czar!"};
+					tGroup = new TableItemGroup{ Name = "Choices so far:"};
+					foreach (var oPlayer in game.Players) {
+						var card = oPlayer.SelectedWhiteCardId;
+						if (string.IsNullOrWhiteSpace (card))
+							continue;
+						tGroup.Items.Add (card);
+					}
+					if(game.IsReadyForScoring)
+					{
+						WhiteCardTable.AllowsSelection = true;
+						tGroup.Name = "Select the winner:";
+					}
+				}
 			}
 			if (status != null)
 				_whiteCards.Add (status);
