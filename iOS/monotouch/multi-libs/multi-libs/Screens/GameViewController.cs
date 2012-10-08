@@ -21,6 +21,8 @@ namespace multilibs
 		private TableSource _whiteCardSource;
 		private List<TableItemGroup> _whiteCards;
 		private string _gameId;
+		private Game _game;
+		private bool _isCzar;
 
 		public GameViewController () : this(string.Empty){}
 
@@ -30,6 +32,7 @@ namespace multilibs
 			restFacilitator = new RestFacilitator();
 			restService = new RestService(restFacilitator, baseUri);
 			_gameId = gameId;
+			_game = null;
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -50,12 +53,7 @@ namespace multilibs
 			WhiteCardTable.Source = _whiteCardSource;
 
 			_whiteCardSource.RowClicked += (cardId) => {
-				var asyncDelegation = new AsyncDelegation(restService);
-				asyncDelegation.Post("selectCard", new {gameId = _gameId, playerId = Application.PlayerId, whiteCardId = cardId})
-					.WhenFinished(()=> {
-						FetchGame();
-					});
-				asyncDelegation.Go();
+				SelectCard(cardId);
 			};
 		}
 
@@ -92,6 +90,25 @@ namespace multilibs
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 		}
 
+		void SelectCard (string cardId)
+		{
+			var asyncDelegation = new AsyncDelegation (restService);
+
+			if (_isCzar) {
+				asyncDelegation.Post ("selectWinner", new {gameId = _gameId, cardId = cardId})
+				.WhenFinished (() => {
+					FetchGame ();
+				});
+				asyncDelegation.Go ();
+			} else {
+				asyncDelegation.Post ("selectCard", new {gameId = _gameId, playerId = Application.PlayerId, whiteCardId = cardId})
+					.WhenFinished (() => {
+						FetchGame ();
+					});
+				asyncDelegation.Go ();
+			}
+		}
+
 		void PollGameData ()
 		{
 			if(!shouldPool) 
@@ -123,7 +140,8 @@ namespace multilibs
 			var asyncDelegation = new AsyncDelegation(restService);
 			asyncDelegation.Post("readyForNextRound", new {gameId = _gameId, playerId = Application.PlayerId})
 				.WhenFinished(()=> {
-					FetchGame();
+					shouldPool = true;
+					PollGameData();
 				});
 			asyncDelegation.Go();
 		}
@@ -131,6 +149,7 @@ namespace multilibs
 		void UpdateView (Game game)
 		{
 			Title = game.Name;
+			_game = game;
 			_whiteCards.Clear ();
 
 			if (game.IsStarted) {
@@ -139,9 +158,6 @@ namespace multilibs
 				BlackCard.Text = "waiting on round to start";
 				return;
 			}
-
-			PointsLabel.Text = string.Format ("{0}", 0);
-
 			
 			WhiteCardTable.AllowsSelection = false;
 			// Web games Section
@@ -154,6 +170,7 @@ namespace multilibs
 
 				if (string.IsNullOrWhiteSpace (player.SelectedWhiteCardId)) {
 					tGroup = new TableItemGroup{ Name = "Select a card to play"};
+					Title = tGroup.Name;
 					foreach (var whiteCard in player.Cards) {
 						tGroup.Items.Add (whiteCard);
 						tGroup.ItemIds.Add (whiteCard);
@@ -173,7 +190,7 @@ namespace multilibs
 					if (game.WinningCardId == player.SelectedWhiteCardId) {
 						status = new TableItemGroup{ Name = "You're the winner!"};
 					} else {
-						status = new TableItemGroup{ Name = "The winner:"};
+						status = new TableItemGroup{ Name = "Winner Selected"};
 						status.Items.Add (game.WinningCardId);
 					}
 
@@ -187,29 +204,40 @@ namespace multilibs
 				}
 
 				if (game.IsReadyForReview && !player.IsReady) {
-					var alert = new UIAlertView("Winner Selected", "Next round will start when everyone is ready", null, "OK", null);
+					if(status == null)
+					{
+						status = new TableItemGroup{ Name = "You're the Czar!"};
+					}
+					shouldPool = false;
+					var alert = new UIAlertView(status.Name, "Next round will start when everyone is ready", null, "OK", null);
 					alert.Clicked += (sender, e) => {
 						ReadyForNextRound();
-						shouldPool = true;
-						PollGameData();
 					};
 					alert.Show();
-					shouldPool = false;
 				}
+				_isCzar = player.IsCzar;
 
 				if(player.IsCzar){
-					status = new TableItemGroup{ Name = "You are the Czar!"};
+					status = null;
+					Title = "You're the Czar!";
 					tGroup = new TableItemGroup{ Name = "Choices so far:"};
 					foreach (var oPlayer in game.Players) {
 						var card = oPlayer.SelectedWhiteCardId;
 						if (string.IsNullOrWhiteSpace (card))
 							continue;
 						tGroup.Items.Add (card);
+						tGroup.ItemIds.Add (card);
 					}
 					if(game.IsReadyForScoring)
 					{
 						WhiteCardTable.AllowsSelection = true;
-						tGroup.Name = "Select the winner:";
+						Title = tGroup.Name = "Select a winner";
+					}
+
+					if(game.IsReadyForReview){
+						Title = "Round Ended";
+						tGroup = new TableItemGroup{ Name = "Next round will start when everyone is ready"};
+						status = null;
 					}
 				}
 			}

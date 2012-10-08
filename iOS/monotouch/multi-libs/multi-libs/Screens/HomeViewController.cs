@@ -60,13 +60,7 @@ namespace multilibs
 			Add (GamesTable);
 
 			_activeGames.RowClicked += (gameId) => {
-				var asyncDelegation = new AsyncDelegation(restService);
-				asyncDelegation.Post("joingame", new {gameId = gameId, playerId = Application.PlayerId, playerName = "Mono Touch"})
-					.WhenFinished(()=> {
-						var gameView = new GameViewController(gameId);
-						this.NavigationController.PushViewController(gameView, true);
-					});
-				asyncDelegation.Go();
+				JoinGame(gameId);
 			};
 		}
 
@@ -102,14 +96,22 @@ namespace multilibs
 			var gameId = Guid.NewGuid().ToString();
 			var gameName = "Mono Game "+ gameId.Substring(0, 5);
 			AddGame(gameId,gameName);
-
-			var gameView = new GameViewController(gameId);
-			this.NavigationController.PushViewController(gameView, true);
 		}
 
 		partial void RefreshClicked(NSObject sender)
 		{
 			FetchGames();
+		}
+
+		void JoinGame (string gameId)
+		{
+			var asyncDelegation = new AsyncDelegation(restService);
+			asyncDelegation.Post("joingame", new {gameId = gameId, playerId = Application.PlayerId, playerName = "Mono Touch"})
+				.WhenFinished(()=> {
+					var gameView = new GameViewController(gameId);
+					this.NavigationController.PushViewController(gameView, true);
+				});
+			asyncDelegation.Go();
 		}
 
 		private void FetchGames()
@@ -149,7 +151,7 @@ namespace multilibs
 			var asyncDelegation = new AsyncDelegation(restService);			
 			asyncDelegation
 				.Post("add", new { id = gameId, name=gameName })
-					.WhenFinished(()=>{})
+					.WhenFinished(()=>{JoinGame(gameId);})
 					.Go();			
 		}
 	}
