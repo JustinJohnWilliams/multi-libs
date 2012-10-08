@@ -118,10 +118,20 @@ namespace multilibs
 			asyncDelegation.Go ();
 		}
 
+		void ReadyForNextRound ()
+		{
+			var asyncDelegation = new AsyncDelegation(restService);
+			asyncDelegation.Post("readyForNextRound", new {gameId = _gameId, playerId = Application.PlayerId})
+				.WhenFinished(()=> {
+					FetchGame();
+				});
+			asyncDelegation.Go();
+		}
+
 		void UpdateView (Game game)
 		{
 			Title = game.Name;
-			_whiteCards.Clear();
+			_whiteCards.Clear ();
 
 			if (game.IsStarted) {
 				BlackCard.Text = game.CurrentBlackCard;
@@ -140,9 +150,9 @@ namespace multilibs
 			TableItemGroup status = null;
 			if (game.Players.Any (p => p.Id == Application.PlayerId)) {
 
-				var player = game.Players.First(p=> p.Id == Application.PlayerId);
+				var player = game.Players.First (p => p.Id == Application.PlayerId);
 
-				if(string.IsNullOrWhiteSpace(player.SelectedWhiteCardId)){
+				if (string.IsNullOrWhiteSpace (player.SelectedWhiteCardId)) {
 					tGroup = new TableItemGroup{ Name = "Select a card to play"};
 					foreach (var whiteCard in player.Cards) {
 						tGroup.Items.Add (whiteCard);
@@ -150,36 +160,47 @@ namespace multilibs
 						
 						WhiteCardTable.AllowsSelection = true;
 					}
-				}else{
+				} else {
 					tGroup = new TableItemGroup{ Name = "You're selection:"};
-					tGroup.Items.Add(player.SelectedWhiteCardId);
+					tGroup.Items.Add (player.SelectedWhiteCardId);
 					status = new TableItemGroup{ Name = "Waiting for the Czar to pick winner..."};
 				}
 
 				PointsLabel.Text = string.Format ("{0}", player.AwesomePoints);
 
-				if(!string.IsNullOrWhiteSpace(game.WinningCardId)){
+				if (!string.IsNullOrWhiteSpace (game.WinningCardId)) {
 
-					if(game.WinningCardId == player.SelectedWhiteCardId){
+					if (game.WinningCardId == player.SelectedWhiteCardId) {
 						status = new TableItemGroup{ Name = "You're the winner!"};
-					}else{
+					} else {
 						status = new TableItemGroup{ Name = "The winner:"};
-						status.Items.Add( game.WinningCardId );
+						status.Items.Add (game.WinningCardId);
 					}
 
 					tGroup = new TableItemGroup{ Name = "Cards Played:"};
-					foreach(var oPlayer in game.Players){
+					foreach (var oPlayer in game.Players) {
 						var card = oPlayer.SelectedWhiteCardId;
-						if(string.IsNullOrWhiteSpace(card))
+						if (string.IsNullOrWhiteSpace (card))
 							continue;
-						tGroup.Items.Add(card);
+						tGroup.Items.Add (card);
 					}
 				}
+
+				if (game.IsReadyForReview && !player.IsReady) {
+					var alert = new UIAlertView("Winner Selected", "Next round will start when everyone is ready", null, "OK", null);
+					alert.Clicked += (sender, e) => {
+						ReadyForNextRound();
+						shouldPool = true;
+						PollGameData();
+					};
+					alert.Show();
+					shouldPool = false;
+				}
 			}
-			if(status != null)
-				_whiteCards.Add(status);
-			_whiteCards.Add(tGroup);
-			WhiteCardTable.ReloadData();
+			if (status != null)
+				_whiteCards.Add (status);
+			_whiteCards.Add (tGroup);
+			WhiteCardTable.ReloadData ();
 		}
 	}
 }

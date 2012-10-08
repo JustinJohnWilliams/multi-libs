@@ -139,7 +139,7 @@ namespace multilibs
 				return;
 
 			FetchGames ();
-			NSTimer.CreateScheduledTimer (6.0, delegate {
+			NSTimer.CreateScheduledTimer (5.0, delegate {
 				PollGames ();
 			});
 		}

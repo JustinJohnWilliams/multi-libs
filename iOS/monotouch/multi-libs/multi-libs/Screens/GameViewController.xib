@@ -117,7 +117,7 @@
 					<object class="IBUILabel" id="329736089">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{146, 372}, {112, 44}}</string>
+						<string key="NSFrame">{{288, 372}, {32, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -145,7 +145,7 @@
 					<object class="IBUILabel" id="812366167">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{6, 383}, {144, 21}}</string>
+						<string key="NSFrame">{{146, 383}, {144, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="329736089"/>
@@ -232,8 +232,8 @@
 							<reference ref="494548201"/>
 							<reference ref="761673397"/>
 							<reference ref="487008857"/>
-							<reference ref="812366167"/>
 							<reference ref="329736089"/>
+							<reference ref="812366167"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -292,7 +292,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">29</int>
+			<int key="maxID">31</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -301,6 +301,7 @@
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="BlackCard">UILabel</string>
+						<string key="NextRoundButton">UIBarButtonItem</string>
 						<string key="PointsLabel">UILabel</string>
 						<string key="WhiteCardTable">UITableView</string>
 					</dictionary>
@@ -308,6 +309,10 @@
 						<object class="IBToOneOutletInfo" key="BlackCard">
 							<string key="name">BlackCard</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="NextRoundButton">
+							<string key="name">NextRoundButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="PointsLabel">
 							<string key="name">PointsLabel</string>
