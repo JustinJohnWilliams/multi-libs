@@ -99,7 +99,7 @@ namespace multilibs
 
 			FetchGame();
 
-			NSTimer.CreateScheduledTimer (6.0, delegate {
+			NSTimer.CreateScheduledTimer (3.0, delegate {
 				PollGameData();
 			});
 		}
@@ -121,6 +121,7 @@ namespace multilibs
 		void UpdateView (Game game)
 		{
 			Title = game.Name;
+			_whiteCards.Clear();
 
 			if (game.IsStarted) {
 				BlackCard.Text = game.CurrentBlackCard;
@@ -131,34 +132,52 @@ namespace multilibs
 
 			PointsLabel.Text = string.Format ("{0}", 0);
 
-
+			
+			WhiteCardTable.AllowsSelection = false;
 			// Web games Section
 			var tGroup = new TableItemGroup{ Name = "Select a card to play"};
+
+			TableItemGroup status = null;
 			if (game.Players.Any (p => p.Id == Application.PlayerId)) {
 
 				var player = game.Players.First(p=> p.Id == Application.PlayerId);
 
 				if(string.IsNullOrWhiteSpace(player.SelectedWhiteCardId)){
+					tGroup = new TableItemGroup{ Name = "Select a card to play"};
 					foreach (var whiteCard in player.Cards) {
 						tGroup.Items.Add (whiteCard);
 						tGroup.ItemIds.Add (whiteCard);
+						
+						WhiteCardTable.AllowsSelection = true;
 					}
 				}else{
-					tGroup.Name = player.SelectedWhiteCardId;
-
+					tGroup = new TableItemGroup{ Name = "You're selection:"};
+					tGroup.Items.Add(player.SelectedWhiteCardId);
+					status = new TableItemGroup{ Name = "Waiting for the Czar to pick winner..."};
 				}
 
 				PointsLabel.Text = string.Format ("{0}", player.AwesomePoints);
 
 				if(!string.IsNullOrWhiteSpace(game.WinningCardId)){
+
 					if(game.WinningCardId == player.SelectedWhiteCardId){
-						tGroup.Name = "You the winner!";
+						status = new TableItemGroup{ Name = "You're the winner!"};
 					}else{
-						tGroup.Name = string.Format("The winner is '{0}'", game.WinningCardId);
+						status = new TableItemGroup{ Name = "The winner:"};
+						status.Items.Add( game.WinningCardId );
+					}
+
+					tGroup = new TableItemGroup{ Name = "Cards Played:"};
+					foreach(var oPlayer in game.Players){
+						var card = oPlayer.SelectedWhiteCardId;
+						if(string.IsNullOrWhiteSpace(card))
+							continue;
+						tGroup.Items.Add(card);
 					}
 				}
 			}
-			_whiteCards.Clear();
+			if(status != null)
+				_whiteCards.Add(status);
 			_whiteCards.Add(tGroup);
 			WhiteCardTable.ReloadData();
 		}
