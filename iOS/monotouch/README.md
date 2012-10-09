@@ -5,20 +5,20 @@ This folder contains iOS solutions implemented using MonoTouch.
 ## Overview
 There are 5 projects to implement.
 
-HelloWorld
-* Exercise to learn click events in iOS.
+###HelloWorld
+Exercise to learn click events in iOS.
 
-HelloViews
-* Exercise to learn navigation between views.
+###HelloViews
+Exercise to learn navigation between views.
 
-HelloTables
-* Exercise to learn how to display data in a UITable.
+###HelloTables
+Exercise to learn how to display data in a UITable.
 
-HelloRest
-* Exercise for learning communicating with a Rest service.
+###HelloRest
+Exercise for learning communicating with a Rest service.
 
-multi-libs
-* Implementation of Cards Against Humanity for iOS
+###multi-libs
+Implementation of Cards Against Humanity for iOS
 
 
 ## Installing
