@@ -42,39 +42,43 @@ namespace HelloRest
 			var rightButton = new UIBarButtonItem("+",UIBarButtonItemStyle.Bordered, this, new MonoTouch.ObjCRuntime.Selector("CreatePeep"));
 			this.NavigationItem.RightBarButtonItem = rightButton;
 
-			var asyncDelegation = new AsyncDelegation(restService);
 
-//			asyncDelegation.Get<Hash>("search.json", new { q = "#haiku" })
-//				.WhenFinished(
-//					result =>
-//					{
-//					List<string> tweets = new List<string>();
-//					textBlockTweets.Text = "";
-//					foreach (var tweetObject in result["results"].ToHashes())
-//					{
-//						textBlockTweets.Text += HttpUtility.HtmlDecode(tweetObject["text"].ToString()) + Environment.NewLine + Environment.NewLine;
-//					}
-//				});
-			
-			asyncDelegation.Go();
 
 			table = new UITableView(this.View.Bounds);
 			this.View.AddSubview(table);
-			
-			peeps = new List<String> () { "A", "B", "C", "D", "E", "F" };
+
 			table.Source = new TableSource(peeps);
+			PullData();
+		}
+
+		void PullData()
+		{
+			var asyncDelegation = new AsyncDelegation(restService);
+			
+			asyncDelegation.Get<Hashes>("list", new { })
+				.WhenFinished(
+					result =>
+					{
+					peeps.Clear();
+					foreach (var peep in result)
+					{
+						peeps.Add(peep["Name"].ToString());
+					}
+					table.ReloadData();
+				});
+			
+			asyncDelegation.Go();
+
 		}
 
 		[Export("CreatePeep")]
 		public void RightButtonPush ()
 		{
-			peeps.Add("G");
-			table.ReloadData();
 			var asyncDelegation = new AsyncDelegation(restService);
-//			asyncDelegation.Post("readyForNextRound", new {gameId = _gameId, playerId = Application.PlayerId})
-//				.WhenFinished(()=> {
-//
-//				});
+			asyncDelegation.Post("add", new {Name="MonoTouch Name" })
+				.WhenFinished(()=> {
+					PullData();
+				});
 			asyncDelegation.Go();
 		}
 
