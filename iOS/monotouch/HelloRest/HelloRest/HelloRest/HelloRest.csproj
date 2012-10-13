@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FD4E81DE-ACF1-4E53-ABF6-C17B0D9191D2}</ProjectGuid>
+    <ProjectGuid>{A1E8712A-BEE4-4E18-9896-9BB3B5F4FFFF}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HelloTables</RootNamespace>
+    <RootNamespace>HelloRest</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>HelloTables</AssemblyName>
+    <AssemblyName>HelloRest</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>True</DebugSymbols>
@@ -87,14 +87,20 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="HelloTablesViewController.cs" />
-    <Compile Include="HelloTablesViewController.designer.cs">
-      <DependentUpon>HelloTablesViewController.cs</DependentUpon>
+    <Compile Include="HelloRestViewController.cs" />
+    <Compile Include="HelloRestViewController.designer.cs">
+      <DependentUpon>HelloRestViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="TableSource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="HelloTablesViewController.xib" />
+    <InterfaceDefinition Include="HelloRestViewController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\RestfulAdapter\RestfulAdapter.csproj">
+      <Project>{C11905D7-3B7C-441C-B151-DCF6983371D1}</Project>
+      <Name>RestfulAdapter</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
