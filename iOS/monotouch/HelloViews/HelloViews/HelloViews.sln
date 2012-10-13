@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloViews", "HelloViews\HelloViews.csproj", "{28B45591-053C-4E63-89B5-74575E11FC75}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Debug|iPhone.Build.0 = Debug|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Release|iPhone.ActiveCfg = Release|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Release|iPhone.Build.0 = Release|iPhone
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{28B45591-053C-4E63-89B5-74575E11FC75}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = HelloViews\HelloViews.csproj
+	EndGlobalSection
+EndGlobal
