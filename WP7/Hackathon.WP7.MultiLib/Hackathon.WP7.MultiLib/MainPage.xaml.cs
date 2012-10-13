@@ -68,22 +68,13 @@ namespace Hackathon.WP7.MultiLib
             if (_restAsyncDelegation == null)
                 _restAsyncDelegation = new RestfulSilverlight.AsyncDelegation(_restService);
 
-            _restAsyncDelegation.Get<List<Entities.Game>>("listAll", new { cache = Guid.NewGuid() })
+            _restAsyncDelegation.Get<List<Entities.Game>>("list", new { cache = Guid.NewGuid() })
                    .WhenFinished(
                    result =>
                    {
-                       var yourgames = (from g in result
-                                       from p in g.players
-                                       where p.id == GetPhoneId()
-                                       select g).Distinct();
-
-                       var availgames = (from g in result
-                                        from p in g.players
-                                        where p.id != GetPhoneId() && g.players.Count < 4
-                                        select g).Distinct();
+                       var yourgames = (from g in result select g).Distinct();
 
                        lbYourGames.ItemsSource = yourgames;
-                       lbGames.ItemsSource = availgames;
                    });
 
             // execute the async request

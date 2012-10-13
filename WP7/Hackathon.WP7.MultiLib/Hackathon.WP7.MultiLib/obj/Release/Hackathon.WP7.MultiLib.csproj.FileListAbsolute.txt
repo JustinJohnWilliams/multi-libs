@@ -13,3 +13,18 @@ C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hack
 C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\Hackathon.WP7.MultiLib.dll
 C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\Hackathon.WP7.MultiLib.pdb
 C:\Users\Jason\documents\visual studio 2010\Projects\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\XapCacheFile.xml
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\ApplicationIcon.png
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\Background.png
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\Hackathon.WP7.MultiLib.dll
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\Hackathon.WP7.MultiLib.pdb
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\AppManifest.xaml
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\Hackathon.WP7.MultiLib.xap
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\Bin\Release\Newtonsoft.Json.WindowsPhone.dll
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\ResolveAssemblyReference.cache
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\App.g.i.cs
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\GameBoard.g.i.cs
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\MainPage.g.i.cs
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\Hackathon.WP7.MultiLib.g.resources
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\Hackathon.WP7.MultiLib.dll
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\Hackathon.WP7.MultiLib.pdb
+C:\Development\multi-libs\WP7\Hackathon.WP7.MultiLib\Hackathon.WP7.MultiLib\obj\Release\XapCacheFile.xml
